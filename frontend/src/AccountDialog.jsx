@@ -5,6 +5,7 @@ export default function AccountDialog({
   onClose,
   onAuthenticated,
   hasProgress,
+  hasPractice = false,
 }) {
   const dialog = useRef(null);
   const [mode, setMode] = useState("register");
@@ -114,7 +115,9 @@ export default function AccountDialog({
         </small>
         {hasProgress && (
           <div className="merge-note">
-            Your completed guest items will be added to your account.
+            {hasPractice
+              ? "Your guest practice results will be added to your account."
+              : "Your completed guest items will be added to your account."}
           </div>
         )}
         {error && (

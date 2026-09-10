@@ -13,6 +13,8 @@ import psycopg
 from fastapi import FastAPI, HTTPException, Request, Response
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field, StrictBool
+from .migrations import migrate
+from .practice import CHALLENGES, feedback, public_challenge
 
 SYLLABUS = json.loads(Path(__file__).with_name('syllabus.json').read_text())
 ITEM_IDS = {i['id'] for t in SYLLABUS for s in t['sections'] for c in s['commands'] for i in c['items']}
@@ -38,6 +40,7 @@ async def lifespan(app):
             expires_at TIMESTAMPTZ NOT NULL)''')
         db.execute('''CREATE TABLE IF NOT EXISTS auth_limits (
             bucket TEXT PRIMARY KEY, attempts INTEGER NOT NULL, expires_at TIMESTAMPTZ NOT NULL)''')
+        migrate(db)
     yield
 
 
@@ -140,6 +143,14 @@ def start_session(db, request, response, user):
             SELECT %s, item_id, completed_at FROM progress WHERE learner = %s
             ON CONFLICT DO NOTHING''', (user[0], anonymous))
         db.execute('DELETE FROM progress WHERE learner = %s', (anonymous,))
+        db.execute('''INSERT INTO practice_progress(learner, challenge_id, version, choice_id, correct, updated_at)
+            SELECT %s, challenge_id, version, choice_id, correct, updated_at
+            FROM practice_progress WHERE learner = %s
+            ON CONFLICT (learner, challenge_id) DO UPDATE SET
+                version = EXCLUDED.version, choice_id = EXCLUDED.choice_id,
+                correct = EXCLUDED.correct, updated_at = EXCLUDED.updated_at
+            WHERE EXCLUDED.updated_at > practice_progress.updated_at''', (user[0], anonymous))
+        db.execute('DELETE FROM practice_progress WHERE learner = %s', (anonymous,))
     old_token = request.cookies.get('onlydevops_session')
     if old_token:
         db.execute('DELETE FROM sessions WHERE token_hash = %s', (token_hash(old_token),))
@@ -232,3 +243,55 @@ def update(item_id: str, body: ProgressUpdate, request: Request):
         else:
             db.execute('DELETE FROM progress WHERE learner = %s AND item_id = %s', (learner, item_id))
     return {'item_id': item_id, 'completed': body.completed}
+
+
+@app.get('/api/practice')
+def practice(request: Request, response: Response):
+    with connect() as db:
+        user = account(db, request)
+        learner = user[0] if user else guest(db, request) or uuid4()
+        if not user:
+            cookie(response, 'onlydevops_learner', str(learner), 60*60*24*365)
+            if request.cookies.get('onlydevops_session'):
+                response.delete_cookie('onlydevops_session')
+        rows = db.execute('''SELECT challenge_id, version, choice_id FROM practice_progress
+                             WHERE learner = %s''', (learner,)).fetchall()
+    progress = {r[0]: r for r in rows}
+    return {
+        'challenges': [public_challenge(c, progress.get(c['id'])) for c in CHALLENGES.values()],
+        'learner': str(learner), 'user': {'username': user[1]} if user else None,
+    }
+
+
+class PracticeAnswer(BaseModel):
+    choice_id: str = Field(min_length=1, max_length=64)
+    version: int = Field(strict=True, ge=1)
+
+
+@app.post('/api/practice/{challenge_id}/answer')
+def answer_practice(challenge_id: str, body: PracticeAnswer, request: Request):
+    challenge = CHALLENGES.get(challenge_id)
+    if not challenge:
+        raise HTTPException(404, 'Practice challenge not found.')
+    if body.version != challenge['version']:
+        raise HTTPException(409, 'This challenge was updated. Reload to try the latest version.')
+    if body.choice_id not in {o['id'] for o in challenge['options']}:
+        raise HTTPException(422, 'Choose one of the available answers.')
+    with connect() as db:
+        user = account(db, request)
+        if request.cookies.get('onlydevops_session') and not user:
+            raise HTTPException(401, 'Your session expired. Sign in again.')
+        learner = user[0] if user else guest(db, request)
+        if not learner:
+            raise HTTPException(401, 'Open practice before saving an answer.')
+        # Required on practice writes to reject requests from a stale account tab.
+        if request.headers.get('x-learner') != str(learner):
+            raise HTTPException(409, 'Your account changed. Reload practice before saving.')
+        result = feedback(challenge, body.choice_id)
+        db.execute('''INSERT INTO practice_progress(learner, challenge_id, version, choice_id, correct)
+            VALUES (%s, %s, %s, %s, %s)
+            ON CONFLICT (learner, challenge_id) DO UPDATE SET
+                version = EXCLUDED.version, choice_id = EXCLUDED.choice_id,
+                correct = EXCLUDED.correct, updated_at = now()''',
+            (learner, challenge_id, challenge['version'], body.choice_id, result['correct']))
+    return result

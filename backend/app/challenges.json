@@ -1,0 +1,122 @@
+[
+  {
+    "id": "docker-upstream-port",
+    "version": 1,
+    "topic": "docker",
+    "title": "The deployment that returns 502",
+    "summary": "The API is healthy, but requests through the proxy fail. Follow the port mapping.",
+    "difficulty": "Foundations",
+    "minutes": 5,
+    "brief": "A release changes the API's published host port. Nginx and the API are separate Compose services on the same default network. The API starts successfully and listens on all interfaces. Requests through Nginx now return 502.",
+    "evidence": [
+      {"label": "compose.yaml · relevant services", "code": "services:\n  api:\n    image: example-api:1.4\n    ports:\n      - \"9000:8000\"\n  proxy:\n    image: nginx:alpine\n    ports:\n      - \"8080:80\""},
+      {"label": "nginx.conf · mounted proxy configuration", "code": "location / {\n    proxy_pass http://api:9000;\n}"},
+      {"label": "Logs and connectivity checks", "code": "api: Listening on 0.0.0.0:8000\nproxy: connect() failed (111: Connection refused) while connecting to upstream\nFrom the proxy container: GET http://api:8000/health -> 200 OK"}
+    ],
+    "question": "Which change addresses the failure shown by this evidence?",
+    "options": [
+      {"id": "container-port", "label": "Point Nginx at api:8000, then reload its configuration.", "feedback": "Correct. The proxy reaches the API over the Compose network, where the API listens on port 8000."},
+      {"id": "localhost", "label": "Point Nginx at localhost:9000 inside the proxy container.", "feedback": "Inside the proxy container, localhost points to that container, not the API service."},
+      {"id": "more-replicas", "label": "Add API replicas while leaving the upstream port unchanged.", "feedback": "More replicas do not change which port the API listens on. The existing connectivity check already succeeds on port 8000."}
+    ],
+    "answer": "container-port",
+    "explanation": "The 9000:8000 mapping exposes container port 8000 as port 9000 on the host. Service-to-service traffic uses the container port. The successful check from the proxy to api:8000 establishes a working network path and listener.",
+    "verification": "Validate the Nginx configuration with nginx -t, reload it, then request the application's health endpoint through the published proxy port. Confirm a successful response and no new upstream connection errors.",
+    "sources": [{"title": "Docker: Networking in Compose", "url": "https://docs.docker.com/compose/how-tos/networking/"}]
+  },
+  {
+    "id": "linux-script-permission",
+    "version": 1,
+    "topic": "linux",
+    "title": "The backup script will not start",
+    "summary": "A readable script fails when launched directly. Inspect its permissions.",
+    "difficulty": "Foundations",
+    "minutes": 4,
+    "brief": "You are signed in as deploy. The backup script belongs to deploy, has a valid shell interpreter, and is stored on a filesystem that permits execution. All parent directories are searchable. Running the script through bash works, but launching it directly fails.",
+    "evidence": [
+      {"label": "Terminal · deploy account", "code": "$ ls -l backup.sh\n-rw-r----- 1 deploy ops 284 Sep 11 09:00 backup.sh\n$ head -n 1 backup.sh\n#!/bin/bash\n$ ./backup.sh\nbash: ./backup.sh: Permission denied\n$ bash backup.sh\nBackup complete"}
+    ],
+    "question": "What is the narrowest permission change that lets the owner execute this script directly?",
+    "options": [
+      {"id": "world-write", "label": "Run chmod 777 backup.sh.", "feedback": "This would also grant everyone write access, which is unnecessary for letting the owner execute the script."},
+      {"id": "owner-execute", "label": "Run chmod u+x backup.sh.", "feedback": "Correct. This adds execution permission for the owner without changing the other permission bits."},
+      {"id": "owner-read", "label": "Run chmod u+r backup.sh.", "feedback": "The owner already has read permission. Direct execution requires the execute bit as well."}
+    ],
+    "answer": "owner-execute",
+    "explanation": "The owner permissions are rw-, so the script can be read but cannot be executed directly. Invoking bash reads the file through the interpreter. Adding u+x addresses the missing owner execute bit while preserving group and other permissions.",
+    "verification": "Check that ls -l now shows -rwxr-----, then run ./backup.sh as deploy. For a real backup job, also verify the output and exit status before relying on it.",
+    "sources": [{"title": "GNU Coreutils: chmod invocation", "url": "https://www.gnu.org/software/coreutils/manual/html_node/chmod-invocation.html"}]
+  },
+  {
+    "id": "git-recover-commit",
+    "version": 1,
+    "topic": "git",
+    "title": "A local commit disappeared",
+    "summary": "A reset moved the branch. Recover the committed work without moving it again.",
+    "difficulty": "Foundations",
+    "minutes": 5,
+    "brief": "A teammate accidentally moved a local branch back one commit with a hard reset. The working tree is now clean. The missing changes were committed before the reset, the commit object still exists, and nothing was pushed. You want to preserve that commit on a new branch before deciding how to integrate it.",
+    "evidence": [
+      {"label": "git reflog · local HEAD history", "code": "8d21abc HEAD@{0}: reset: moving to HEAD~1\n4f31bca HEAD@{1}: commit: Add health endpoint\n8d21abc HEAD@{2}: commit: Configure application"},
+      {"label": "git status", "code": "On branch feature/health\nnothing to commit, working tree clean"}
+    ],
+    "question": "Which command preserves the missing commit without changing the current branch or working tree?",
+    "options": [
+      {"id": "clean", "label": "git clean -fd", "feedback": "Cleaning untracked files does not recover a commit and can remove unrelated local files."},
+      {"id": "force-push", "label": "git push --force", "feedback": "A force push changes a remote branch. It does not preserve the missing local commit on a new branch."},
+      {"id": "recovery-branch", "label": "git branch recovery/health 4f31bca", "feedback": "Correct. The new branch points to the recovered commit while the current checkout stays unchanged."}
+    ],
+    "answer": "recovery-branch",
+    "explanation": "The local reflog records earlier values of HEAD. In this history, 4f31bca is the committed change before the reset. A new branch keeps it reachable. Reflogs are local and expire; they are not a substitute for backups and do not guarantee recovery of uncommitted changes.",
+    "verification": "Run git show recovery/health and inspect the health-endpoint changes. Confirm git status still shows the original clean checkout before choosing a merge or cherry-pick.",
+    "sources": [{"title": "Git: reflog documentation", "url": "https://git-scm.com/docs/git-reflog"}]
+  },
+  {
+    "id": "kubernetes-readiness-path",
+    "version": 1,
+    "topic": "kubernetes",
+    "title": "Running, but not ready",
+    "summary": "The container stays alive while Kubernetes keeps it out of service traffic.",
+    "difficulty": "Foundations",
+    "minutes": 6,
+    "brief": "A Deployment has one Pod whose container is running with zero restarts. The application exposes /healthz on port 8080. The Service selector and target port are correct. The Service uses the default readiness behavior, but its endpoints are not ready.",
+    "evidence": [
+      {"label": "Deployment · readiness probe", "code": "readinessProbe:\n  httpGet:\n    path: /ready\n    port: 8080\n  periodSeconds: 5"},
+      {"label": "Pod events and direct checks", "code": "Warning Unhealthy: Readiness probe failed: HTTP probe failed with statuscode: 404\nGET PodIP:8080/healthz -> 200 OK\nGET PodIP:8080/ready   -> 404 Not Found\nContainer restarts: 0"}
+    ],
+    "question": "Which fix best matches the evidence?",
+    "options": [
+      {"id": "correct-path", "label": "Update the readiness probe to the application's /healthz endpoint.", "feedback": "Correct. The configured probe path does not exist, while the intended health endpoint succeeds."},
+      {"id": "remove-probe", "label": "Remove readiness checks permanently so all running Pods receive traffic.", "feedback": "That hides the configuration error and removes a useful protection. The evidence identifies a working endpoint to use."},
+      {"id": "increase-memory", "label": "Increase the memory limit to stop container restarts.", "feedback": "The container has not restarted. The observed failure is a 404 response from the readiness probe."}
+    ],
+    "answer": "correct-path",
+    "explanation": "A failed readiness probe marks a Pod unready; it does not itself restart the container. Here, the probe reaches the application but uses the wrong path. Readiness and liveness serve different purposes, so a running container is not necessarily ready for traffic.",
+    "verification": "Roll out the corrected probe, wait for the Pod Ready condition, check that the Service's EndpointSlice reports the endpoint ready, and request the application through the Service.",
+    "sources": [{"title": "Kubernetes: Liveness, readiness, and startup probes", "url": "https://kubernetes.io/docs/concepts/workloads/pods/probes/"}]
+  },
+  {
+    "id": "actions-package-permission",
+    "version": 1,
+    "topic": "github-actions",
+    "title": "The image builds, but will not publish",
+    "summary": "A trusted workflow can read the repository but cannot create a container package.",
+    "difficulty": "Foundations",
+    "minutes": 5,
+    "brief": "A workflow triggered by a push to the repository's main branch builds an image successfully. Login to ghcr.io uses GITHUB_TOKEN and succeeds. The package name and repository access are correct; organization policy allows publication. This is not a fork pull request. The publishing job has the permissions shown below.",
+    "evidence": [
+      {"label": "publish job · token permissions", "code": "permissions:\n  contents: read\n  packages: read"},
+      {"label": "Workflow log · publish step", "code": "Build complete\nLogin Succeeded\ndocker push ghcr.io/example/project:latest\ndenied: permission_denied: write_package"}
+    ],
+    "question": "What is the smallest token-permission change needed for this job?",
+    "options": [
+      {"id": "contents-write", "label": "Change contents to write and leave packages as read.", "feedback": "Repository content permissions do not grant permission to publish a package."},
+      {"id": "packages-write", "label": "Keep contents: read and set packages: write for the publishing job.", "feedback": "Correct. Publishing requires package write permission, while checkout only needs repository read access."},
+      {"id": "write-all", "label": "Set permissions: write-all for every workflow job.", "feedback": "That grants more access than this task requires. Scope package write access to the publishing job."}
+    ],
+    "answer": "packages-write",
+    "explanation": "GITHUB_TOKEN permissions are scoped by resource. Reading repository contents and writing packages are separate capabilities. The provided evidence rules out several other publication failures, so the missing package write permission is the appropriate change.",
+    "verification": "Re-run the trusted publishing job with packages: write. Confirm the image tag exists in the intended package and that other jobs retain their narrower permissions.",
+    "sources": [{"title": "GitHub: GITHUB_TOKEN authentication", "url": "https://docs.github.com/en/actions/tutorials/authenticate-with-github_token"}]
+  }
+]

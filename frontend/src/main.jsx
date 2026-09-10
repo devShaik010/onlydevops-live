@@ -27,6 +27,7 @@ import "@fontsource/jetbrains-mono/500.css";
 import "./styles.css";
 import AccountDialog from "./AccountDialog";
 import useLearningView from "./useLearningView";
+import PracticePage from "./PracticePage";
 
 const toolLogos = {
   argocd: "argocd",
@@ -278,7 +279,6 @@ function App() {
             <Infinity size={23} />
           </span>
           only<span>devops</span>
-          <small>POC</small>
         </a>
         <div className="top-right">
           {data.user ? (
@@ -450,6 +450,13 @@ function App() {
             </span>
           )}
         </div>
+        <a className="practice-entry" href="/practice">
+          <span>
+            <Workflow size={18} />
+            Put your skills to work with troubleshooting practice
+          </span>
+          <ArrowRight size={17} />
+        </a>
         <div className="toolbar">
           <div className="tabs">
             {[
@@ -638,4 +645,10 @@ function App() {
     </>
   );
 }
-createRoot(document.getElementById("root")).render(<App />);
+createRoot(document.getElementById("root")).render(
+  location.pathname.replace(/\/$/, "") === "/practice" ? (
+    <PracticePage />
+  ) : (
+    <App />
+  ),
+);
