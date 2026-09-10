@@ -1,6 +1,10 @@
 node_modules/
 dist/
-.vite/
+.env
+.venv/
+__pycache__/
+*.pyc
 .DS_Store
-npm-debug.log*
-tools/
+
+test-results/
+playwright-report/

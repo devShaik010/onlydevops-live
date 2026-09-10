@@ -1,0 +1,2613 @@
+[
+  {
+    "id": "linux",
+    "title": "Linux",
+    "subtitle": "The foundation of every server.",
+    "sections": [
+      {
+        "id": "linux-0",
+        "title": "File & folder management",
+        "commands": [
+          {
+            "id": "linux-0-0",
+            "title": "ls",
+            "items": [
+              {
+                "id": "linux-0-0-0",
+                "label": "ls"
+              },
+              {
+                "id": "linux-0-0-1",
+                "label": "ls -a"
+              },
+              {
+                "id": "linux-0-0-2",
+                "label": "ls -l"
+              },
+              {
+                "id": "linux-0-0-3",
+                "label": "ls -lh"
+              },
+              {
+                "id": "linux-0-0-4",
+                "label": "ls -la"
+              },
+              {
+                "id": "linux-0-0-5",
+                "label": "ls -R"
+              }
+            ]
+          },
+          {
+            "id": "linux-0-1",
+            "title": "Navigation",
+            "items": [
+              {
+                "id": "linux-0-1-0",
+                "label": "pwd"
+              },
+              {
+                "id": "linux-0-1-1",
+                "label": "cd"
+              },
+              {
+                "id": "linux-0-1-2",
+                "label": "cd .."
+              },
+              {
+                "id": "linux-0-1-3",
+                "label": "cd ~"
+              },
+              {
+                "id": "linux-0-1-4",
+                "label": "cd -"
+              }
+            ]
+          },
+          {
+            "id": "linux-0-2",
+            "title": "Create & remove",
+            "items": [
+              {
+                "id": "linux-0-2-0",
+                "label": "touch"
+              },
+              {
+                "id": "linux-0-2-1",
+                "label": "mkdir"
+              },
+              {
+                "id": "linux-0-2-2",
+                "label": "mkdir -p"
+              },
+              {
+                "id": "linux-0-2-3",
+                "label": "rmdir"
+              },
+              {
+                "id": "linux-0-2-4",
+                "label": "rm"
+              },
+              {
+                "id": "linux-0-2-5",
+                "label": "rm -r"
+              }
+            ]
+          },
+          {
+            "id": "linux-0-3",
+            "title": "Copy & move",
+            "items": [
+              {
+                "id": "linux-0-3-0",
+                "label": "cp"
+              },
+              {
+                "id": "linux-0-3-1",
+                "label": "cp -r"
+              },
+              {
+                "id": "linux-0-3-2",
+                "label": "mv"
+              }
+            ]
+          },
+          {
+            "id": "linux-0-4",
+            "title": "Find files",
+            "items": [
+              {
+                "id": "linux-0-4-0",
+                "label": "find"
+              },
+              {
+                "id": "linux-0-4-1",
+                "label": "locate"
+              },
+              {
+                "id": "linux-0-4-2",
+                "label": "which"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "linux-1",
+        "title": "Read & process text",
+        "commands": [
+          {
+            "id": "linux-1-0",
+            "title": "Read files",
+            "items": [
+              {
+                "id": "linux-1-0-0",
+                "label": "cat"
+              },
+              {
+                "id": "linux-1-0-1",
+                "label": "less"
+              },
+              {
+                "id": "linux-1-0-2",
+                "label": "head"
+              },
+              {
+                "id": "linux-1-0-3",
+                "label": "tail"
+              },
+              {
+                "id": "linux-1-0-4",
+                "label": "tail -f"
+              }
+            ]
+          },
+          {
+            "id": "linux-1-1",
+            "title": "Filter & transform",
+            "items": [
+              {
+                "id": "linux-1-1-0",
+                "label": "grep"
+              },
+              {
+                "id": "linux-1-1-1",
+                "label": "grep -r"
+              },
+              {
+                "id": "linux-1-1-2",
+                "label": "sort"
+              },
+              {
+                "id": "linux-1-1-3",
+                "label": "uniq"
+              },
+              {
+                "id": "linux-1-1-4",
+                "label": "wc"
+              },
+              {
+                "id": "linux-1-1-5",
+                "label": "cut"
+              },
+              {
+                "id": "linux-1-1-6",
+                "label": "sed"
+              },
+              {
+                "id": "linux-1-1-7",
+                "label": "awk"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "linux-2",
+        "title": "Users & permissions",
+        "commands": [
+          {
+            "id": "linux-2-0",
+            "title": "Users & groups",
+            "items": [
+              {
+                "id": "linux-2-0-0",
+                "label": "whoami"
+              },
+              {
+                "id": "linux-2-0-1",
+                "label": "id"
+              },
+              {
+                "id": "linux-2-0-2",
+                "label": "useradd"
+              },
+              {
+                "id": "linux-2-0-3",
+                "label": "usermod"
+              },
+              {
+                "id": "linux-2-0-4",
+                "label": "passwd"
+              },
+              {
+                "id": "linux-2-0-5",
+                "label": "groupadd"
+              },
+              {
+                "id": "linux-2-0-6",
+                "label": "sudo"
+              },
+              {
+                "id": "linux-2-0-7",
+                "label": "su"
+              }
+            ]
+          },
+          {
+            "id": "linux-2-1",
+            "title": "Permissions",
+            "items": [
+              {
+                "id": "linux-2-1-0",
+                "label": "chmod"
+              },
+              {
+                "id": "linux-2-1-1",
+                "label": "chmod +x"
+              },
+              {
+                "id": "linux-2-1-2",
+                "label": "chown"
+              },
+              {
+                "id": "linux-2-1-3",
+                "label": "chgrp"
+              },
+              {
+                "id": "linux-2-1-4",
+                "label": "umask"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "linux-3",
+        "title": "Processes & services",
+        "commands": [
+          {
+            "id": "linux-3-0",
+            "title": "Processes",
+            "items": [
+              {
+                "id": "linux-3-0-0",
+                "label": "ps aux"
+              },
+              {
+                "id": "linux-3-0-1",
+                "label": "top"
+              },
+              {
+                "id": "linux-3-0-2",
+                "label": "pgrep"
+              },
+              {
+                "id": "linux-3-0-3",
+                "label": "kill"
+              },
+              {
+                "id": "linux-3-0-4",
+                "label": "kill -TERM"
+              },
+              {
+                "id": "linux-3-0-5",
+                "label": "jobs"
+              },
+              {
+                "id": "linux-3-0-6",
+                "label": "bg"
+              },
+              {
+                "id": "linux-3-0-7",
+                "label": "fg"
+              }
+            ]
+          },
+          {
+            "id": "linux-3-1",
+            "title": "Services",
+            "items": [
+              {
+                "id": "linux-3-1-0",
+                "label": "systemctl status"
+              },
+              {
+                "id": "linux-3-1-1",
+                "label": "systemctl start"
+              },
+              {
+                "id": "linux-3-1-2",
+                "label": "systemctl stop"
+              },
+              {
+                "id": "linux-3-1-3",
+                "label": "systemctl enable"
+              },
+              {
+                "id": "linux-3-1-4",
+                "label": "journalctl"
+              },
+              {
+                "id": "linux-3-1-5",
+                "label": "journalctl -u"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "linux-4",
+        "title": "Networking & remote access",
+        "commands": [
+          {
+            "id": "linux-4-0",
+            "title": "Connectivity",
+            "items": [
+              {
+                "id": "linux-4-0-0",
+                "label": "ip addr"
+              },
+              {
+                "id": "linux-4-0-1",
+                "label": "ip route"
+              },
+              {
+                "id": "linux-4-0-2",
+                "label": "ping"
+              },
+              {
+                "id": "linux-4-0-3",
+                "label": "ss -tulpn"
+              },
+              {
+                "id": "linux-4-0-4",
+                "label": "curl"
+              },
+              {
+                "id": "linux-4-0-5",
+                "label": "wget"
+              },
+              {
+                "id": "linux-4-0-6",
+                "label": "dig"
+              }
+            ]
+          },
+          {
+            "id": "linux-4-1",
+            "title": "Remote access",
+            "items": [
+              {
+                "id": "linux-4-1-0",
+                "label": "ssh"
+              },
+              {
+                "id": "linux-4-1-1",
+                "label": "ssh-keygen"
+              },
+              {
+                "id": "linux-4-1-2",
+                "label": "ssh-copy-id"
+              },
+              {
+                "id": "linux-4-1-3",
+                "label": "scp"
+              },
+              {
+                "id": "linux-4-1-4",
+                "label": "rsync"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "linux-5",
+        "title": "Storage & packages",
+        "commands": [
+          {
+            "id": "linux-5-0",
+            "title": "Disk & archives",
+            "items": [
+              {
+                "id": "linux-5-0-0",
+                "label": "df -h"
+              },
+              {
+                "id": "linux-5-0-1",
+                "label": "du -sh"
+              },
+              {
+                "id": "linux-5-0-2",
+                "label": "lsblk"
+              },
+              {
+                "id": "linux-5-0-3",
+                "label": "mount"
+              },
+              {
+                "id": "linux-5-0-4",
+                "label": "tar -czf"
+              },
+              {
+                "id": "linux-5-0-5",
+                "label": "tar -xzf"
+              },
+              {
+                "id": "linux-5-0-6",
+                "label": "gzip"
+              }
+            ]
+          },
+          {
+            "id": "linux-5-1",
+            "title": "Packages",
+            "items": [
+              {
+                "id": "linux-5-1-0",
+                "label": "apt update"
+              },
+              {
+                "id": "linux-5-1-1",
+                "label": "apt install"
+              },
+              {
+                "id": "linux-5-1-2",
+                "label": "apt remove"
+              },
+              {
+                "id": "linux-5-1-3",
+                "label": "dnf install"
+              }
+            ]
+          },
+          {
+            "id": "linux-5-2",
+            "title": "Scheduling",
+            "items": [
+              {
+                "id": "linux-5-2-0",
+                "label": "crontab -e"
+              },
+              {
+                "id": "linux-5-2-1",
+                "label": "crontab -l"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "shell",
+    "title": "Shell scripting",
+    "subtitle": "Make repeatable work automatic.",
+    "sections": [
+      {
+        "id": "shell-0",
+        "title": "Script essentials",
+        "commands": [
+          {
+            "id": "shell-0-0",
+            "title": "Getting started",
+            "items": [
+              {
+                "id": "shell-0-0-0",
+                "label": "Shebang"
+              },
+              {
+                "id": "shell-0-0-1",
+                "label": "Executable scripts"
+              },
+              {
+                "id": "shell-0-0-2",
+                "label": "Comments"
+              },
+              {
+                "id": "shell-0-0-3",
+                "label": "Variables"
+              },
+              {
+                "id": "shell-0-0-4",
+                "label": "Quoting"
+              },
+              {
+                "id": "shell-0-0-5",
+                "label": "Environment variables"
+              },
+              {
+                "id": "shell-0-0-6",
+                "label": "Positional arguments"
+              },
+              {
+                "id": "shell-0-0-7",
+                "label": "Exit codes"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "shell-1",
+        "title": "Control flow",
+        "commands": [
+          {
+            "id": "shell-1-0",
+            "title": "Conditions",
+            "items": [
+              {
+                "id": "shell-1-0-0",
+                "label": "test / [ ]"
+              },
+              {
+                "id": "shell-1-0-1",
+                "label": "[[ ]]"
+              },
+              {
+                "id": "shell-1-0-2",
+                "label": "if / elif / else"
+              },
+              {
+                "id": "shell-1-0-3",
+                "label": "case"
+              }
+            ]
+          },
+          {
+            "id": "shell-1-1",
+            "title": "Loops",
+            "items": [
+              {
+                "id": "shell-1-1-0",
+                "label": "for"
+              },
+              {
+                "id": "shell-1-1-1",
+                "label": "while"
+              },
+              {
+                "id": "shell-1-1-2",
+                "label": "until"
+              },
+              {
+                "id": "shell-1-1-3",
+                "label": "break / continue"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "shell-2",
+        "title": "Input, output & functions",
+        "commands": [
+          {
+            "id": "shell-2-0",
+            "title": "Streams",
+            "items": [
+              {
+                "id": "shell-2-0-0",
+                "label": "stdin / stdout / stderr"
+              },
+              {
+                "id": "shell-2-0-1",
+                "label": "Pipes"
+              },
+              {
+                "id": "shell-2-0-2",
+                "label": "Output redirection"
+              },
+              {
+                "id": "shell-2-0-3",
+                "label": "Here documents"
+              },
+              {
+                "id": "shell-2-0-4",
+                "label": "read"
+              }
+            ]
+          },
+          {
+            "id": "shell-2-1",
+            "title": "Functions",
+            "items": [
+              {
+                "id": "shell-2-1-0",
+                "label": "Function declaration"
+              },
+              {
+                "id": "shell-2-1-1",
+                "label": "Arguments & return values"
+              },
+              {
+                "id": "shell-2-1-2",
+                "label": "Local variables"
+              },
+              {
+                "id": "shell-2-1-3",
+                "label": "Command substitution"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "shell-3",
+        "title": "Reliable scripts",
+        "commands": [
+          {
+            "id": "shell-3-0",
+            "title": "Error handling",
+            "items": [
+              {
+                "id": "shell-3-0-0",
+                "label": "set -e"
+              },
+              {
+                "id": "shell-3-0-1",
+                "label": "set -u"
+              },
+              {
+                "id": "shell-3-0-2",
+                "label": "set -o pipefail"
+              },
+              {
+                "id": "shell-3-0-3",
+                "label": "trap"
+              },
+              {
+                "id": "shell-3-0-4",
+                "label": "Input validation"
+              }
+            ]
+          },
+          {
+            "id": "shell-3-1",
+            "title": "Practice checklist",
+            "items": [
+              {
+                "id": "shell-3-1-0",
+                "label": "Argument parsing with getopts"
+              },
+              {
+                "id": "shell-3-1-1",
+                "label": "Logging"
+              },
+              {
+                "id": "shell-3-1-2",
+                "label": "Idempotent scripts"
+              },
+              {
+                "id": "shell-3-1-3",
+                "label": "ShellCheck"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "git",
+    "title": "Git / GitHub",
+    "subtitle": "Track changes. Work together.",
+    "sections": [
+      {
+        "id": "git-0",
+        "title": "Local workflow",
+        "commands": [
+          {
+            "id": "git-0-0",
+            "title": "Repository",
+            "items": [
+              {
+                "id": "git-0-0-0",
+                "label": "git init"
+              },
+              {
+                "id": "git-0-0-1",
+                "label": "git clone"
+              },
+              {
+                "id": "git-0-0-2",
+                "label": "git config"
+              },
+              {
+                "id": "git-0-0-3",
+                "label": "git status"
+              }
+            ]
+          },
+          {
+            "id": "git-0-1",
+            "title": "Changes",
+            "items": [
+              {
+                "id": "git-0-1-0",
+                "label": "git add"
+              },
+              {
+                "id": "git-0-1-1",
+                "label": "git diff"
+              },
+              {
+                "id": "git-0-1-2",
+                "label": "git commit"
+              },
+              {
+                "id": "git-0-1-3",
+                "label": "git log"
+              },
+              {
+                "id": "git-0-1-4",
+                "label": "git show"
+              },
+              {
+                "id": "git-0-1-5",
+                "label": ".gitignore"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "git-1",
+        "title": "Branches & history",
+        "commands": [
+          {
+            "id": "git-1-0",
+            "title": "Branches",
+            "items": [
+              {
+                "id": "git-1-0-0",
+                "label": "git branch"
+              },
+              {
+                "id": "git-1-0-1",
+                "label": "git switch"
+              },
+              {
+                "id": "git-1-0-2",
+                "label": "git merge"
+              },
+              {
+                "id": "git-1-0-3",
+                "label": "Merge conflicts"
+              },
+              {
+                "id": "git-1-0-4",
+                "label": "git rebase"
+              }
+            ]
+          },
+          {
+            "id": "git-1-1",
+            "title": "Undo",
+            "items": [
+              {
+                "id": "git-1-1-0",
+                "label": "git restore"
+              },
+              {
+                "id": "git-1-1-1",
+                "label": "git reset"
+              },
+              {
+                "id": "git-1-1-2",
+                "label": "git revert"
+              },
+              {
+                "id": "git-1-1-3",
+                "label": "git stash"
+              },
+              {
+                "id": "git-1-1-4",
+                "label": "git cherry-pick"
+              },
+              {
+                "id": "git-1-1-5",
+                "label": "git tag"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "git-2",
+        "title": "GitHub collaboration",
+        "commands": [
+          {
+            "id": "git-2-0",
+            "title": "Remotes",
+            "items": [
+              {
+                "id": "git-2-0-0",
+                "label": "git remote"
+              },
+              {
+                "id": "git-2-0-1",
+                "label": "git fetch"
+              },
+              {
+                "id": "git-2-0-2",
+                "label": "git pull"
+              },
+              {
+                "id": "git-2-0-3",
+                "label": "git push"
+              }
+            ]
+          },
+          {
+            "id": "git-2-1",
+            "title": "Collaboration",
+            "items": [
+              {
+                "id": "git-2-1-0",
+                "label": "Forks"
+              },
+              {
+                "id": "git-2-1-1",
+                "label": "Pull requests"
+              },
+              {
+                "id": "git-2-1-2",
+                "label": "Code reviews"
+              },
+              {
+                "id": "git-2-1-3",
+                "label": "Branch protection"
+              },
+              {
+                "id": "git-2-1-4",
+                "label": "Issues"
+              },
+              {
+                "id": "git-2-1-5",
+                "label": "Releases"
+              },
+              {
+                "id": "git-2-1-6",
+                "label": "SSH authentication"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "docker",
+    "title": "Docker",
+    "subtitle": "Package once. Run consistently.",
+    "sections": [
+      {
+        "id": "docker-0",
+        "title": "Container essentials",
+        "commands": [
+          {
+            "id": "docker-0-0",
+            "title": "Lifecycle",
+            "items": [
+              {
+                "id": "docker-0-0-0",
+                "label": "docker run"
+              },
+              {
+                "id": "docker-0-0-1",
+                "label": "docker ps"
+              },
+              {
+                "id": "docker-0-0-2",
+                "label": "docker stop"
+              },
+              {
+                "id": "docker-0-0-3",
+                "label": "docker start"
+              },
+              {
+                "id": "docker-0-0-4",
+                "label": "docker rm"
+              },
+              {
+                "id": "docker-0-0-5",
+                "label": "docker exec"
+              },
+              {
+                "id": "docker-0-0-6",
+                "label": "docker logs"
+              },
+              {
+                "id": "docker-0-0-7",
+                "label": "docker inspect"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "docker-1",
+        "title": "Images & builds",
+        "commands": [
+          {
+            "id": "docker-1-0",
+            "title": "Dockerfile",
+            "items": [
+              {
+                "id": "docker-1-0-0",
+                "label": "FROM"
+              },
+              {
+                "id": "docker-1-0-1",
+                "label": "WORKDIR"
+              },
+              {
+                "id": "docker-1-0-2",
+                "label": "COPY"
+              },
+              {
+                "id": "docker-1-0-3",
+                "label": "RUN"
+              },
+              {
+                "id": "docker-1-0-4",
+                "label": "CMD / ENTRYPOINT"
+              },
+              {
+                "id": "docker-1-0-5",
+                "label": "ENV / ARG"
+              },
+              {
+                "id": "docker-1-0-6",
+                "label": "USER"
+              },
+              {
+                "id": "docker-1-0-7",
+                "label": ".dockerignore"
+              },
+              {
+                "id": "docker-1-0-8",
+                "label": "Multi-stage builds"
+              }
+            ]
+          },
+          {
+            "id": "docker-1-1",
+            "title": "Images",
+            "items": [
+              {
+                "id": "docker-1-1-0",
+                "label": "docker build"
+              },
+              {
+                "id": "docker-1-1-1",
+                "label": "docker images"
+              },
+              {
+                "id": "docker-1-1-2",
+                "label": "docker tag"
+              },
+              {
+                "id": "docker-1-1-3",
+                "label": "docker push"
+              },
+              {
+                "id": "docker-1-1-4",
+                "label": "docker pull"
+              },
+              {
+                "id": "docker-1-1-5",
+                "label": "Layer caching"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "docker-2",
+        "title": "Networking & storage",
+        "commands": [
+          {
+            "id": "docker-2-0",
+            "title": "Networks",
+            "items": [
+              {
+                "id": "docker-2-0-0",
+                "label": "Bridge networks"
+              },
+              {
+                "id": "docker-2-0-1",
+                "label": "Port publishing"
+              },
+              {
+                "id": "docker-2-0-2",
+                "label": "Container DNS"
+              },
+              {
+                "id": "docker-2-0-3",
+                "label": "docker network"
+              }
+            ]
+          },
+          {
+            "id": "docker-2-1",
+            "title": "Storage",
+            "items": [
+              {
+                "id": "docker-2-1-0",
+                "label": "Named volumes"
+              },
+              {
+                "id": "docker-2-1-1",
+                "label": "Bind mounts"
+              },
+              {
+                "id": "docker-2-1-2",
+                "label": "docker volume"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "docker-3",
+        "title": "Compose & operations",
+        "commands": [
+          {
+            "id": "docker-3-0",
+            "title": "Compose",
+            "items": [
+              {
+                "id": "docker-3-0-0",
+                "label": "Services"
+              },
+              {
+                "id": "docker-3-0-1",
+                "label": "Networks"
+              },
+              {
+                "id": "docker-3-0-2",
+                "label": "Volumes"
+              },
+              {
+                "id": "docker-3-0-3",
+                "label": "Environment variables"
+              },
+              {
+                "id": "docker-3-0-4",
+                "label": "Health checks"
+              },
+              {
+                "id": "docker-3-0-5",
+                "label": "Dependencies"
+              },
+              {
+                "id": "docker-3-0-6",
+                "label": "docker compose up"
+              },
+              {
+                "id": "docker-3-0-7",
+                "label": "docker compose down"
+              },
+              {
+                "id": "docker-3-0-8",
+                "label": "docker compose logs"
+              }
+            ]
+          },
+          {
+            "id": "docker-3-1",
+            "title": "Operations",
+            "items": [
+              {
+                "id": "docker-3-1-0",
+                "label": "Resource limits"
+              },
+              {
+                "id": "docker-3-1-1",
+                "label": "Non-root containers"
+              },
+              {
+                "id": "docker-3-1-2",
+                "label": "Image scanning"
+              },
+              {
+                "id": "docker-3-1-3",
+                "label": "Restart policies"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "kubernetes",
+    "title": "Kubernetes",
+    "subtitle": "Run and manage container workloads.",
+    "sections": [
+      {
+        "id": "kubernetes-0",
+        "title": "Cluster fundamentals",
+        "commands": [
+          {
+            "id": "kubernetes-0-0",
+            "title": "Architecture",
+            "items": [
+              {
+                "id": "kubernetes-0-0-0",
+                "label": "Control plane"
+              },
+              {
+                "id": "kubernetes-0-0-1",
+                "label": "Worker nodes"
+              },
+              {
+                "id": "kubernetes-0-0-2",
+                "label": "API server"
+              },
+              {
+                "id": "kubernetes-0-0-3",
+                "label": "etcd"
+              },
+              {
+                "id": "kubernetes-0-0-4",
+                "label": "Scheduler"
+              },
+              {
+                "id": "kubernetes-0-0-5",
+                "label": "kubelet"
+              }
+            ]
+          },
+          {
+            "id": "kubernetes-0-1",
+            "title": "kubectl",
+            "items": [
+              {
+                "id": "kubernetes-0-1-0",
+                "label": "kubectl get"
+              },
+              {
+                "id": "kubernetes-0-1-1",
+                "label": "kubectl describe"
+              },
+              {
+                "id": "kubernetes-0-1-2",
+                "label": "kubectl apply"
+              },
+              {
+                "id": "kubernetes-0-1-3",
+                "label": "kubectl delete"
+              },
+              {
+                "id": "kubernetes-0-1-4",
+                "label": "kubectl logs"
+              },
+              {
+                "id": "kubernetes-0-1-5",
+                "label": "kubectl exec"
+              },
+              {
+                "id": "kubernetes-0-1-6",
+                "label": "Namespaces"
+              },
+              {
+                "id": "kubernetes-0-1-7",
+                "label": "Contexts"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "kubernetes-1",
+        "title": "Workloads",
+        "commands": [
+          {
+            "id": "kubernetes-1-0",
+            "title": "Applications",
+            "items": [
+              {
+                "id": "kubernetes-1-0-0",
+                "label": "Pods"
+              },
+              {
+                "id": "kubernetes-1-0-1",
+                "label": "Deployments"
+              },
+              {
+                "id": "kubernetes-1-0-2",
+                "label": "ReplicaSets"
+              },
+              {
+                "id": "kubernetes-1-0-3",
+                "label": "StatefulSets"
+              },
+              {
+                "id": "kubernetes-1-0-4",
+                "label": "DaemonSets"
+              },
+              {
+                "id": "kubernetes-1-0-5",
+                "label": "Jobs"
+              },
+              {
+                "id": "kubernetes-1-0-6",
+                "label": "CronJobs"
+              }
+            ]
+          },
+          {
+            "id": "kubernetes-1-1",
+            "title": "Lifecycle",
+            "items": [
+              {
+                "id": "kubernetes-1-1-0",
+                "label": "Rolling updates"
+              },
+              {
+                "id": "kubernetes-1-1-1",
+                "label": "Rollbacks"
+              },
+              {
+                "id": "kubernetes-1-1-2",
+                "label": "Readiness probes"
+              },
+              {
+                "id": "kubernetes-1-1-3",
+                "label": "Liveness probes"
+              },
+              {
+                "id": "kubernetes-1-1-4",
+                "label": "Startup probes"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "kubernetes-2",
+        "title": "Networking & configuration",
+        "commands": [
+          {
+            "id": "kubernetes-2-0",
+            "title": "Networking",
+            "items": [
+              {
+                "id": "kubernetes-2-0-0",
+                "label": "ClusterIP"
+              },
+              {
+                "id": "kubernetes-2-0-1",
+                "label": "NodePort"
+              },
+              {
+                "id": "kubernetes-2-0-2",
+                "label": "LoadBalancer"
+              },
+              {
+                "id": "kubernetes-2-0-3",
+                "label": "Ingress"
+              },
+              {
+                "id": "kubernetes-2-0-4",
+                "label": "Service discovery"
+              },
+              {
+                "id": "kubernetes-2-0-5",
+                "label": "Network policies"
+              }
+            ]
+          },
+          {
+            "id": "kubernetes-2-1",
+            "title": "Configuration",
+            "items": [
+              {
+                "id": "kubernetes-2-1-0",
+                "label": "ConfigMaps"
+              },
+              {
+                "id": "kubernetes-2-1-1",
+                "label": "Secrets"
+              },
+              {
+                "id": "kubernetes-2-1-2",
+                "label": "Environment injection"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "kubernetes-3",
+        "title": "Storage & operations",
+        "commands": [
+          {
+            "id": "kubernetes-3-0",
+            "title": "Storage",
+            "items": [
+              {
+                "id": "kubernetes-3-0-0",
+                "label": "PersistentVolumes"
+              },
+              {
+                "id": "kubernetes-3-0-1",
+                "label": "PersistentVolumeClaims"
+              },
+              {
+                "id": "kubernetes-3-0-2",
+                "label": "StorageClasses"
+              }
+            ]
+          },
+          {
+            "id": "kubernetes-3-1",
+            "title": "Operations",
+            "items": [
+              {
+                "id": "kubernetes-3-1-0",
+                "label": "Requests & limits"
+              },
+              {
+                "id": "kubernetes-3-1-1",
+                "label": "Horizontal Pod Autoscaler"
+              },
+              {
+                "id": "kubernetes-3-1-2",
+                "label": "Service accounts"
+              },
+              {
+                "id": "kubernetes-3-1-3",
+                "label": "RBAC"
+              },
+              {
+                "id": "kubernetes-3-1-4",
+                "label": "Helm charts"
+              },
+              {
+                "id": "kubernetes-3-1-5",
+                "label": "Helm values"
+              },
+              {
+                "id": "kubernetes-3-1-6",
+                "label": "Troubleshooting"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "cicd",
+    "title": "CI / CD",
+    "subtitle": "Turn a change into a reliable release.",
+    "sections": [
+      {
+        "id": "cicd-0",
+        "title": "Pipeline fundamentals",
+        "commands": [
+          {
+            "id": "cicd-0-0",
+            "title": "Workflow",
+            "items": [
+              {
+                "id": "cicd-0-0-0",
+                "label": "Continuous integration"
+              },
+              {
+                "id": "cicd-0-0-1",
+                "label": "Continuous delivery"
+              },
+              {
+                "id": "cicd-0-0-2",
+                "label": "Continuous deployment"
+              },
+              {
+                "id": "cicd-0-0-3",
+                "label": "Pipeline stages"
+              },
+              {
+                "id": "cicd-0-0-4",
+                "label": "Build triggers"
+              },
+              {
+                "id": "cicd-0-0-5",
+                "label": "Artifacts"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "cicd-1",
+        "title": "Quality & security",
+        "commands": [
+          {
+            "id": "cicd-1-0",
+            "title": "Checks",
+            "items": [
+              {
+                "id": "cicd-1-0-0",
+                "label": "Linting"
+              },
+              {
+                "id": "cicd-1-0-1",
+                "label": "Unit tests"
+              },
+              {
+                "id": "cicd-1-0-2",
+                "label": "Integration tests"
+              },
+              {
+                "id": "cicd-1-0-3",
+                "label": "Dependency scanning"
+              },
+              {
+                "id": "cicd-1-0-4",
+                "label": "Image scanning"
+              },
+              {
+                "id": "cicd-1-0-5",
+                "label": "Secret management"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "cicd-2",
+        "title": "Delivery strategies",
+        "commands": [
+          {
+            "id": "cicd-2-0",
+            "title": "Releases",
+            "items": [
+              {
+                "id": "cicd-2-0-0",
+                "label": "Environment promotion"
+              },
+              {
+                "id": "cicd-2-0-1",
+                "label": "Approval gates"
+              },
+              {
+                "id": "cicd-2-0-2",
+                "label": "Rolling deployment"
+              },
+              {
+                "id": "cicd-2-0-3",
+                "label": "Blue-green deployment"
+              },
+              {
+                "id": "cicd-2-0-4",
+                "label": "Canary deployment"
+              },
+              {
+                "id": "cicd-2-0-5",
+                "label": "Rollback strategy"
+              },
+              {
+                "id": "cicd-2-0-6",
+                "label": "Versioning"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "jenkins",
+    "title": "Jenkins",
+    "subtitle": "Build pipelines as code.",
+    "sections": [
+      {
+        "id": "jenkins-0",
+        "title": "Jenkins essentials",
+        "commands": [
+          {
+            "id": "jenkins-0-0",
+            "title": "Setup",
+            "items": [
+              {
+                "id": "jenkins-0-0-0",
+                "label": "Controller & agents"
+              },
+              {
+                "id": "jenkins-0-0-1",
+                "label": "Plugins"
+              },
+              {
+                "id": "jenkins-0-0-2",
+                "label": "Credentials"
+              },
+              {
+                "id": "jenkins-0-0-3",
+                "label": "Tools"
+              },
+              {
+                "id": "jenkins-0-0-4",
+                "label": "Jobs"
+              },
+              {
+                "id": "jenkins-0-0-5",
+                "label": "Webhooks"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "jenkins-1",
+        "title": "Pipeline as code",
+        "commands": [
+          {
+            "id": "jenkins-1-0",
+            "title": "Jenkinsfile",
+            "items": [
+              {
+                "id": "jenkins-1-0-0",
+                "label": "Declarative pipeline"
+              },
+              {
+                "id": "jenkins-1-0-1",
+                "label": "agent"
+              },
+              {
+                "id": "jenkins-1-0-2",
+                "label": "stages / steps"
+              },
+              {
+                "id": "jenkins-1-0-3",
+                "label": "environment"
+              },
+              {
+                "id": "jenkins-1-0-4",
+                "label": "parameters"
+              },
+              {
+                "id": "jenkins-1-0-5",
+                "label": "when"
+              },
+              {
+                "id": "jenkins-1-0-6",
+                "label": "post"
+              }
+            ]
+          },
+          {
+            "id": "jenkins-1-1",
+            "title": "Execution",
+            "items": [
+              {
+                "id": "jenkins-1-1-0",
+                "label": "checkout"
+              },
+              {
+                "id": "jenkins-1-1-1",
+                "label": "sh"
+              },
+              {
+                "id": "jenkins-1-1-2",
+                "label": "withCredentials"
+              },
+              {
+                "id": "jenkins-1-1-3",
+                "label": "archiveArtifacts"
+              },
+              {
+                "id": "jenkins-1-1-4",
+                "label": "junit"
+              },
+              {
+                "id": "jenkins-1-1-5",
+                "label": "Parallel stages"
+              },
+              {
+                "id": "jenkins-1-1-6",
+                "label": "Shared libraries"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "jenkins-2",
+        "title": "Delivery & maintenance",
+        "commands": [
+          {
+            "id": "jenkins-2-0",
+            "title": "Operations",
+            "items": [
+              {
+                "id": "jenkins-2-0-0",
+                "label": "Docker agents"
+              },
+              {
+                "id": "jenkins-2-0-1",
+                "label": "Multibranch pipelines"
+              },
+              {
+                "id": "jenkins-2-0-2",
+                "label": "Build retention"
+              },
+              {
+                "id": "jenkins-2-0-3",
+                "label": "Role-based access"
+              },
+              {
+                "id": "jenkins-2-0-4",
+                "label": "Backup & restore"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "github-actions",
+    "title": "GitHub Actions",
+    "subtitle": "Automate inside your repository.",
+    "sections": [
+      {
+        "id": "github-actions-0",
+        "title": "Workflow essentials",
+        "commands": [
+          {
+            "id": "github-actions-0-0",
+            "title": "Workflow YAML",
+            "items": [
+              {
+                "id": "github-actions-0-0-0",
+                "label": "Workflow files"
+              },
+              {
+                "id": "github-actions-0-0-1",
+                "label": "on"
+              },
+              {
+                "id": "github-actions-0-0-2",
+                "label": "jobs"
+              },
+              {
+                "id": "github-actions-0-0-3",
+                "label": "runs-on"
+              },
+              {
+                "id": "github-actions-0-0-4",
+                "label": "steps"
+              },
+              {
+                "id": "github-actions-0-0-5",
+                "label": "uses"
+              },
+              {
+                "id": "github-actions-0-0-6",
+                "label": "run"
+              },
+              {
+                "id": "github-actions-0-0-7",
+                "label": "workflow_dispatch"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "github-actions-1",
+        "title": "Data & reuse",
+        "commands": [
+          {
+            "id": "github-actions-1-0",
+            "title": "Configuration",
+            "items": [
+              {
+                "id": "github-actions-1-0-0",
+                "label": "env"
+              },
+              {
+                "id": "github-actions-1-0-1",
+                "label": "vars"
+              },
+              {
+                "id": "github-actions-1-0-2",
+                "label": "secrets"
+              },
+              {
+                "id": "github-actions-1-0-3",
+                "label": "Contexts"
+              },
+              {
+                "id": "github-actions-1-0-4",
+                "label": "Expressions"
+              },
+              {
+                "id": "github-actions-1-0-5",
+                "label": "Job outputs"
+              }
+            ]
+          },
+          {
+            "id": "github-actions-1-1",
+            "title": "Efficiency",
+            "items": [
+              {
+                "id": "github-actions-1-1-0",
+                "label": "Matrix builds"
+              },
+              {
+                "id": "github-actions-1-1-1",
+                "label": "Dependency caching"
+              },
+              {
+                "id": "github-actions-1-1-2",
+                "label": "Upload artifacts"
+              },
+              {
+                "id": "github-actions-1-1-3",
+                "label": "Download artifacts"
+              },
+              {
+                "id": "github-actions-1-1-4",
+                "label": "Reusable workflows"
+              },
+              {
+                "id": "github-actions-1-1-5",
+                "label": "Composite actions"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "github-actions-2",
+        "title": "Deploy & secure",
+        "commands": [
+          {
+            "id": "github-actions-2-0",
+            "title": "Delivery",
+            "items": [
+              {
+                "id": "github-actions-2-0-0",
+                "label": "Environments"
+              },
+              {
+                "id": "github-actions-2-0-1",
+                "label": "Required approvals"
+              },
+              {
+                "id": "github-actions-2-0-2",
+                "label": "Concurrency"
+              },
+              {
+                "id": "github-actions-2-0-3",
+                "label": "OIDC authentication"
+              },
+              {
+                "id": "github-actions-2-0-4",
+                "label": "Token permissions"
+              },
+              {
+                "id": "github-actions-2-0-5",
+                "label": "Pin action versions"
+              },
+              {
+                "id": "github-actions-2-0-6",
+                "label": "Self-hosted runners"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "gitops",
+    "title": "GitOps",
+    "subtitle": "Keep Git and your environments in sync.",
+    "sections": [
+      {
+        "id": "gitops-0",
+        "title": "GitOps foundations",
+        "commands": [
+          {
+            "id": "gitops-0-0",
+            "title": "Principles",
+            "items": [
+              {
+                "id": "gitops-0-0-0",
+                "label": "Declarative configuration"
+              },
+              {
+                "id": "gitops-0-0-1",
+                "label": "Versioned & immutable state"
+              },
+              {
+                "id": "gitops-0-0-2",
+                "label": "Automatically pulled changes"
+              },
+              {
+                "id": "gitops-0-0-3",
+                "label": "Continuous reconciliation"
+              }
+            ]
+          },
+          {
+            "id": "gitops-0-1",
+            "title": "Core concepts",
+            "items": [
+              {
+                "id": "gitops-0-1-0",
+                "label": "Desired state"
+              },
+              {
+                "id": "gitops-0-1-1",
+                "label": "Live state"
+              },
+              {
+                "id": "gitops-0-1-2",
+                "label": "Configuration drift"
+              },
+              {
+                "id": "gitops-0-1-3",
+                "label": "Reconciliation loop"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "gitops-1",
+        "title": "Repository & environment design",
+        "commands": [
+          {
+            "id": "gitops-1-0",
+            "title": "Repositories",
+            "items": [
+              {
+                "id": "gitops-1-0-0",
+                "label": "Application code vs configuration"
+              },
+              {
+                "id": "gitops-1-0-1",
+                "label": "Monorepo vs multiple repositories"
+              },
+              {
+                "id": "gitops-1-0-2",
+                "label": "Directory structure"
+              },
+              {
+                "id": "gitops-1-0-3",
+                "label": "Protected branches"
+              }
+            ]
+          },
+          {
+            "id": "gitops-1-1",
+            "title": "Environments",
+            "items": [
+              {
+                "id": "gitops-1-1-0",
+                "label": "Environment overlays"
+              },
+              {
+                "id": "gitops-1-1-1",
+                "label": "Kustomize bases & overlays"
+              },
+              {
+                "id": "gitops-1-1-2",
+                "label": "Helm values per environment"
+              },
+              {
+                "id": "gitops-1-1-3",
+                "label": "Image version pinning"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "gitops-2",
+        "title": "Change & promotion workflow",
+        "commands": [
+          {
+            "id": "gitops-2-0",
+            "title": "Delivery",
+            "items": [
+              {
+                "id": "gitops-2-0-0",
+                "label": "Pull-request review"
+              },
+              {
+                "id": "gitops-2-0-1",
+                "label": "Manifest validation"
+              },
+              {
+                "id": "gitops-2-0-2",
+                "label": "CI image builds"
+              },
+              {
+                "id": "gitops-2-0-3",
+                "label": "Image tag updates"
+              },
+              {
+                "id": "gitops-2-0-4",
+                "label": "Environment promotion"
+              }
+            ]
+          },
+          {
+            "id": "gitops-2-1",
+            "title": "Recovery & security",
+            "items": [
+              {
+                "id": "gitops-2-1-0",
+                "label": "Git revert rollback"
+              },
+              {
+                "id": "gitops-2-1-1",
+                "label": "Drift correction"
+              },
+              {
+                "id": "gitops-2-1-2",
+                "label": "Secret encryption"
+              },
+              {
+                "id": "gitops-2-1-3",
+                "label": "External secret references"
+              },
+              {
+                "id": "gitops-2-1-4",
+                "label": "Least-privilege access"
+              },
+              {
+                "id": "gitops-2-1-5",
+                "label": "Audit history"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "argocd",
+    "title": "Argo CD",
+    "subtitle": "Deliver Kubernetes changes from Git.",
+    "sections": [
+      {
+        "id": "argocd-0",
+        "title": "Setup & architecture",
+        "commands": [
+          {
+            "id": "argocd-0-0",
+            "title": "Components",
+            "items": [
+              {
+                "id": "argocd-0-0-0",
+                "label": "API server"
+              },
+              {
+                "id": "argocd-0-0-1",
+                "label": "Repository server"
+              },
+              {
+                "id": "argocd-0-0-2",
+                "label": "Application controller"
+              },
+              {
+                "id": "argocd-0-0-3",
+                "label": "ApplicationSet controller"
+              }
+            ]
+          },
+          {
+            "id": "argocd-0-1",
+            "title": "Connect",
+            "items": [
+              {
+                "id": "argocd-0-1-0",
+                "label": "argocd login"
+              },
+              {
+                "id": "argocd-0-1-1",
+                "label": "argocd repo add"
+              },
+              {
+                "id": "argocd-0-1-2",
+                "label": "argocd repo list"
+              },
+              {
+                "id": "argocd-0-1-3",
+                "label": "argocd cluster add"
+              },
+              {
+                "id": "argocd-0-1-4",
+                "label": "argocd cluster list"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "argocd-1",
+        "title": "Applications & projects",
+        "commands": [
+          {
+            "id": "argocd-1-0",
+            "title": "Application specification",
+            "items": [
+              {
+                "id": "argocd-1-0-0",
+                "label": "Application resource"
+              },
+              {
+                "id": "argocd-1-0-1",
+                "label": "Source repository"
+              },
+              {
+                "id": "argocd-1-0-2",
+                "label": "Target revision"
+              },
+              {
+                "id": "argocd-1-0-3",
+                "label": "Manifest path"
+              },
+              {
+                "id": "argocd-1-0-4",
+                "label": "Destination cluster"
+              },
+              {
+                "id": "argocd-1-0-5",
+                "label": "Destination namespace"
+              },
+              {
+                "id": "argocd-1-0-6",
+                "label": "Helm sources"
+              },
+              {
+                "id": "argocd-1-0-7",
+                "label": "Kustomize sources"
+              }
+            ]
+          },
+          {
+            "id": "argocd-1-1",
+            "title": "Projects",
+            "items": [
+              {
+                "id": "argocd-1-1-0",
+                "label": "AppProject"
+              },
+              {
+                "id": "argocd-1-1-1",
+                "label": "Allowed repositories"
+              },
+              {
+                "id": "argocd-1-1-2",
+                "label": "Allowed destinations"
+              },
+              {
+                "id": "argocd-1-1-3",
+                "label": "Resource allowlists"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "argocd-2",
+        "title": "Sync & health",
+        "commands": [
+          {
+            "id": "argocd-2-0",
+            "title": "Application commands",
+            "items": [
+              {
+                "id": "argocd-2-0-0",
+                "label": "argocd app create"
+              },
+              {
+                "id": "argocd-2-0-1",
+                "label": "argocd app list"
+              },
+              {
+                "id": "argocd-2-0-2",
+                "label": "argocd app get"
+              },
+              {
+                "id": "argocd-2-0-3",
+                "label": "argocd app diff"
+              },
+              {
+                "id": "argocd-2-0-4",
+                "label": "argocd app sync"
+              },
+              {
+                "id": "argocd-2-0-5",
+                "label": "argocd app wait"
+              },
+              {
+                "id": "argocd-2-0-6",
+                "label": "argocd app history"
+              }
+            ]
+          },
+          {
+            "id": "argocd-2-1",
+            "title": "Sync policy",
+            "items": [
+              {
+                "id": "argocd-2-1-0",
+                "label": "Manual sync"
+              },
+              {
+                "id": "argocd-2-1-1",
+                "label": "Automated sync"
+              },
+              {
+                "id": "argocd-2-1-2",
+                "label": "Self-heal"
+              },
+              {
+                "id": "argocd-2-1-3",
+                "label": "Auto-prune"
+              },
+              {
+                "id": "argocd-2-1-4",
+                "label": "Sync windows"
+              },
+              {
+                "id": "argocd-2-1-5",
+                "label": "Sync status"
+              },
+              {
+                "id": "argocd-2-1-6",
+                "label": "Resource health"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "argocd-3",
+        "title": "Delivery & operations",
+        "commands": [
+          {
+            "id": "argocd-3-0",
+            "title": "Orchestration",
+            "items": [
+              {
+                "id": "argocd-3-0-0",
+                "label": "Sync phases"
+              },
+              {
+                "id": "argocd-3-0-1",
+                "label": "Sync hooks"
+              },
+              {
+                "id": "argocd-3-0-2",
+                "label": "Sync waves"
+              },
+              {
+                "id": "argocd-3-0-3",
+                "label": "ApplicationSet generators"
+              },
+              {
+                "id": "argocd-3-0-4",
+                "label": "ApplicationSet templates"
+              }
+            ]
+          },
+          {
+            "id": "argocd-3-1",
+            "title": "Operations",
+            "items": [
+              {
+                "id": "argocd-3-1-0",
+                "label": "RBAC"
+              },
+              {
+                "id": "argocd-3-1-1",
+                "label": "SSO integration"
+              },
+              {
+                "id": "argocd-3-1-2",
+                "label": "Repository credentials"
+              },
+              {
+                "id": "argocd-3-1-3",
+                "label": "Notifications"
+              },
+              {
+                "id": "argocd-3-1-4",
+                "label": "Troubleshoot sync failures"
+              },
+              {
+                "id": "argocd-3-1-5",
+                "label": "Troubleshoot degraded health"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "terraform",
+    "title": "Terraform",
+    "subtitle": "Define and manage infrastructure as code.",
+    "sections": [
+      {
+        "id": "terraform-0",
+        "title": "Configuration essentials",
+        "commands": [
+          {
+            "id": "terraform-0-0",
+            "title": "HCL basics",
+            "items": [
+              {
+                "id": "terraform-0-0-0",
+                "label": "Blocks & arguments"
+              },
+              {
+                "id": "terraform-0-0-1",
+                "label": "Providers"
+              },
+              {
+                "id": "terraform-0-0-2",
+                "label": "Resources"
+              },
+              {
+                "id": "terraform-0-0-3",
+                "label": "Data sources"
+              },
+              {
+                "id": "terraform-0-0-4",
+                "label": "Input variables"
+              },
+              {
+                "id": "terraform-0-0-5",
+                "label": "Variable types"
+              },
+              {
+                "id": "terraform-0-0-6",
+                "label": "Local values"
+              },
+              {
+                "id": "terraform-0-0-7",
+                "label": "Outputs"
+              }
+            ]
+          },
+          {
+            "id": "terraform-0-1",
+            "title": "Expressions",
+            "items": [
+              {
+                "id": "terraform-0-1-0",
+                "label": "References"
+              },
+              {
+                "id": "terraform-0-1-1",
+                "label": "Functions"
+              },
+              {
+                "id": "terraform-0-1-2",
+                "label": "Conditionals"
+              },
+              {
+                "id": "terraform-0-1-3",
+                "label": "for expressions"
+              },
+              {
+                "id": "terraform-0-1-4",
+                "label": "count"
+              },
+              {
+                "id": "terraform-0-1-5",
+                "label": "for_each"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "terraform-1",
+        "title": "CLI workflow",
+        "commands": [
+          {
+            "id": "terraform-1-0",
+            "title": "Initialize & validate",
+            "items": [
+              {
+                "id": "terraform-1-0-0",
+                "label": "terraform init"
+              },
+              {
+                "id": "terraform-1-0-1",
+                "label": "terraform init -upgrade"
+              },
+              {
+                "id": "terraform-1-0-2",
+                "label": "terraform fmt"
+              },
+              {
+                "id": "terraform-1-0-3",
+                "label": "terraform fmt -check"
+              },
+              {
+                "id": "terraform-1-0-4",
+                "label": "terraform validate"
+              }
+            ]
+          },
+          {
+            "id": "terraform-1-1",
+            "title": "Plan & apply",
+            "items": [
+              {
+                "id": "terraform-1-1-0",
+                "label": "terraform plan"
+              },
+              {
+                "id": "terraform-1-1-1",
+                "label": "terraform plan -out"
+              },
+              {
+                "id": "terraform-1-1-2",
+                "label": "terraform apply"
+              },
+              {
+                "id": "terraform-1-1-3",
+                "label": "terraform apply saved-plan"
+              },
+              {
+                "id": "terraform-1-1-4",
+                "label": "terraform plan -destroy"
+              },
+              {
+                "id": "terraform-1-1-5",
+                "label": "terraform destroy"
+              },
+              {
+                "id": "terraform-1-1-6",
+                "label": "terraform output"
+              },
+              {
+                "id": "terraform-1-1-7",
+                "label": "terraform show"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "terraform-2",
+        "title": "State & backends",
+        "commands": [
+          {
+            "id": "terraform-2-0",
+            "title": "State management",
+            "items": [
+              {
+                "id": "terraform-2-0-0",
+                "label": "State files"
+              },
+              {
+                "id": "terraform-2-0-1",
+                "label": "Resource addresses"
+              },
+              {
+                "id": "terraform-2-0-2",
+                "label": "terraform state list"
+              },
+              {
+                "id": "terraform-2-0-3",
+                "label": "terraform state show"
+              },
+              {
+                "id": "terraform-2-0-4",
+                "label": "terraform state mv"
+              },
+              {
+                "id": "terraform-2-0-5",
+                "label": "terraform state rm"
+              },
+              {
+                "id": "terraform-2-0-6",
+                "label": "terraform import"
+              },
+              {
+                "id": "terraform-2-0-7",
+                "label": "import blocks"
+              },
+              {
+                "id": "terraform-2-0-8",
+                "label": "moved blocks"
+              }
+            ]
+          },
+          {
+            "id": "terraform-2-1",
+            "title": "Backends",
+            "items": [
+              {
+                "id": "terraform-2-1-0",
+                "label": "Local backend"
+              },
+              {
+                "id": "terraform-2-1-1",
+                "label": "Remote backend"
+              },
+              {
+                "id": "terraform-2-1-2",
+                "label": "State locking"
+              },
+              {
+                "id": "terraform-2-1-3",
+                "label": "State encryption"
+              },
+              {
+                "id": "terraform-2-1-4",
+                "label": "Backend migration"
+              },
+              {
+                "id": "terraform-2-1-5",
+                "label": "State access control"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "terraform-3",
+        "title": "Modules & environments",
+        "commands": [
+          {
+            "id": "terraform-3-0",
+            "title": "Modules",
+            "items": [
+              {
+                "id": "terraform-3-0-0",
+                "label": "Root module"
+              },
+              {
+                "id": "terraform-3-0-1",
+                "label": "Child modules"
+              },
+              {
+                "id": "terraform-3-0-2",
+                "label": "Module inputs"
+              },
+              {
+                "id": "terraform-3-0-3",
+                "label": "Module outputs"
+              },
+              {
+                "id": "terraform-3-0-4",
+                "label": "Module sources"
+              },
+              {
+                "id": "terraform-3-0-5",
+                "label": "Module version pinning"
+              }
+            ]
+          },
+          {
+            "id": "terraform-3-1",
+            "title": "Environments",
+            "items": [
+              {
+                "id": "terraform-3-1-0",
+                "label": "tfvars files"
+              },
+              {
+                "id": "terraform-3-1-1",
+                "label": "TF_VAR variables"
+              },
+              {
+                "id": "terraform-3-1-2",
+                "label": "terraform workspace list"
+              },
+              {
+                "id": "terraform-3-1-3",
+                "label": "terraform workspace new"
+              },
+              {
+                "id": "terraform-3-1-4",
+                "label": "terraform workspace select"
+              },
+              {
+                "id": "terraform-3-1-5",
+                "label": "Separate environment state"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "terraform-4",
+        "title": "Reliable infrastructure",
+        "commands": [
+          {
+            "id": "terraform-4-0",
+            "title": "Lifecycle",
+            "items": [
+              {
+                "id": "terraform-4-0-0",
+                "label": "Implicit dependencies"
+              },
+              {
+                "id": "terraform-4-0-1",
+                "label": "depends_on"
+              },
+              {
+                "id": "terraform-4-0-2",
+                "label": "create_before_destroy"
+              },
+              {
+                "id": "terraform-4-0-3",
+                "label": "prevent_destroy"
+              },
+              {
+                "id": "terraform-4-0-4",
+                "label": "ignore_changes"
+              }
+            ]
+          },
+          {
+            "id": "terraform-4-1",
+            "title": "Team workflow",
+            "items": [
+              {
+                "id": "terraform-4-1-0",
+                "label": "Provider version constraints"
+              },
+              {
+                "id": "terraform-4-1-1",
+                "label": "Dependency lock file"
+              },
+              {
+                "id": "terraform-4-1-2",
+                "label": "Sensitive variables"
+              },
+              {
+                "id": "terraform-4-1-3",
+                "label": "Drift detection"
+              },
+              {
+                "id": "terraform-4-1-4",
+                "label": "Plan review"
+              },
+              {
+                "id": "terraform-4-1-5",
+                "label": "CI validation"
+              },
+              {
+                "id": "terraform-4-1-6",
+                "label": "terraform test"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

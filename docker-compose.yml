@@ -1,0 +1,55 @@
+name: onlydevops
+services:
+  web:
+    build: ./frontend
+    ports:
+      - "${APP_PORT:-8080}:8080"
+    depends_on:
+      api:
+        condition: service_healthy
+    networks: [frontend]
+    restart: unless-stopped
+    security_opt: ["no-new-privileges:true"]
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1:8080/"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  api:
+    build: ./backend
+    environment:
+      DATABASE_URL: postgresql://onlydevops:${POSTGRES_PASSWORD:-onlydevops_local}@db:5432/onlydevops
+      COOKIE_SECURE: ${COOKIE_SECURE:-false}
+    depends_on:
+      db:
+        condition: service_healthy
+    networks: [frontend, backend]
+    restart: unless-stopped
+    security_opt: ["no-new-privileges:true"]
+    read_only: true
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: onlydevops
+      POSTGRES_USER: onlydevops
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-onlydevops_local}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks: [backend]
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U onlydevops -d onlydevops"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+volumes:
+  postgres_data:
+networks:
+  frontend:
+  backend:
+    internal: true

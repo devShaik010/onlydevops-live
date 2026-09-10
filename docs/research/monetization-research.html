@@ -1,0 +1,513 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>OnlyDevOps Paid Product Strategy</title><style>
+:root{color-scheme:light;--ink:#191919;--muted:#606060;--rule:#dedede}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#fff;color:var(--ink);font:17px/1.65 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.layout{display:grid;grid-template-columns:250px minmax(0,960px);gap:56px;max-width:1360px;margin:auto;padding:48px 32px 96px}
+nav{position:sticky;top:28px;align-self:start;font-size:13px;line-height:1.5;max-height:90vh;overflow:auto;border-right:1px solid var(--rule);padding-right:24px}
+nav strong{display:block;margin-bottom:18px}nav ul{list-style:none;margin:0;padding:0}nav li{margin:0 0 11px}nav>div>ul>li>a{display:none}nav ul ul ul{display:none}nav a{color:var(--muted);text-decoration:none}nav a:hover{color:#000;text-decoration:underline}
+main{min-width:0}h1{font-size:42px;line-height:1.13;letter-spacing:-1.5px;font-weight:650;margin:0 0 38px;max-width:780px}h2{font-size:27px;line-height:1.25;letter-spacing:-.5px;margin:58px 0 20px;padding-top:23px;border-top:1px solid var(--rule);scroll-margin-top:20px}h3{font-size:20px;line-height:1.35;margin:32px 0 14px}p{margin:0 0 19px}a{color:#254b69;text-underline-offset:3px;overflow-wrap:anywhere}strong{font-weight:650}code{font-size:.87em;overflow-wrap:anywhere;background:#f4f4f4;padding:1px 4px}
+.table-wrap{overflow:auto;margin:26px 0 30px}table{width:100%;border-collapse:collapse;font-size:13px;line-height:1.5;min-width:670px}th{text-align:left;font-weight:650;background:#eeeeee}td,th{padding:12px 13px;vertical-align:top;border-bottom:1px solid var(--rule)}tr:nth-child(even) td{background:#fafafa}td:first-child{font-weight:550}ol{padding-left:24px}li{margin-bottom:13px}#sources~ol{font-size:13px;line-height:1.6}.print{font:inherit;font-size:13px;background:white;border:1px solid #aaa;padding:8px 12px;margin-top:18px;cursor:pointer}
+@media(max-width:1000px){.layout{grid-template-columns:1fr;max-width:880px;padding:30px 24px 70px}nav{display:none}h1{font-size:37px}}
+@media(max-width:550px){body{font-size:16px}.layout{padding:25px 18px 60px;gap:0}h1{font-size:32px}h2{font-size:24px}}
+@media print{@page{size:A4;margin:18mm 16mm}body{font-size:10pt;line-height:1.5}.layout{display:block;padding:0;max-width:none}nav{display:none}h1{font-size:26pt}h2{font-size:17pt;margin-top:24pt;break-after:avoid}h3{font-size:12pt;break-after:avoid}table{min-width:0;font-size:8pt}td,th{padding:6pt}tr{break-inside:avoid}thead{display:table-header-group}p{orphans:3;widows:3}.table-wrap{overflow:visible}a{color:inherit}}
+</style></head><body><div class="layout"><nav aria-label="Report contents"><strong>Report contents</strong><div class="toc">
+<ul>
+<li><a href="#onlydevops-paid-product-strategy">OnlyDevOps Paid Product Strategy</a><ul>
+<li><a href="#recommendation">Recommendation</a></li>
+<li><a href="#1-scope-and-evidence">1. Scope and evidence</a></li>
+<li><a href="#2-market-evidence-and-competitive-pressure">2. Market evidence and competitive pressure</a></li>
+<li><a href="#3-ranked-feature-opportunities">3. Ranked feature opportunities</a><ul>
+<li><a href="#troubleshooting-and-broken-pr-challenges">Troubleshooting and broken-PR challenges</a></li>
+<li><a href="#projects-with-evidence">Projects with evidence</a></li>
+<li><a href="#interview-practice-that-uses-the-learners-work">Interview practice that uses the learner&rsquo;s work</a></li>
+<li><a href="#revision-and-job-alignment">Revision and job alignment</a></li>
+<li><a href="#services-and-later-products">Services and later products</a></li>
+</ul>
+</li>
+<li><a href="#4-the-recommended-first-paid-offer">4. The recommended first paid offer</a><ul>
+<li><a href="#a-concrete-sample-experience">A concrete sample experience</a></li>
+</ul>
+</li>
+<li><a href="#5-payment-provider-decision">5. Payment-provider decision</a><ul>
+<li><a href="#india-first-sales">India-first sales</a></li>
+<li><a href="#international-first-software-subscription">International-first software subscription</a></li>
+<li><a href="#alternatives-and-limitations">Alternatives and limitations</a></li>
+</ul>
+</li>
+<li><a href="#6-can-7-work-economically">6. Can $7 work economically?</a><ul>
+<li><a href="#payment-deductions">Payment deductions</a></li>
+<li><a href="#contribution-per-monthly-subscriber">Contribution per monthly subscriber</a></li>
+</ul>
+</li>
+<li><a href="#7-production-architecture-and-release-requirements">7. Production architecture and release requirements</a><ul>
+<li><a href="#accounts-and-learner-records">Accounts and learner records</a></li>
+<li><a href="#billing-and-access">Billing and access</a></li>
+<li><a href="#assessment-execution">Assessment execution</a></li>
+<li><a href="#operations-and-launch-gate">Operations and launch gate</a></li>
+</ul>
+</li>
+<li><a href="#8-content-quality-and-defensibility">8. Content quality and defensibility</a></li>
+<li><a href="#9-validation-and-launch-sequence">9. Validation and launch sequence</a></li>
+<li><a href="#10-ideas-to-defer">10. Ideas to defer</a></li>
+<li><a href="#11-decision-and-remaining-uncertainties">11. Decision and remaining uncertainties</a></li>
+<li><a href="#sources">Sources</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<button class="print" onclick="window.print()">Print / Save as PDF</button></nav><main><h1 id="onlydevops-paid-product-strategy">OnlyDevOps Paid Product Strategy</h1>
+<h2 id="recommendation">Recommendation</h2>
+<p><strong>Build OnlyDevOps Practice: a focused subscription that connects the existing DevOps checklist to troubleshooting exercises, project evidence, and interview explanations. Test $7 per month as the initial international price.</strong> Keep the present roadmap, accounts, and saved checklist progress free. The paid value should be the structured practice and feedback that help someone use those skills.</p>
+<p>Start with early-career engineers and developers moving into DevOps who already know some Linux, Git, or Docker. A complete beginner may need a course before this product becomes useful. An experienced SRE will expect deeper systems problems and stronger lab infrastructure. Serving both immediately would dilute the first release.</p>
+<p>The strongest first feature is a <strong>DevOps troubleshooting and pull-request practice library</strong>. Learners investigate a broken deployment, examine realistic logs and configuration, submit a fix, and explain why it works. Link the result back to the exact skills on their sheet. Add a small project portfolio and targeted revision before adding large course libraries or hosted cloud labs.</p>
+<p>The $7 price is a hypothesis to validate. Existing competitors already sell substantial practice at nearby prices, and public evidence cannot establish that OnlyDevOps users will pay or remain subscribed. Launch a small paid offer, measure actual use and renewal, and expand the subscription only when there is enough content and a sustainable publishing cadence.</p>
+<h2 id="1-scope-and-evidence">1. Scope and evidence</h2>
+<p>This report treats OnlyDevOps as a product moving into production. The local directory still uses the historical name <code>onlydevops-poc</code>; that name does not define the recommended product scope. The current implementation has React, FastAPI, PostgreSQL, 452 tracked items across 11 topics, guest-to-account progress import, cross-device account progress, filters, and resume behavior. The reviewed files contain no payment or entitlement implementation. Password recovery, verified email, versioned migrations, and a documented backup system remain gaps in the current product documentation. These are observations of the local code and README, not a production infrastructure audit.</p>
+<p>The working commercial assumptions are an India-based business selling to Indian and international learners, a small delivery team, and a desired entry price near US$7. Business registration, customer geography, staffing, traffic, budget, and existing payment approvals have not been established. Payment recommendations are conditional on these facts.</p>
+<p>Prices and provider policies were checked on <strong>11 September 2026</strong>. Vendor pages are evidence of advertised offers, not audited revenue or proof of demand. Dynamic prices, promotions, taxes, and country-specific offers require confirmation before a buying or implementation decision. All OnlyDevOps package quantities, scores, cost assumptions, prices, and success thresholds below are proposals rather than existing capabilities or market benchmarks.</p>
+<h2 id="2-market-evidence-and-competitive-pressure">2. Market evidence and competitive pressure</h2>
+<p>The Linux Foundation&rsquo;s 2026 talent research draws on 400 global respondents surveyed in February 2026 and discusses gaps in security and operational readiness. It supports investigating practical cross-skill training. It does <strong>not</strong> measure Indian students&rsquo; willingness to pay $7, and it was produced within an ecosystem that includes training providers. Use it as directional employer evidence, not a market-size estimate. <a href="https://training.linuxfoundation.org/blog/just-released-2026-state-of-tech-talent-report/">Linux Foundation research summary</a> · <a href="https://www.linuxfoundation.org/research/open-source-jobs-report-2026?hsLang=en">Report overview</a></p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Product</th>
+<th>Verified offer or price signal</th>
+<th>Implication for OnlyDevOps</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SadServers</td>
+<td>Pro: <strong>$9/month or $72/year</strong>. Pro+: <strong>$11/month or $88/year</strong>. Troubleshooting scenarios, solutions, and progressively stronger access features.</td>
+<td>$7/month is close to a mature direct competitor; $72/year is only $6/month equivalent. A lower sticker price is insufficient differentiation. <a href="https://sadservers.com/pricing">Pricing</a></td>
+</tr>
+<tr>
+<td>iximiuz Labs</td>
+<td>Pricing page lists regular <strong>$20/month or $120/year</strong>, alongside a temporary Fair Pricing offer. Retrieved versions differed on the discount: do not treat a promotional minimum as stable.</td>
+<td>A small specialist can compete through content quality and technical depth. Annual equivalents and discounts make price-only positioning fragile. <a href="https://labs.iximiuz.com/pricing?open=plans">Pricing</a></td>
+</tr>
+<tr>
+<td>KodeKloud</td>
+<td>Standard, Pro, and AI plans combine courses and hands-on practice; higher plans add playgrounds, projects, and guidance. Exact regional prices were not reliably exposed in the retrieved page.</td>
+<td>Competing on catalogue size or a general AI tutor would be expensive. Its support page confirms regional and promotional price variation. <a href="https://kodekloud.com/pricing">Plans</a> · <a href="https://support.kodekloud.com/how-can-i-check-the-latest-kodekloud-pricing-and-available-discounts">Pricing explanation</a></td>
+</tr>
+<tr>
+<td>roadmap.sh</td>
+<td>Pro markets AI courses, quizzes, roadmaps, and coaching, with a $10/month marketing reference. The dynamic individual checkout amount was not reliably exposed; Teams explicitly shows <strong>$10/seat/month billed annually</strong>, minimum three seats.</td>
+<td>A tracker plus generic AI chat already has close substitutes. Do not assume the individual marketing reference means $10 charged monthly. <a href="https://roadmap.sh/premium">Premium</a></td>
+</tr>
+<tr>
+<td>killer.sh</td>
+<td>CKA, CKS, or CKAD: <strong>$39.99 for two simulator sessions</strong> per exam. Other simulators have different prices.</td>
+<td>Specific, time-bounded assessment can support a one-time purchase. This is not comparable to an unlimited monthly subscription. <a href="https://killer.sh/faq">FAQ</a></td>
+</tr>
+<tr>
+<td>Killercoda</td>
+<td>Free use of non-course scenarios, with paid features for longer sessions and additional capabilities. Its FAQ says external platforms cannot require a separate purchase to make a public scenario solvable. Current paid price was not verified.</td>
+<td>Free practice is substantial competition. It cannot simply become the hidden free backend of OnlyDevOps&rsquo;s paid exercises. <a href="https://killercoda.com/faq">FAQ</a></td>
+</tr>
+<tr>
+<td>Free project and interview resources</td>
+<td>The Cloud Resume Challenge&rsquo;s core steps are free. The DevOps Exercises repository contains public questions and exercises across many tools.</td>
+<td>Charge for an integrated practice experience, maintained assessment, and useful feedback—not merely a list of links or repackaged questions. <a href="https://cloudresumechallenge.dev/docs/faq/">Cloud Resume Challenge</a> · <a href="https://github.com/bregman-arie/devops-exercises">DevOps Exercises</a></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Commercial interpretation:</strong> the opportunity is narrower than “affordable DevOps education.” OnlyDevOps could make the journey from a checked skill to a working change and a clear explanation unusually convenient. None of the reviewed evidence establishes that this combination is unique. Its advantage must be demonstrated through product quality and learner results.</p>
+<p>A promising acquisition audience is a developer or support engineer saying: “I have watched the tutorials, but I cannot debug confidently or explain a project in an interview.” A secondary audience is a junior DevOps engineer practicing the problems encountered at work. College-wide training and employer assessments are later markets with different buying and support requirements.</p>
+<h2 id="3-ranked-feature-opportunities">3. Ranked feature opportunities</h2>
+<p>Scores are analytical judgments. Each dimension uses 1–5, where 5 is favorable. The priority score is 30% strength of the learner problem, 25% fit with the existing platform, 25% feasibility at $7, and 20% reason to return. It is not a forecast of conversion. “Feasibility” includes engineering, content maintenance, infrastructure, and support—not just coding time.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Rank</th>
+<th>Feature</th>
+<th>Problem / Fit / Feasibility / Return</th>
+<th>Score / 5</th>
+<th>Charging model and decision</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Troubleshooting and broken-PR challenges</td>
+<td>5 / 5 / 4 / 5</td>
+<td>4.75</td>
+<td>Main $7 Practice feature. Start with supplied logs/configuration and constrained answer checks.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Guided projects with evidence and explicit checks</td>
+<td>5 / 5 / 3 / 4</td>
+<td>4.30</td>
+<td>Include a small library; deeper project packs can later be $9–15 each.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Interview practice based on completed work</td>
+<td>5 / 4 / 4 / 4</td>
+<td>4.30</td>
+<td>Bundle structured text sessions. Human interviews are separately priced.</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Revision queue based on mistakes</td>
+<td>3 / 5 / 5 / 4</td>
+<td>4.20</td>
+<td>Subscription retention feature; weak reason to buy alone.</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Learning plan tied to a job description</td>
+<td>4 / 5 / 4 / 3</td>
+<td>4.05</td>
+<td>Later bundle feature. Start with an editable skill mapping and explicit gaps.</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Weekly incident series</td>
+<td>4 / 4 / 3 / 5</td>
+<td>3.95</td>
+<td>Publish inside the subscription once the editorial cadence is proven.</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Project evidence profile and export</td>
+<td>4 / 5 / 4 / 2</td>
+<td>3.85</td>
+<td>Bundle feature. Basic access to earned records should survive cancellation.</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Certification readiness practice packs</td>
+<td>4 / 4 / 3 / 3</td>
+<td>3.55</td>
+<td>Optional $9–19 packs later; original questions and a clear version policy.</td>
+</tr>
+<tr>
+<td>9</td>
+<td>DevOps configuration review assistant</td>
+<td>4 / 4 / 2 / 4</td>
+<td>3.50</td>
+<td>Metered automation after rule-based checks are reliable.</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Budgeted browser Linux/Docker labs</td>
+<td>5 / 4 / 1 / 3</td>
+<td>3.35</td>
+<td>Separate usage-limited add-on after measuring session cost and support.</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Team or college assignments and progress</td>
+<td>4 / 3 / 2 / 4</td>
+<td>3.25</td>
+<td>Sell a bounded institutional pilot before building team administration.</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Focused downloadable practice packs</td>
+<td>3 / 3 / 5 / 1</td>
+<td>3.10</td>
+<td>$7 one-time purchase is a useful alternative if subscription retention is weak.</td>
+</tr>
+<tr>
+<td>13</td>
+<td>Human project review</td>
+<td>5 / 3 / 1 / 2</td>
+<td>2.90</td>
+<td>$25–49 starting price hypothesis; capacity-limited service, not included at $7.</td>
+</tr>
+<tr>
+<td>14</td>
+<td>Human mock interview</td>
+<td>5 / 2 / 1 / 2</td>
+<td>2.65</td>
+<td>$29–59 starting hypothesis, depending on reviewer cost and duration.</td>
+</tr>
+<tr>
+<td>15</td>
+<td>Architecture design and review workspace</td>
+<td>3 / 2 / 2 / 3</td>
+<td>2.50</td>
+<td>Revisit after demand is established; the older designer is a separate codebase.</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="troubleshooting-and-broken-pr-challenges">Troubleshooting and broken-PR challenges</h3>
+<p>Give the learner a short incident brief, selected logs, a small repository diff, and a concrete acceptance condition. Examples include an Nginx upstream failure, a Docker service listening on the wrong interface, a workflow with excessive token permissions, a Kubernetes readiness problem, and a Git recovery task. Have the learner identify relevant evidence, propose a change, verify it, and explain the trade-off.</p>
+<p>For the first release, use authored evidence bundles and a constrained patch or configuration editor. Do not imply that a static command-output exercise is a live terminal. Avoid arbitrary server-side code execution in the initial challenge engine. Deeper runnable exercises can be supplied as clearly documented local projects, with hosted execution developed separately.</p>
+<p>Each exercise should map to existing item IDs and record first attempt, hints used, independent completion, and later revision. Self-checking an item stays a separate signal from passing an assessment. That distinction makes the tracker more informative without claiming formal certification.</p>
+<h3 id="projects-with-evidence">Projects with evidence</h3>
+<p>Offer three coherent projects for the first full subscription: containerize and deploy an application; build and repair a CI pipeline; operate a local Kubernetes application with health checks and rollback. Each needs a brief, starter files, milestones, an acceptance rubric, common failures, and a reference explanation.</p>
+<p>In the first version, local tests produce a report the learner can attach alongside a commit link. Label this <strong>self-submitted evidence</strong>, since the learner controls the local environment. “Platform-checked” results require a trusted execution path; “human-reviewed” requires actual review. Showing these distinctions protects the usefulness of the portfolio.</p>
+<h3 id="interview-practice-that-uses-the-learners-work">Interview practice that uses the learner&rsquo;s work</h3>
+<p>Ask the learner to explain a fix they actually made: why a readiness probe differs from liveness, what signal justified rollback, or what would change under higher load. Score coverage against a maintained rubric: diagnosis, evidence, remediation, verification, and prevention. Offer a strong example answer after submission.</p>
+<p>Begin with text and authored feedback. AI can later personalize follow-ups using the approved scenario context, with visible usage limits and a fallback when generation fails. Do not market this as a hiring probability, an accredited assessment, or access to real employer interview questions.</p>
+<h3 id="revision-and-job-alignment">Revision and job alignment</h3>
+<p>The revision queue should resurface missed concepts and variations of previously failed tasks. It should distinguish “never attempted,” “passed with hints,” and “passed independently.” The existing Continue learning action can eventually offer the next skill or the next useful practice task.</p>
+<p>A job-description feature could map a pasted role to the syllabus, explain why each skill is relevant, and propose a weekly plan. It must visibly flag unmapped requirements such as networking, observability, IAM, a specific cloud, or incident communication. A numerical match is a syllabus match, not a prediction of employment. Keep this secondary until users repeatedly ask for it.</p>
+<h3 id="services-and-later-products">Services and later products</h3>
+<p>Human feedback is attractive when bounded: one repository, a checklist-based review, a short recorded explanation, one follow-up, and a clear turnaround. A $7 group clinic can work only with enough paid seats; for example, ten seats gross $70 before fees and preparation. It also creates scheduling, attendance, and refund work. It should not become an unlimited support promise.</p>
+<p>Team features could include assignments, cohort progress, a manager view, and billing for a defined seat count. Test one $49–99/month small-team pilot as a separate pricing experiment before adding SSO, recruiting workflows, or a marketplace. Employer assessment is a different product from personal learning and needs stronger identity, privacy, and assessment validity.</p>
+<h2 id="4-the-recommended-first-paid-offer">4. The recommended first paid offer</h2>
+<p><strong>Target public offer: OnlyDevOps Practice, $7/month, cancel renewal at any time.</strong> The following is a release specification, not a description of features already built.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Area</th>
+<th>Free</th>
+<th>$7/month Practice</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Current product</td>
+<td>All existing syllabus topics, checklist tracking, accounts, sync, and resume</td>
+<td>Included</td>
+</tr>
+<tr>
+<td>Try practice</td>
+<td>Three complete sample challenges and one project preview</td>
+<td>At least 30 reviewed challenges across Linux, Git, Docker, CI/CD, and Kubernetes</td>
+</tr>
+<tr>
+<td>Projects</td>
+<td>Preview the requirements and expected outputs</td>
+<td>Three complete project tracks with local test instructions and evidence records</td>
+</tr>
+<tr>
+<td>Feedback</td>
+<td>Full feedback on the sample challenges</td>
+<td>Authored explanations and rule-based feedback throughout</td>
+</tr>
+<tr>
+<td>Revision</td>
+<td>Basic topic progress</td>
+<td>Mistake history and a recommended revision queue</td>
+</tr>
+<tr>
+<td>Interview practice</td>
+<td>One sample rubric</td>
+<td>Four guided text sessions per billing period; AI is optional and separately bounded</td>
+</tr>
+<tr>
+<td>New material</td>
+<td>Occasional public examples</td>
+<td>Target four reviewed challenges each month, only once production capacity supports it</td>
+</tr>
+<tr>
+<td>Results</td>
+<td>Access to existing checklist data</td>
+<td>Exportable attempt and project records; earned history remains readable after expiry</td>
+</tr>
+<tr>
+<td>Computing and people</td>
+<td>No bundled cloud account</td>
+<td>No promise of unlimited hosted computing or individual mentorship</td>
+</tr>
+</tbody>
+</table></div>
+<p>For a smaller first commercial release, sell a clearly described <strong>$7 non-renewing 30-day Practice Pass</strong> containing ten finished challenges and one project. This establishes real purchase behavior without promising a catalogue or recurring delivery that does not yet exist. Publish the access period and included content before checkout. Do not silently convert pass buyers into subscribers.</p>
+<p>After repeat engagement and renewal evidence, introduce the full monthly plan. Consider <strong>$70/year</strong> later: ten monthly payments for twelve months of access, a 16.7% discount from $84. Annual cash helps funding, but it also commits the business to a year of delivery. Avoid lifetime hosting offers during an uncertain cost stage.</p>
+<p>For India, test <strong>₹499 versus ₹599 per month</strong> as separate regional price hypotheses, not currency conversions. Prefer a clear tax-inclusive consumer price where the business can support it. Confirm the applicable product tax treatment before publishing the amount. Do not launch many plans or coupons before one offer works.</p>
+<h3 id="a-concrete-sample-experience">A concrete sample experience</h3>
+<p>The learner reaches Docker networking on the sheet and selects “Practice this skill.” The incident says a service returns 502 after a release. They receive the reverse-proxy configuration, Compose service definitions, a change diff, and selected logs. They identify an upstream port mismatch, submit the relevant configuration fix, and state how they would confirm recovery.</p>
+<p>The exercise validates the supported configuration change and compares the explanation with an explicit rubric. It then presents alternative diagnoses and why the supplied evidence makes them less likely. The result links back to the skill sheet and schedules a later variation. A related project milestone asks the learner to make their own application pass a health check and document a rollback.</p>
+<p>This creates a coherent reason to pay: a maintained sequence from learning to application to explanation. Whether learners value it more than competing practice products remains the central experiment.</p>
+<h2 id="5-payment-provider-decision">5. Payment-provider decision</h2>
+<h3 id="india-first-sales">India-first sales</h3>
+<p><strong>Shortlist Razorpay first if the business is registered in India and Indian learners are the initial audience.</strong> Its published standard pricing is generally 2% plus GST on the provider fee. Its February 2026 pricing explanation also lists an additional 0.99% subscription fee over the underlying payment-method fee. International card pricing is listed separately at 3% plus GST; other international methods can differ. Obtain the actual recurring-payment quote rather than budgeting only 2%. <a href="https://razorpay.com/pricing/">Standard pricing</a> · <a href="https://razorpay.com/blog/razorpay-payment-gateway-pricing-explained/">Detailed fee explanation</a></p>
+<p>Verify account activation, UPI AutoPay, target card types, recurring international payments, settlements, refund costs, and the export documentation applicable to this business. Ordinary international payment support is not evidence that every international subscription method is approved. Razorpay documents additional-method activation and international product support. <a href="https://razorpay.com/docs/payments/payment-methods/?preferred-country=IN">Payment methods</a> · <a href="https://razorpay.com/docs/payments/international-payments/?preferred-country=IN">International payments</a></p>
+<h3 id="international-first-software-subscription">International-first software subscription</h3>
+<p><strong>Evaluate Paddle if most customers will be outside India and the approved product is software.</strong> Its advertised fee is 5% + $0.50, including merchant-of-record billing and sales-tax services. Paddle specifically asks businesses selling below $10 to contact it for custom pricing. India is not on the listed unsupported supplier-country list, but geography does not guarantee approval, acceptable product classification, or a particular payout arrangement. <a href="https://www.paddle.com/pricing">Pricing</a> · <a href="https://www.paddle.com/help/legal/sanctions/which-countries-are-supported-by-paddle">Country policy</a></p>
+<p>Paddle focuses on software and restricts unrelated human services. Treat standalone mentoring or interview services as a separate approval and payment question. A software subscription cannot be assumed to authorize every future service. <a href="https://www.paddle.com/help/start/intro-to-paddle/what-am-i-not-allowed-to-sell-on-paddle">Acceptable-use explanation</a></p>
+<h3 id="alternatives-and-limitations">Alternatives and limitations</h3>
+<p>Lemon Squeezy advertises 5% + $0.50; its fee documentation adds 0.5% for subscriptions, 1.5% for non-US transactions, and 1.5% for PayPal payments when applicable. Bank and PayPal payouts can also incur fees. Indian merchants without Stripe pre-approval may have to use PayPal payouts. Evaluate the actual settlement route before relying on it. <a href="https://www.lemonsqueezy.com/pricing">Pricing</a> · <a href="https://docs.lemonsqueezy.com/help/getting-started/fees">Fees</a> · <a href="https://docs.lemonsqueezy.com/help/getting-started/supported-countries">Supported countries</a></p>
+<p>Lemon Squeezy&rsquo;s prohibited-products policy includes services, job boards, advertising, and marketplaces. It may suit an approved SaaS or digital product, but it is not a universal checkout for the service ideas in this report. <a href="https://docs.lemonsqueezy.com/help/getting-started/prohibited-products">Product policy</a></p>
+<p>Stripe states that new Indian accounts remain invite-only. Use an already approved account if it suits the business; do not make launch dependent on receiving a new invitation. If the business is based elsewhere, reconsider Stripe against that country&rsquo;s actual account eligibility, Billing fees, and local payment methods. <a href="https://support.stripe.com/questions/stripe-accounts-are-invite-only-in-india?locale=en-GB">India account policy</a></p>
+<p>A merchant of record can handle the customer transaction&rsquo;s covered indirect-tax obligations. It does not remove the business&rsquo;s own income-tax, accounting, or local reporting responsibilities. Exact obligations depend on the seller and buyer jurisdictions and product classification. <a href="https://docs.lemonsqueezy.com/help/payments/sales-tax-vat">Merchant-of-record tax explanation</a></p>
+<p><strong>Decision sequence:</strong> establish seller country and first customer market; obtain product and payout approval; confirm full fees; then implement one provider. Start with Razorpay for a primarily Indian launch or evaluate Paddle for a primarily global software launch. Add a second provider only if measured checkout failures or market expansion justify the extra reconciliation work.</p>
+<h2 id="6-can-7-work-economically">6. Can $7 work economically?</h2>
+<p>Yes, it can be viable for a product dominated by maintained content, deterministic checks, and limited automation. It is much harder when the same fee includes significant computing time or personal review. The following calculations are planning scenarios, not vendor quotes for infrastructure or forecasts of OnlyDevOps profit.</p>
+<h3 id="payment-deductions">Payment deductions</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Case</th>
+<th>Calculation</th>
+<th>Result before other costs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$7 payment at 5% + $0.50</td>
+<td>$7 − $0.35 − $0.50</td>
+<td><strong>$6.15</strong>; fees consume 12.14% of price</td>
+</tr>
+<tr>
+<td>$7 non-US card subscription under the listed Lemon Squeezy percentages</td>
+<td>$7 − (7% × $7) − $0.50</td>
+<td><strong>$6.01</strong>, before payout fees; assumes no buyer tax or other extras</td>
+</tr>
+<tr>
+<td>$70 annual payment at 5% + $0.50</td>
+<td>($70 − $3.50 − $0.50) ÷ 12</td>
+<td><strong>$5.50/month equivalent</strong> before service costs</td>
+</tr>
+<tr>
+<td>₹599 domestic recurring payment using 2% + 0.99%, with 18% GST on those fees</td>
+<td>₹599 − [₹599 × 2.99% × 1.18]</td>
+<td><strong>₹577.87</strong>, before the product&rsquo;s own taxes and other costs</td>
+</tr>
+</tbody>
+</table></div>
+<p>These use the published schedules above for illustration. A sub-$10 Paddle quote may differ. Provider fee taxes and tax charged on the subscription itself are different amounts. For merchants of record, fee calculation on the tax-inclusive order total can reduce proceeds further. <a href="https://www.paddle.com/pricing">Paddle schedule</a> · <a href="https://docs.lemonsqueezy.com/help/getting-started/fees">Lemon Squeezy calculation basis</a> · <a href="https://razorpay.com/blog/razorpay-payment-gateway-pricing-explained/">Razorpay subscription schedule</a></p>
+<h3 id="contribution-per-monthly-subscriber">Contribution per monthly subscriber</h3>
+<p>Assume the $7 is revenue before customer sales tax, payment cost is $0.85, variable application/feedback cost is $0.35, a support-cost reserve is $0.40, and a refund/fraud reserve is $0.21. The latter three figures are internal budget allowances that must be measured. They do not imply a verified infrastructure or AI price.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Service model</th>
+<th>Extra assumed cost</th>
+<th>Contribution before fixed costs, content production, acquisition, and tax</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Content and constrained assessment</td>
+<td>None beyond the allowances above</td>
+<td><strong>$5.19/month</strong>, about 74% of $7</td>
+</tr>
+<tr>
+<td>Same product plus 20 hosted lab hours at $0.10/hour</td>
+<td>$2.00</td>
+<td><strong>$3.19/month</strong></td>
+</tr>
+<tr>
+<td>Same product plus 20 hosted lab hours at $0.50/hour</td>
+<td>$10.00</td>
+<td><strong>−$4.81/month</strong></td>
+</tr>
+<tr>
+<td>Same product plus one 20-minute human review at $15/hour</td>
+<td>$5.00</td>
+<td><strong>$0.19/month</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>The lab rates and review rate are sensitivity assumptions, not claimed market rates. Lab budgets must include idle capacity, memory, storage, networking, provisioning failures, abuse, and teardown—not just nominal CPU hours. Measure active users and heavy users separately; an average can hide unprofitable unlimited usage.</p>
+<p>At the base $5.19 contribution, 100 monthly subscribers provide $519 before fixed costs. If fixed tools and infrastructure cost $200/month, $319 remains before ongoing content work, owner pay, customer acquisition, and taxes. Adding 20 hours of monthly content work valued at $20/hour raises the assumed recurring fixed requirement to $600; approximately <strong>116 monthly subscribers</strong> would cover that amount. This does not repay initial development or catalogue creation.</p>
+<p>At $70/year, the same $0.96 monthly variable allowances leave $4.54/month equivalent contribution. Annual billing reduces transaction frequency, but the discount still reduces revenue per service month. Do not present prepaid annual cash as monthly recurring revenue or immediately available profit.</p>
+<p>A $7 tax-inclusive price also needs a sensitivity check. If an illustrative 20% consumption tax applied, pre-tax revenue would be $5.83. With an $0.85 fee on the $7 total and $0.96 other variable allowances, contribution would be about $4.02. This is a tax-rate scenario, not a conclusion about the tax rate applicable to OnlyDevOps.</p>
+<p><strong>Budget rule:</strong> keep the first paid product free of unlimited lab or human-service commitments. Add optional AI only after measuring cost per accepted answer, retry frequency, quality, and usage distribution. Set customer-visible quotas and server-side enforcement; choose the model through an evaluation on actual exercises rather than assuming one model will remain economical.</p>
+<h2 id="7-production-architecture-and-release-requirements">7. Production architecture and release requirements</h2>
+<p>The existing React/FastAPI/PostgreSQL stack can support the first paid release. No evidence here justifies a rewrite into microservices or deploying Kubernetes merely to sell subscriptions. Extend the application with explicit billing, access control, content versioning, and assessment records. These are proposed implementation requirements, not claims that the current stack already meets them.</p>
+<h3 id="accounts-and-learner-records">Accounts and learner records</h3>
+<p>Add a verified recovery contact or another reliable recovery method before charging for persistent access. Existing username accounts need a migration path that requires an authenticated user to link the recovery identity; never infer ownership from a matching username. Password reset must revoke or rotate relevant sessions and avoid exposing account existence. Preserve existing learner IDs and completed-item IDs.</p>
+<p>Keep checklist completion separate from assessment attempts and project evidence. Record challenge version, submission, result, rubric version, hint usage, timestamps, and verification method. Public profiles should be opt-in, with a way to remove shared records. Cancellation should stop future paid access while preserving access to the learner&rsquo;s existing progress and earned records under a published retention policy.</p>
+<h3 id="billing-and-access">Billing and access</h3>
+<p>Use a hosted checkout so the application does not collect card numbers. Create checkout sessions on the server using an allowed price ID and the authenticated account ID. Never accept a client-supplied amount or grant paid access simply because a success page loaded.</p>
+<p>Store provider customer and subscription identifiers, current period end, cancellation state, product access, payment-event IDs, and audit entries. Model access as a server-side entitlement with an expiry, rather than a browser flag or permanent <code>is_pro</code> boolean. Paid APIs and content downloads need the same checks as the UI.</p>
+<p>Validate webhook signatures over the raw request body, store the event durably, process it once, and handle delayed or out-of-order delivery. Razorpay explicitly documents duplicates and unordered delivery; Paddle likewise advises using event occurrence time. Run reconciliation against provider state so a missed event does not permanently lose access or grant it indefinitely. <a href="https://razorpay.com/docs/webhooks/validate-test/?preferred-country=US">Razorpay webhook validation</a> · <a href="https://developer.paddle.com/webhooks/about/how-webhooks-work/">Paddle delivery behavior</a></p>
+<p>Define behavior for successful payment, renewal failure, grace period, cancellation at period end, immediate cancellation, refund, dispute, and expired access. A cancellation request and an expired paid period are different states. Provide receipts, renewal dates, payment-method management where supported, and easy cancellation. <a href="https://developer.paddle.com/build/subscriptions/provision-access-webhooks/">Paddle access-state guidance</a></p>
+<h3 id="assessment-execution">Assessment execution</h3>
+<p>For the first release, validate supported configuration structures and authored answers without running arbitrary learner code. A future project checker or hosted lab must run in disposable, isolated infrastructure separated from the application, payment secrets, and database. Avoid shared privileged runners, host Docker sockets, or access to cloud metadata. Apply time, resource, networking, and spending limits.</p>
+<p>GitHub warns that self-hosted runners can be persistently compromised by untrusted workflow code. That directly matters if project checking evolves into executing public submissions. A container alone is not a complete design for hostile multi-tenant workloads. <a href="https://docs.github.com/en/actions/reference/security/secure-use?learn=getting_started&amp;learnProduct=actions">GitHub security guidance</a></p>
+<h3 id="operations-and-launch-gate">Operations and launch gate</h3>
+<p>Before accepting real payments, complete a production-specific review of HTTPS and cookies, secret storage, database migrations, backups and a restore drill, monitoring, deployment rollback, account recovery, and paid-access isolation. Add payment failure and webhook-replay tests to the existing suite. Existing local tests are useful evidence of current behavior; they do not certify production billing readiness.</p>
+<p>Publish the actual catalogue, price, tax treatment, renewal terms, cancellation/refund policy, support contact, and expected response time. Test a complete authorized live purchase-to-access-to-cancellation path before public promotion, with the business owner controlling the payment instrument. Remove historical POC labels from product UI and documentation as part of the production release, while accurately identifying features still in development.</p>
+<h2 id="8-content-quality-and-defensibility">8. Content quality and defensibility</h2>
+<p>The principal long-term asset should be a maintained library of original tasks, feedback, and learning evidence. A generic AI wrapper is easily substituted. A carefully designed exercise that accepts valid alternative solutions, explains a failure, and stays current is harder to maintain and potentially more valuable.</p>
+<p>Every paid task needs an owner, supported tool version, acceptance rubric, reference result, difficulty estimate, review date, and an issue-reporting route. Test more than the author&rsquo;s preferred answer. Separate a factual wrong answer from a valid alternative and give learners a way to challenge grading. Run periodic checks when tools or APIs change.</p>
+<p>Use documentation and open resources as references with appropriate licensing and attribution. Write original tasks; do not copy paid competitor scenarios or exam content. Record the license of any starter repository, logo, or redistributed file. Link to external practice where useful, but do not promise uptime, private content, or paid integration rights without an agreement.</p>
+<p>Estimate the content workload before setting a release date. For example, 30 tasks at three hours each, three project tracks at twelve hours each, and forty additional QA hours total <strong>166 hours</strong>. These are planning assumptions; genuinely complex runnable exercises may take much longer. Subscription publishing consumes founder time even when serving another user costs almost nothing.</p>
+<p>Extend the syllabus where the exercises expose omissions. Networking/DNS/HTTP/TLS, observability, IAM/secrets, incident communication, and basic cloud operations are sensible candidates. Validate the target role before expanding into every cloud provider. The first paid experience can be narrow and clearly labeled without pretending the current 11-topic checklist is exhaustive.</p>
+<h2 id="9-validation-and-launch-sequence">9. Validation and launch sequence</h2>
+<p>An initial eight-to-twelve-week planning window is reasonable only as a small-team hypothesis, with provider onboarding and content review as dependencies. Milestone completion should control launch timing. A shorter focused release is preferable to billing for unfinished functionality.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Deliverable</th>
+<th>Decision evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Weeks 1–2: customer and content test</td>
+<td>Interview 10–15 target learners; observe five attempting three prototype challenges; define the first offer and apply for the relevant payment account.</td>
+<td>Do they have the same recurring problem? Where do they get stuck? What have they already paid for?</td>
+</tr>
+<tr>
+<td>Weeks 3–4: commercial foundations</td>
+<td>Recovery identity, migrations, hosted checkout, access records, cancellation/refund handling, observability, and a restored backup.</td>
+<td>Sandbox billing scenarios pass; account and paid-access isolation are demonstrated.</td>
+</tr>
+<tr>
+<td>Weeks 4–6: bounded paid release</td>
+<td>Ten reviewed challenges, one project, clear feedback, and the $7 non-renewing pass.</td>
+<td>Real payments, completed exercises, support load, and explicit reasons for purchase/refund.</td>
+</tr>
+<tr>
+<td>Weeks 7–9: retention and content expansion</td>
+<td>Fix grading issues, add revision, grow the catalogue, and follow the first cohort.</td>
+<td>Users return to practice and ask for further material; the second payment is possible to measure.</td>
+</tr>
+<tr>
+<td>Weeks 10–12: full subscription decision</td>
+<td>Release the 30-challenge/three-project package only if it exists and can be maintained.</td>
+<td>Repeat use, acceptable support cost, and monthly delivery capacity justify recurring billing.</td>
+</tr>
+</tbody>
+</table></div>
+<p>Ask about recent behavior rather than hypothetical enthusiasm. Useful questions include: “Show me the last deployment issue you could not solve”; “What did you use next?”; “Which learning product did you most recently pay for, and why?”; and “Would this exercise replace something you already use?” Include learners who choose a competitor or decline to pay.</p>
+<p>Use a small set of <strong>internal decision thresholds</strong>, not claims about industry averages: seek at least 10 genuine buyers among the first 50 qualified learners who see the finished offer; at least half of those buyers should complete three exercises within seven days; and at least four of the first ten should make a second purchase or renewal when eligible. These small counts are directional and highly uncertain. Report numerator, denominator, recruitment source, price, and refund status; do not extrapolate them into a large market forecast.</p>
+<p>Track preview completion, checkout start, paid activation, first challenge completion, repeat weekly practice, project milestone completion, renewal eligibility, successful renewal, cancellations, refunds, and support minutes per payer. A screenshot of “100 accounts” says little about whether a paid product works. Cohort renewal counts should exclude people whose renewal date has not arrived.</p>
+<p>For acquisition, publish a small number of excellent free incident exercises, share useful original technical explanations in relevant communities under their rules, and make optional project evidence easy to share. Test college clubs and developer communities manually. Do not begin with broad paid advertising: at the illustrative $5.19 monthly contribution, a $20 acquisition cost requires about four paid months just to recover, before fixed costs and content work.</p>
+<p>If people buy a pack but do not return, prefer discrete project or interview-sprint products. If they repeatedly request live environments, measure willingness to pay for a capped lab add-on. If they mostly want a human reviewer, validate a higher-priced service with a small queue. These are legitimate outcomes of the research, not reasons to force a subscription.</p>
+<h2 id="10-ideas-to-defer">10. Ideas to defer</h2>
+<p><strong>A large video-course library:</strong> high production and maintenance burden with little advantage over established catalogues. Use concise explanations attached to exercises first.</p>
+<p><strong>Unlimited AI chat or generated roadmaps as the headline:</strong> competing products already offer these, while usage costs and incorrect technical answers still require control. Add AI where it improves a specific measured interaction.</p>
+<p><strong>Unlimited Kubernetes or cloud accounts for $7:</strong> cost, isolation, provisioning, and support must be proven first. Low-cost competitors are not evidence that OnlyDevOps will have the same economics.</p>
+<p><strong>Certificates for checking boxes:</strong> these would overstate what the product has assessed. Provide transparent completion and evidence records instead of implying recognized certification.</p>
+<p><strong>Paid job listings, placement guarantees, or a mentor marketplace:</strong> these require employer supply, trust, operations, and sometimes different payment eligibility. They do not follow automatically from having learner accounts.</p>
+<p><strong>Charging for basic account recovery, saved progress, or exporting a learner&rsquo;s existing records:</strong> these are part of operating a trustworthy production service. Monetize additional practice and value.</p>
+<p><strong>Reintegrating the architecture designer immediately:</strong> it is an interesting later path, especially for design reviews, but it adds a second product surface before the first paid need is validated.</p>
+<h2 id="11-decision-and-remaining-uncertainties">11. Decision and remaining uncertainties</h2>
+<p>Approve the product direction as <strong>free learning tracker plus paid DevOps practice</strong>. Build the troubleshooting engine, connect it to skills, and add one meaningful project before widening the catalogue. The first commercial experiment should cost around $7 and have a concrete, finished deliverable. Recurring billing should follow recurring value.</p>
+<p>The unresolved commercial questions are who will buy first, whether they prefer a pass or subscription, why they would choose OnlyDevOps over existing practice platforms, and whether they will return. The unresolved delivery questions are content-authoring capacity, grading reliability, and measured support costs. The unresolved payment questions are seller jurisdiction, provider approval, target recurring methods, full fees, and settlement route.</p>
+<p>No payment accounts have been created, customers contacted, or subscriptions enabled as part of this report. The implementation remains to be planned and built. The recommendations provide a production-oriented decision framework and a testable paid offer; they do not establish product-market fit.</p>
+<h2 id="sources">Sources</h2>
+<p>All web sources below were accessed on 11 September 2026. Publication dates are included where reliably exposed; otherwise the source is an undated live page. Inline links identify the specific claims supported. Repeated appearances of a source refer to the same page.</p>
+<ol>
+<li>Linux Foundation Education. <a href="https://training.linuxfoundation.org/blog/just-released-2026-state-of-tech-talent-report/">Just Released: 2026 State of Tech Talent Report</a>. 2026. Survey timing and population; directional skills evidence.</li>
+<li>Marco Gerosa, Adrienn Lawson, and Anna Hermansen, Linux Foundation Research. <a href="https://www.linuxfoundation.org/research/open-source-jobs-report-2026?hsLang=en">2026 State of Tech Talent Report overview</a>. 2026. Workforce and operational-readiness context. The report&rsquo;s download was not reliably retrievable; this analysis uses the accessible publisher summaries.</li>
+<li>SadServers. <a href="https://sadservers.com/pricing">Pricing</a>. Live page. Monthly and annual individual offers; verified against directly retrieved page text.</li>
+<li>iximiuz Labs. <a href="https://labs.iximiuz.com/pricing?open=plans">Plans &amp; Pricing</a>. Live page. Regular monthly and annual prices; promotional values varied between retrieved versions and are not used as a stable benchmark.</li>
+<li>KodeKloud. <a href="https://kodekloud.com/pricing">Pricing &amp; Subscription Plans</a>. Live page. Feature bundles; exact personalized prices not verified.</li>
+<li>KodeKloud Support. <a href="https://support.kodekloud.com/how-can-i-check-the-latest-kodekloud-pricing-and-available-discounts">How can I check the latest KodeKloud pricing and available discounts?</a>. Undated. Regional, currency, tax, and promotional variation.</li>
+<li>roadmap.sh. <a href="https://roadmap.sh/premium">Premium Features</a>. Live page. AI feature competition and explicit team annual-billing terms; individual checkout amount unresolved.</li>
+<li>killer.sh. <a href="https://killer.sh/faq">FAQ</a>. Live page. Exam-specific two-session pricing and access model.</li>
+<li>Killercoda. <a href="https://killercoda.com/faq">FAQ</a>. Live page. Free scenarios, paid capabilities, and limits on external-platform dependencies. The paid pricing page required JavaScript and was not used for a price claim.</li>
+<li>The Cloud Resume Challenge. <a href="https://cloudresumechallenge.dev/docs/faq/">Challenge FAQ</a>. Undated. Free core project steps.</li>
+<li>Arie Bregman and contributors. <a href="https://github.com/bregman-arie/devops-exercises">DevOps Exercises</a>. Live repository. Public exercises and interview-preparation substitute.</li>
+<li>Razorpay. <a href="https://razorpay.com/pricing/">Payment Gateway Pricing</a>. Live page. Standard gateway fees.</li>
+<li>Razorpay. <a href="https://razorpay.com/blog/razorpay-payment-gateway-pricing-explained/">Payment Gateway Pricing and Fees Explained</a>. 13 February 2026. Subscription surcharge, fee GST, international-method distinctions.</li>
+<li>Razorpay Docs. <a href="https://razorpay.com/docs/payments/payment-methods/?preferred-country=IN">About Payment Methods</a>. Live documentation. Activation and available local methods.</li>
+<li>Razorpay Docs. <a href="https://razorpay.com/docs/payments/international-payments/?preferred-country=IN">About International Payments</a>. Live documentation. International support and activation dependencies.</li>
+<li>Paddle. <a href="https://www.paddle.com/pricing">Pricing</a>. Live page. Advertised processing/MoR price and sub-$10 custom-pricing instruction.</li>
+<li>Paddle Help Center. <a href="https://www.paddle.com/help/legal/sanctions/which-countries-are-supported-by-paddle">Which countries are supported by Paddle?</a>. Live policy. Supplier-country restrictions; no guarantee of approval.</li>
+<li>Paddle Help Center. <a href="https://www.paddle.com/help/start/intro-to-paddle/what-am-i-not-allowed-to-sell-on-paddle">Understanding Paddle&rsquo;s Acceptable Use Policy</a>. Updated 13 April 2026. Software focus and unrelated-human-service restrictions.</li>
+<li>Lemon Squeezy. <a href="https://www.lemonsqueezy.com/pricing">Pricing</a>. Live page. Base platform fee.</li>
+<li>Lemon Squeezy Docs. <a href="https://docs.lemonsqueezy.com/help/getting-started/fees">Fees</a>. Live documentation. Subscription, international, PayPal, and payout fees; fee calculation base.</li>
+<li>Lemon Squeezy Docs. <a href="https://docs.lemonsqueezy.com/help/getting-started/supported-countries">Supported Countries</a>. Live documentation. India payout qualification.</li>
+<li>Lemon Squeezy Docs. <a href="https://docs.lemonsqueezy.com/help/getting-started/prohibited-products">Prohibited Products</a>. Live policy. Restrictions affecting services and alternative business models.</li>
+<li>Stripe Support. <a href="https://support.stripe.com/questions/stripe-accounts-are-invite-only-in-india?locale=en-GB">Stripe accounts are invite-only in India</a>. Live policy. New-account availability.</li>
+<li>Lemon Squeezy Docs. <a href="https://docs.lemonsqueezy.com/help/payments/sales-tax-vat">Sales Tax and VAT</a>. Live documentation. Merchant-of-record tax scope and seller obligations.</li>
+<li>Razorpay Docs. <a href="https://razorpay.com/docs/webhooks/validate-test/?preferred-country=US">Validate and Test Webhooks</a>. Live documentation. Raw-body validation, duplicates, and event ordering.</li>
+<li>Paddle Developer Docs. <a href="https://developer.paddle.com/webhooks/about/how-webhooks-work/">How webhooks work</a>. Live documentation. Event processing and ordering.</li>
+<li>Paddle Developer Docs. <a href="https://developer.paddle.com/build/subscriptions/provision-access-webhooks/">Provision access and handle subscription state</a>. Live documentation. Application access lifecycle.</li>
+<li>GitHub Docs. <a href="https://docs.github.com/en/actions/reference/security/secure-use?learn=getting_started&amp;learnProduct=actions">Secure use reference</a>. Live documentation. Untrusted-code execution and runner isolation.</li>
+<li>OnlyDevOps local source. <code>README.md</code>, <code>frontend/src/main.jsx</code>, <code>backend/app/main.py</code>, <code>docker-compose.yml</code>, and the existing test files in <code>/Users/talentcogent/onlydevops-poc</code>. Reviewed locally; not a publicly cited release or deployment audit.</li>
+</ol></main></div></body></html>
