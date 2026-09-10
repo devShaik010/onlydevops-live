@@ -4,6 +4,8 @@ export default defineConfig({
   use: {
     baseURL: process.env.BASE_URL || "http://localhost:8080",
     browserName: "chromium",
+    trace: "retain-on-failure",
+    screenshot: "only-on-failure",
   },
-  reporter: "list",
+  reporter: [["list"], ["html", { open: "never" }]],
 });

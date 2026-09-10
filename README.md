@@ -1,6 +1,6 @@
 # OnlyDevOps
 
-A minimal DevOps syllabus tracker inspired by Striver’s sheet format. Open a topic, expand a section, and check off individual skills or command variations. No lesson pages, definitions, or examples.
+A DevOps learning platform with a syllabus tracker and troubleshooting practice. Open a topic, check off individual skills, then work through realistic incidents with supplied logs, diagnostic choices, and explanations.
 
 ## Run
 
@@ -18,7 +18,7 @@ docker compose down
 
 `down` preserves progress in the named PostgreSQL volume. `down -v` permanently deletes it.
 
-## POC scope
+## Learning sheets
 
 Linux → Shell scripting → Git / GitHub → Docker → Kubernetes → CI / CD → Jenkins → GitHub Actions → GitOps → Argo CD → Terraform.
 
@@ -49,7 +49,21 @@ Only the web port is published. The API and database communicate on a private ba
 - `backend/app/main.py`: API and idempotent initial schema creation.
 - `docker-compose.yml`: all three services, networks, and persistent storage.
 
-This is a working POC syllabus, not an exhaustive reference for every tool. Admin editing, versioned schema migrations, backups, and production TLS are future work. Before public deployment, set a strong database password, terminate HTTPS at your ingress, and set `COOKIE_SECURE=true`. Fonts (Inter, Space Grotesk, and JetBrains Mono) are self-hosted through Fontsource. Tool logos are vendored from [Devicon](https://github.com/devicons/devicon); attribution and license are in `frontend/public/logos/`. CI/CD and GitOps use workflow symbols because they are practices rather than products.
+The syllabus is a starting curriculum, not an exhaustive reference for every tool. The platform is being prepared for production; the local Compose configuration is a development setup. Before public deployment, configure account recovery, automated backups with restore drills, a strong database password, HTTPS at your ingress, monitoring, and `COOKIE_SECURE=true`. Fonts (Inter, Space Grotesk, and JetBrains Mono) are self-hosted through Fontsource. Tool logos are vendored from [Devicon](https://github.com/devicons/devicon); attribution and license are in `frontend/public/logos/`. CI/CD and GitOps use workflow symbols because they are practices rather than products.
+
+## Troubleshooting practice
+
+Open **`/practice`** or follow the practice link from a learning sheet. The free starter collection includes five original incidents covering Docker ports, Linux permissions, Git commit recovery, Kubernetes readiness, and GitHub Actions token permissions.
+
+Read the supplied evidence, choose a diagnosis, and select **Check answer**. The server saves the result and returns the explanation, verification steps, and reference documentation. Wrong answers appear under **To review**; correct answers appear under **Solved**. Retrying keeps the previous saved result until another answer is successfully saved. Practice answers never check off syllabus items automatically.
+
+Guest results persist in the browser's cookie-backed learner account. Registration or sign-in imports them into the account; when both have answered the same challenge, the more recently saved result wins. Imported guest results are consumed. Account practice results are available on other devices after opening or reloading practice. Signing out opens a fresh guest view. Direct links such as `/practice#docker-upstream-port` support reload and browser history.
+
+This release uses authored content and deterministic answer checking on the existing API/database. It adds no AI provider, hosted lab, or other paid service. Payment collection and paywalls are not enabled.
+
+Content lives in `backend/app/challenges.json`. Keep challenge IDs stable; increment `version` when changing answers or meaning so older results are not presented as current assessments. Include feedback for every option, evidence, verification steps, and official source links. Run `python3 tests/content.py` before publishing a content change.
+
+New tables are created by versioned, additive migrations in `backend/app/migrations.py`. Applied migrations must not be edited. `001_practice_progress` adds a separate practice table without replacing accounts or checklist progress. See [contribution and recovery guidance](CONTRIBUTING.md).
 
 ## Development & verification
 
@@ -67,6 +81,7 @@ With the Compose stack running:
 ```sh
 python3 tests/smoke.py
 python3 tests/accounts.py
+python3 tests/practice.py
 cd frontend
 npx playwright install chromium
 npx playwright test
@@ -75,6 +90,8 @@ npx playwright test
 For an optional container restart persistence test, run `python3 tests/restart.py` (this restarts the API and database).
 
 The smoke suite checks real PostgreSQL persistence through the API, isolation between browser sessions, idempotent checks, undo, and validation. Browser tests cover check/reload, filtering, navigation, mobile layout, and failed saves. Account tests also cover guest import, two-device sync, sign-out isolation, session expiry, wrong credentials, account-ID cookie forgery, and origin checks. Account tests require access to this Compose stack and remove only their own test accounts.
+
+Practice tests additionally cover content-version conflicts, stale account tabs, guest/account imports, answer isolation, and preserving checklist progress. `python3 tests/content.py` runs without Docker or installed backend packages. GitHub Actions runs the build, content checks, API suites, and Playwright against a disposable Compose database on every push and pull request. Browser traces and reports are retained for seven days on failure; credentials and production data are not required.
 
 Container setup follows [FastAPI’s Docker guidance](https://fastapi.tiangolo.com/deployment/docker/) and [Compose health-based startup ordering](https://docs.docker.com/compose/how-tos/startup-order/).
 
