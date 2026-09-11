@@ -30,6 +30,7 @@ import useLearningView from "./useLearningView";
 import PracticePage from "./PracticePage";
 import WorkspaceNav from "./WorkspaceNav";
 import ThemeToggle from "./ThemeToggle";
+import SkipLink from "./SkipLink";
 import "./theme.css";
 
 const toolLogos = {
@@ -78,6 +79,7 @@ function ToolLogo({ topic, decorative = false }) {
 const items = (t) =>
   t.sections.flatMap((s) => s.commands.flatMap((c) => c.items));
 function App() {
+  const roadmapToggle = useRef(null);
   const revision = useRef(0);
   const saving = useRef(new Set());
   const [data, setData] = useState(null),
@@ -99,6 +101,16 @@ function App() {
     setFilter,
     navigate,
   } = useLearningView(data?.topics);
+  useEffect(() => {
+    if (!mobile) return;
+    const closeOnEscape = (event) => {
+      if (event.key !== "Escape" || accountOpen) return;
+      setMobile(false);
+      roadmapToggle.current?.focus();
+    };
+    window.addEventListener("keydown", closeOnEscape);
+    return () => window.removeEventListener("keydown", closeOnEscape);
+  }, [mobile, accountOpen]);
   async function load(quiet = false) {
     if (saving.current.size) return;
     const current = ++revision.current;
@@ -269,6 +281,7 @@ function App() {
           hasProgress={done.size > 0}
         />
       )}
+      <SkipLink onSkip={() => setMobile(false)} />
       <header className="topbar">
         <a
           className="brand"
@@ -323,6 +336,8 @@ function App() {
           </a>
           <button
             className="mobile-toggle"
+            ref={roadmapToggle}
+            aria-controls="learning-roadmap"
             aria-label="Toggle roadmap"
             aria-expanded={mobile}
             onClick={() => setMobile(!mobile)}
@@ -331,7 +346,7 @@ function App() {
           </button>
         </div>
       </header>
-      <aside className={mobile ? "sidebar mobile-open" : "sidebar"}>
+      <aside id="learning-roadmap" className={mobile ? "sidebar mobile-open" : "sidebar"}>
         <div className="sidebar-heading">
           <span className="eyebrow">YOUR LEARNING PATH</span>
           <small>{String(topics.length).padStart(2, "0")}</small>
@@ -388,7 +403,7 @@ function App() {
           </p>
         </div>
       </aside>
-      <main>
+      <main id="main-content" tabIndex={-1}>
         <div className="breadcrumb">
           The DevOps sheet <ChevronRight size={12} />
           <span>{t.title}</span>

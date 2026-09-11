@@ -15,6 +15,7 @@ import {
 import AccountDialog from "./AccountDialog";
 import WorkspaceNav from "./WorkspaceNav";
 import ThemeToggle from "./ThemeToggle";
+import SkipLink from "./SkipLink";
 import "./practice.css";
 
 const topicNames = {
@@ -300,6 +301,7 @@ export default function PracticePage() {
           hasPractice
         />
       )}
+      <SkipLink />
       <header className="topbar practice-topbar">
         <a className="brand" href="/" aria-label="OnlyDevOps learning sheet">
           <span className="brand-icon">
@@ -334,7 +336,7 @@ export default function PracticePage() {
           )}
         </div>
       </header>
-      <main className="practice-main">
+      <main id="main-content" tabIndex={-1} className="practice-main">
         <nav className="practice-breadcrumb" aria-label="Practice navigation">
           <a href="/">
             <ArrowLeft size={14} />
