@@ -1,8 +1,5 @@
 {
   "buildCommand": "npm --prefix frontend ci && npm --prefix frontend run build",
   "outputDirectory": "frontend/dist",
-  "framework": null,
-  "functions": {
-    "api/[...path].js": { "runtime": "nodejs22.x" }
-  }
+  "framework": null
 }
