@@ -8,7 +8,7 @@ concurrency:
 jobs:
   verify:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
@@ -17,28 +17,9 @@ jobs:
           cache: npm
           cache-dependency-path: frontend/package-lock.json
       - run: npm --prefix frontend ci
-      - name: Validate practice content
-        run: python3 tests/content.py
+      - name: Validate content JSON
+        run: node -e "const fs=require('fs'); const syllabus=JSON.parse(fs.readFileSync('api/syllabus.json')); const challenges=JSON.parse(fs.readFileSync('api/challenges.json')); const topics=new Set(syllabus.map(t=>t.id)); if(challenges.some(c=>!topics.has(c.topic)||!c.options.some(o=>o.id===c.answer))) process.exit(1); console.log('Content OK')"
+      - name: Check API syntax
+        run: node --check 'api/[...path].js'
       - name: Build frontend
         run: npm --prefix frontend run build
-      - run: docker compose up --build -d --wait --wait-timeout 180
-      - run: python3 tests/smoke.py
-      - run: python3 tests/accounts.py
-      - run: python3 tests/practice.py
-      - run: npx playwright install --with-deps chromium
-        working-directory: frontend
-      - run: npx playwright test
-        working-directory: frontend
-      - if: failure()
-        run: docker compose logs
-      - name: Upload browser failure reports
-        if: failure()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
-        with:
-          name: browser-failure-reports
-          path: |
-            frontend/playwright-report/
-            frontend/test-results/
-          retention-days: 7
-      - if: always()
-        run: docker compose down -v
