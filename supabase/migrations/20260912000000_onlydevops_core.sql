@@ -43,7 +43,7 @@ alter table public.practice_progress enable row level security;
 alter table public.auth_limits enable row level security;
 
 -- No anon/authenticated Data API policies are granted. The Vercel API uses
--- DATABASE_URL server-side and remains the only application data boundary.
+-- The server-side Supabase service role remains the only application data boundary.
 revoke all on public.accounts, public.sessions, public.progress,
   public.practice_progress, public.auth_limits from anon, authenticated;
 
