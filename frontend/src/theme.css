@@ -82,6 +82,7 @@
 .practice-progress strong, .progress-top strong { font-variant-numeric: tabular-nums; }
 button, a, input, select { touch-action: manipulation; }
 .account-dialog { overscroll-behavior: contain; }
+.user-avatar { display: block; flex: 0 0 auto; width: 28px; height: 28px; border-radius: 50%; background: var(--tint); border: 1px solid var(--accentBorder); }
 .section-header, .check-item, h1 { scroll-margin-top: 125px; }
 .theme-toggle, .practice-card, .answer-option, .workspace-nav a, .topic, .practice-primary {
   transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease;

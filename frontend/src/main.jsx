@@ -32,6 +32,7 @@ import WorkspaceNav from "./WorkspaceNav";
 import ThemeToggle from "./ThemeToggle";
 import SkipLink from "./SkipLink";
 import AdminPage from "./AdminPage";
+import Avatar from "./Avatar";
 import "./theme.css";
 
 const toolLogos = {
@@ -310,7 +311,7 @@ function App() {
           {data.user ? (
             <div className="account-control">
               <span className="account-name" title={data.user.username}>
-                <Cloud size={15} />
+                <Avatar seed={data.user.username} />
                 {data.user.username}
               </span>
               <button

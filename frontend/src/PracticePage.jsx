@@ -16,6 +16,7 @@ import AccountDialog from "./AccountDialog";
 import WorkspaceNav from "./WorkspaceNav";
 import ThemeToggle from "./ThemeToggle";
 import SkipLink from "./SkipLink";
+import Avatar from "./Avatar";
 import "./practice.css";
 
 const topicNames = {
@@ -315,7 +316,7 @@ export default function PracticePage() {
           {data?.user ? (
             <div className="account-control">
               <span className="account-name">
-                <Cloud size={15} />
+                <Avatar seed={data.user.username} />
                 {data.user.username}
               </span>
               <button aria-label="Sign out" disabled={busy} onClick={logout}>
