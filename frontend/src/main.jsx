@@ -28,6 +28,7 @@ import "./styles.css";
 import AccountDialog from "./AccountDialog";
 import useLearningView from "./useLearningView";
 import PracticePage from "./PracticePage";
+import WorkspaceNav from "./WorkspaceNav";
 
 const toolLogos = {
   argocd: "argocd",
@@ -280,6 +281,7 @@ function App() {
           </span>
           only<span>devops</span>
         </a>
+        <WorkspaceNav />
         <div className="top-right">
           {data.user ? (
             <div className="account-control">
@@ -299,6 +301,8 @@ function App() {
           ) : (
             <button
               className="save-account"
+              aria-label="Save my progress"
+              title="Save my progress"
               disabled={pending.size > 0 || accountBusy}
               onClick={() => setAccountOpen(true)}
             >

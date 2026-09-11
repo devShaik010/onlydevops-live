@@ -8,8 +8,12 @@ import {
   Infinity,
   LogOut,
   Terminal,
+  Search,
+  X,
+  Clock3,
 } from "lucide-react";
 import AccountDialog from "./AccountDialog";
+import WorkspaceNav from "./WorkspaceNav";
 import "./practice.css";
 
 const topicNames = {
@@ -95,10 +99,6 @@ function Exercise({ challenge, learner, onSaved, onBusy }) {
             </pre>
           </figure>
         ))}
-        <p className="practice-format">
-          These are provided logs and configuration snippets. Read them to
-          diagnose the incident.
-        </p>
       </section>
       <section className="practice-answer" aria-labelledby="diagnosis-title">
         <h2 id="diagnosis-title">Make the diagnosis</h2>
@@ -132,10 +132,6 @@ function Exercise({ challenge, learner, onSaved, onBusy }) {
               {busy ? "Saving answer…" : "Check answer"}
               <ArrowRight size={16} aria-hidden="true" />
             </button>
-            <p className="practice-format">
-              Choose an answer to see the explanation. Your latest result will
-              be saved.
-            </p>
           </form>
         ) : (
           <div ref={feedbackRef} tabIndex={-1} className="practice-feedback">
@@ -204,6 +200,8 @@ export default function PracticePage() {
   const [error, setError] = useState("");
   const [selected, setSelected] = useState(() => location.hash.slice(1));
   const [filter, setFilter] = useState("all");
+  const [query, setQuery] = useState("");
+  const [topic, setTopic] = useState("all");
   const [accountOpen, setAccountOpen] = useState(false);
   const [busy, setBusy] = useState(false);
   const headingRef = useRef(null);
@@ -280,13 +278,16 @@ export default function PracticePage() {
   }
 
   const solved = data?.challenges.filter((c) => c.result?.correct).length || 0;
+  const nextChallenge = data?.challenges.find((c) => c.id !== selected && !c.result?.correct);
   const visible =
     data?.challenges.filter(
       (c) =>
-        filter === "all" ||
+        (topic === "all" || c.topic === topic) &&
+        `${c.title} ${c.summary} ${topicNames[c.topic]}`.toLowerCase().includes(query.trim().toLowerCase()) &&
+        (filter === "all" ||
         (filter === "solved"
           ? c.result?.correct
-          : c.result && !c.result.correct),
+          : c.result && !c.result.correct)),
     ) || [];
   return (
     <>
@@ -305,6 +306,7 @@ export default function PracticePage() {
           </span>
           only<span>devops</span>
         </a>
+        <WorkspaceNav practice />
         <div className="top-right">
           {data?.user ? (
             <div className="account-control">
@@ -319,6 +321,8 @@ export default function PracticePage() {
           ) : (
             <button
               className="save-account"
+              aria-label="Save my progress"
+              title="Save my progress"
               disabled={!data || busy}
               onClick={() => setAccountOpen(true)}
             >
@@ -406,6 +410,11 @@ export default function PracticePage() {
                     <ArrowLeft size={15} />
                     All challenges
                   </button>
+                  {challenge.result && nextChallenge && (
+                    <button className="practice-primary" disabled={busy} onClick={() => navigate(nextChallenge.id)}>
+                      Next challenge <ArrowRight size={15} />
+                    </button>
+                  )}
                   <a href={`/#${challenge.topic}`}>
                     Review the {topicNames[challenge.topic]} sheet
                     <ArrowRight size={15} />
@@ -420,10 +429,7 @@ export default function PracticePage() {
                     <h1 ref={headingRef} tabIndex={-1}>
                       Follow the evidence<em>.</em>
                     </h1>
-                    <p>
-                      A broken deployment. A missing permission. Read the clues,
-                      choose a diagnosis, and learn how to verify the fix.
-                    </p>
+                    <p>Docker, Linux, Git and Kubernetes. Real incidents, one diagnosis at a time.</p>
                   </div>
                   <div className="practice-progress">
                     <strong>
@@ -432,6 +438,17 @@ export default function PracticePage() {
                     </strong>
                     <span>challenges solved</span>
                   </div>
+                </div>
+                <div className="practice-discovery">
+                  <div className="search">
+                    <Search size={16} aria-hidden="true" />
+                    <input aria-label="Search challenges" placeholder="Search incidents or tools" value={query} onChange={(event) => setQuery(event.target.value)} />
+                    {query && <button aria-label="Clear challenge search" onClick={() => setQuery("")}><X size={15} /></button>}
+                  </div>
+                  <select aria-label="Filter by tool" value={topic} onChange={(event) => setTopic(event.target.value)}>
+                    <option value="all">All tools</option>
+                    {Object.entries(topicNames).map(([id, name]) => <option key={id} value={id}>{name}</option>)}
+                  </select>
                 </div>
                 <div className="practice-library-bar">
                   <div className="tabs">
@@ -450,18 +467,18 @@ export default function PracticePage() {
                       </button>
                     ))}
                   </div>
-                  <span>Free starter collection</span>
+                  <span>{visible.length} challenges · Free starter collection</span>
                 </div>
                 <div className="practice-grid">
                   {visible.map((c) => (
                     <button
                       key={c.id}
-                      className="practice-card"
+                      className={`practice-card ${c.result?.correct ? "is-solved" : c.result ? "needs-review" : ""}`}
                       onClick={() => navigate(c.id)}
                     >
                       <div className="practice-card-meta">
-                        <span>{topicNames[c.topic]}</span>
-                        <span>{c.minutes} min</span>
+                        <span><img src={`/logos/${c.topic === "github-actions" ? "githubactions" : c.topic}.svg`} alt="" />{topicNames[c.topic]}</span>
+                        <span><Clock3 size={13} aria-hidden="true" />{c.minutes} min</span>
                       </div>
                       <h2>{c.title}</h2>
                       <p>{c.summary}</p>
@@ -482,15 +499,11 @@ export default function PracticePage() {
                 {!visible.length && (
                   <div className="empty">
                     <h2>
-                      {filter === "solved"
+                      {query || topic !== "all" ? "No matching challenges." : filter === "solved"
                         ? "Your first diagnosis is waiting."
                         : "Nothing to review yet."}
                     </h2>
-                    <p>
-                      Choose a challenge and check your answer to build your
-                      practice history.
-                    </p>
-                    <button onClick={() => setFilter("all")}>
+                    <button onClick={() => { setFilter("all"); setQuery(""); setTopic("all"); }}>
                       Browse all challenges
                       <ArrowRight size={14} />
                     </button>
