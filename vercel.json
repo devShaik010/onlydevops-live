@@ -1,5 +1,9 @@
 {
   "buildCommand": "npm --prefix frontend ci && npm --prefix frontend run build",
   "outputDirectory": "frontend/dist",
-  "framework": null
+  "framework": null,
+  "rewrites": [
+    { "source": "/practice", "destination": "/index.html" },
+    { "source": "/admin", "destination": "/index.html" }
+  ]
 }
