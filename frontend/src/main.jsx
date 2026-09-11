@@ -144,6 +144,17 @@ function App() {
     load();
   }, []);
   useEffect(() => {
+    if (!data || data.user || accountOpen || accountBusy) return;
+    try {
+      if (window.localStorage.getItem("onlydevops_account_prompt_seen")) return;
+      window.localStorage.setItem("onlydevops_account_prompt_seen", "1");
+    } catch {
+      return;
+    }
+    const timer = window.setTimeout(() => setAccountOpen(true), 900);
+    return () => window.clearTimeout(timer);
+  }, [data?.user?.username, accountOpen, accountBusy]);
+  useEffect(() => {
     if (!data?.user || pending.size || accountOpen || accountBusy) return;
     const refresh = () => {
       if (document.visibilityState === "visible") load(true);
