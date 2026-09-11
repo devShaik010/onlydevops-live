@@ -81,6 +81,7 @@ const items = (t) =>
   t.sections.flatMap((s) => s.commands.flatMap((c) => c.items));
 function App() {
   const roadmapToggle = useRef(null);
+  const guestPrompted = useRef(false);
   const revision = useRef(0);
   const saving = useRef(new Set());
   const [data, setData] = useState(null),
@@ -144,13 +145,8 @@ function App() {
     load();
   }, []);
   useEffect(() => {
-    if (!data || data.user || accountOpen || accountBusy) return;
-    try {
-      if (window.localStorage.getItem("onlydevops_account_prompt_seen")) return;
-      window.localStorage.setItem("onlydevops_account_prompt_seen", "1");
-    } catch {
-      return;
-    }
+    if (!data || data.user || accountOpen || accountBusy || guestPrompted.current) return;
+    guestPrompted.current = true;
     const timer = window.setTimeout(() => setAccountOpen(true), 900);
     return () => window.clearTimeout(timer);
   }, [data?.user?.username, accountOpen, accountBusy]);
