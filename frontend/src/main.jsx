@@ -29,6 +29,8 @@ import AccountDialog from "./AccountDialog";
 import useLearningView from "./useLearningView";
 import PracticePage from "./PracticePage";
 import WorkspaceNav from "./WorkspaceNav";
+import ThemeToggle from "./ThemeToggle";
+import "./theme.css";
 
 const toolLogos = {
   argocd: "argocd",
@@ -283,6 +285,7 @@ function App() {
         </a>
         <WorkspaceNav />
         <div className="top-right">
+          <ThemeToggle />
           {data.user ? (
             <div className="account-control">
               <span className="account-name" title={data.user.username}>

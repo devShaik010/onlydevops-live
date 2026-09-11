@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import AccountDialog from "./AccountDialog";
 import WorkspaceNav from "./WorkspaceNav";
+import ThemeToggle from "./ThemeToggle";
 import "./practice.css";
 
 const topicNames = {
@@ -308,6 +309,7 @@ export default function PracticePage() {
         </a>
         <WorkspaceNav practice />
         <div className="top-right">
+          <ThemeToggle />
           {data?.user ? (
             <div className="account-control">
               <span className="account-name">
