@@ -1,8 +1,23 @@
-# OnlyDevOps
+# OnlyDevOps Live
 
-A DevOps learning platform with a syllabus tracker and troubleshooting practice. Open a topic, check off individual skills, then work through realistic incidents with supplied logs, diagnostic choices, and explanations.
+A Vercel + Supabase launch track for OnlyDevOps. It keeps the existing syllabus tracker and troubleshooting practice while moving runtime hosting to Vercel and PostgreSQL to Supabase.
+
+The Docker/FastAPI/PostgreSQL implementation remains in the sibling `onlydevops-poc` repository as the infrastructure track. This repository is the managed-services launch track.
+
+## Launch setup
+
+1. Create a Supabase project and apply `supabase/migrations/20260912000000_onlydevops_core.sql` in the SQL editor or with the Supabase CLI.
+2. Copy `.env.example` to the Vercel project environment settings. Use the Supabase **transaction pooler** URL for `DATABASE_URL` and keep `COOKIE_SECURE=true`.
+3. Import this repository into Vercel. The included `vercel.json` builds `frontend/dist` and routes `/api/*` to the FastAPI function.
+4. Set the Vercel production domain as the Supabase Auth/site URL when the app switches to Supabase Auth.
+
+The current API keeps the tested account/session contract while using Supabase Postgres as its database. A later migration will replace the custom account tables with Supabase Auth users and JWT/RLS policies; do not expose `DATABASE_URL` or a Supabase service-role key to the browser.
+
+Vercel Hobby is for personal, non-commercial use. A commercial launch needs Vercel Pro or another host that permits commercial use. Supabase Free is suitable for a small beta, but it can pause inactive projects and does not include automatic backups; export the database regularly until moving to a paid plan.
 
 ## Run
+
+For the managed launch preview, use Vercel or run the frontend with `npm --prefix frontend run dev`. The Docker commands below are retained for local parity and recovery testing; they are not required by the Vercel deployment.
 
 ```sh
 docker compose up --build -d
