@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { X, Cloud, ArrowRight } from "lucide-react";
+import { celebrate } from "./celebrate";
 
 export default function AccountDialog({
   onClose,
@@ -34,6 +35,7 @@ export default function AccountDialog({
             ? result.detail
             : "Check your username and password requirements.",
         );
+      if (mode === "register") celebrate();
       await onAuthenticated();
     } catch (err) {
       setError(

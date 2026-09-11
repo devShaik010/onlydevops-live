@@ -17,6 +17,7 @@ import WorkspaceNav from "./WorkspaceNav";
 import ThemeToggle from "./ThemeToggle";
 import SkipLink from "./SkipLink";
 import Avatar from "./Avatar";
+import { celebrate } from "./celebrate";
 import "./practice.css";
 
 const topicNames = {
@@ -71,6 +72,7 @@ function Exercise({ challenge, learner, onSaved, onBusy }) {
       }
       const saved = await response.json();
       onSaved(challenge.id, saved);
+      if (saved.correct) celebrate();
       setRetry(false);
       requestAnimationFrame(() => feedbackRef.current?.focus());
     } catch (err) {
