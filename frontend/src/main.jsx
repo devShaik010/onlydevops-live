@@ -31,6 +31,7 @@ import PracticePage from "./PracticePage";
 import WorkspaceNav from "./WorkspaceNav";
 import ThemeToggle from "./ThemeToggle";
 import SkipLink from "./SkipLink";
+import AdminPage from "./AdminPage";
 import "./theme.css";
 
 const toolLogos = {
@@ -667,10 +668,12 @@ function App() {
     </>
   );
 }
-createRoot(document.getElementById("root")).render(
-  location.pathname.replace(/\/$/, "") === "/practice" ? (
-    <PracticePage />
-  ) : (
-    <App />
-  ),
-);
+
+function Root() {
+  const path = window.location.pathname.replace(/\/$/, "");
+  if (path === "/admin") return <AdminPage />;
+  if (path === "/practice") return <PracticePage />;
+  return <App />;
+}
+
+createRoot(document.getElementById("root")).render(<Root />);

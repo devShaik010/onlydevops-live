@@ -11,8 +11,12 @@ The small, managed-services MVP for OnlyDevOps. Vercel hosts the React app and J
    - `SUPABASE_URL` — `https://knezxorchnyhcopxhbqf.supabase.co`
    - `SUPABASE_SERVICE_ROLE_KEY` — the server-only Supabase service-role key
    - `COOKIE_SECURE` — `true`
+   - `ADMIN_USERNAME`, `ADMIN_PASSWORD`, `ADMIN_AUTHCODE` — private admin credentials
+   - `ADMIN_SECRET` — a long random secret used to sign the admin cookie
 
 4. Deploy. `vercel.json` builds `frontend/dist`; the catch-all `api/[...path].js` function handles `/api/*`.
+
+The private admin dashboard is available at `/admin`. It reports registrations, active sessions, learning activity, practice accuracy, and a 14-day registration trend. Keep all `ADMIN_*` values server-only and change them if they are ever exposed.
 
 The service-role key must never be prefixed with `VITE_` or exposed in frontend code. Rotate it immediately if it is ever committed or pasted into a browser.
 

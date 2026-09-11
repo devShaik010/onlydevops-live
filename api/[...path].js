@@ -6,6 +6,7 @@ const projectUrl = () => (process.env.SUPABASE_URL || "").replace(/\/$/, "");
 const serviceKey = () => process.env.SUPABASE_SERVICE_ROLE_KEY || "";
 const challengeById = new Map(challenges.map((challenge) => [challenge.id, challenge]));
 const itemIds = new Set(syllabus.flatMap((topic) => topic.sections.flatMap((section) => section.commands.flatMap((command) => command.items.map((item) => item.id)))));
+const adminSecret = () => process.env.ADMIN_SECRET || process.env.SUPABASE_SERVICE_ROLE_KEY || "";
 
 async function supabase(path, options = {}) {
   if (!projectUrl() || !serviceKey()) throw new Error("Supabase server environment is not configured.");
@@ -37,6 +38,21 @@ function cookieHeader(name, value, maxAge) {
 
 function clearCookie(name) {
   return `${name}=; Path=/; Max-Age=0; HttpOnly; SameSite=Strict`;
+}
+
+function adminCookie(token, maxAge) {
+  const secure = process.env.COOKIE_SECURE === "false" ? "" : "; Secure";
+  return `onlydevops_admin=${encodeURIComponent(token)}; Path=/; Max-Age=${maxAge}; HttpOnly; SameSite=Strict${secure}`;
+}
+
+function adminToken() {
+  return crypto.createHmac("sha256", adminSecret()).update("onlydevops-admin").digest("hex");
+}
+
+function isAdmin(req) {
+  if (!adminSecret()) return false;
+  const token = cookies(req).onlydevops_admin || "";
+  return token.length === 64 && crypto.timingSafeEqual(Buffer.from(token), Buffer.from(adminToken()));
 }
 
 function send(res, status, body, extra = {}) {
@@ -133,6 +149,42 @@ async function authenticate(req, res, mode) {
   send(res, mode === "register" ? 201 : 200, { user: { username: user.username } }, { "Set-Cookie": [cookieHeader("onlydevops_session", token, 30 * 86400), clearCookie("onlydevops_learner")] });
 }
 
+async function adminLogin(req, res) {
+  const body = await jsonBody(req);
+  const valid = adminSecret() && process.env.ADMIN_USERNAME && process.env.ADMIN_PASSWORD && process.env.ADMIN_AUTHCODE
+    && String(body.username || "") === String(process.env.ADMIN_USERNAME)
+    && String(body.password || "") === String(process.env.ADMIN_PASSWORD || "")
+    && String(body.authcode || "") === String(process.env.ADMIN_AUTHCODE || "");
+  if (!valid) return send(res, 401, { detail: "Admin credentials are incorrect." });
+  return send(res, 200, { ok: true }, { "Set-Cookie": adminCookie(adminToken(), 60 * 60 * 8) });
+}
+
+async function adminStats(req, res) {
+  if (!isAdmin(req)) return send(res, 401, { detail: "Admin sign-in required." });
+  const now = new Date();
+  const [accounts, sessions, progress, practice] = await Promise.all([
+    supabase("accounts?select=created_at&order=created_at.asc", { method: "GET" }),
+    supabase(`sessions?expires_at=gt.${encodeURIComponent(now.toISOString())}&select=account_id`, { method: "GET" }),
+    supabase("progress?select=learner", { method: "GET" }),
+    supabase("practice_progress?select=learner,correct", { method: "GET" }),
+  ]);
+  const days = Array.from({ length: 14 }, (_, index) => {
+    const date = new Date(now);
+    date.setUTCDate(date.getUTCDate() - (13 - index));
+    const key = date.toISOString().slice(0, 10);
+    return { date: key, count: accounts.filter((account) => String(account.created_at).slice(0, 10) === key).length };
+  });
+  return send(res, 200, {
+    registered: accounts.length,
+    activeSessions: new Set(sessions.map((session) => session.account_id)).size,
+    checklistCompletions: progress.length,
+    practiceAttempts: practice.length,
+    correctAttempts: practice.filter((attempt) => attempt.correct).length,
+    registrations: days,
+    updatedAt: now.toISOString(),
+  });
+}
+
 async function handler(req, res) {
   try {
     const url = new URL(req.url, "http://vercel.local");
@@ -140,6 +192,9 @@ async function handler(req, res) {
     if (req.method === "GET" && path === "health") return send(res, 200, { status: "ok" });
     if (req.method === "GET" && path === "sheet") return sheet(req, res);
     if (req.method === "GET" && path === "practice") return practice(req, res);
+    if (req.method === "POST" && path === "admin/login") return adminLogin(req, res);
+    if (req.method === "POST" && path === "admin/logout") return send(res, 200, { ok: true }, { "Set-Cookie": clearCookie("onlydevops_admin") });
+    if (req.method === "GET" && path === "admin/stats") return adminStats(req, res);
     if (req.method === "POST" && path === "auth/register") return authenticate(req, res, "register");
     if (req.method === "POST" && path === "auth/login") return authenticate(req, res, "login");
     if (req.method === "POST" && path === "auth/logout") {
