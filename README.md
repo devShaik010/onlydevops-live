@@ -2,6 +2,8 @@
 
 The small, managed-services MVP for OnlyDevOps. Vercel hosts the React app and JavaScript API function; Supabase provides PostgreSQL. The Docker implementation lives in the sibling `onlydevops-poc` repository for the later infrastructure track.
 
+![OnlyDevOps MVP architecture](docs/diagrams/onlydevops-mvp-architecture.png)
+
 ## Deploy
 
 1. In Supabase, open the SQL editor and run `supabase/migrations/20260912000000_onlydevops_core.sql`.
