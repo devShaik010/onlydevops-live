@@ -89,17 +89,32 @@ function newId() { return crypto.randomUUID(); }
 async function currentLearner(req) {
   const jar = cookies(req);
   if (jar.onlydevops_session) {
-    const sessions = await supabase(`sessions?token_hash=eq.${encodeURIComponent(tokenHash(jar.onlydevops_session))}&expires_at=gt.${encodeURIComponent(new Date().toISOString())}&select=account_id,accounts(username)`, { method: "GET" });
-    if (sessions?.[0]) return { id: sessions[0].account_id, username: sessions[0].accounts.username, account: true };
+    const sessions = await supabase(`sessions?token_hash=eq.${encodeURIComponent(tokenHash(jar.onlydevops_session))}&expires_at=gt.${encodeURIComponent(new Date().toISOString())}&select=account_id,accounts(*)`, { method: "GET" });
+    if (sessions?.[0]) {
+      const account = sessions[0].accounts;
+      return {
+        id: sessions[0].account_id,
+        username: account.username,
+        display_name: account.display_name || null,
+        email: account.email || null,
+        account: true,
+      };
+    }
   }
   return { id: jar.onlydevops_learner || newId(), username: null, account: false };
+}
+
+function publicUser(account) {
+  return account?.username
+    ? { username: account.username, display_name: account.display_name || null, email: account.email || null }
+    : null;
 }
 
 async function sheet(req, res) {
   const learner = await currentLearner(req);
   const rows = await supabase(`progress?learner=eq.${encodeURIComponent(learner.id)}&select=item_id`, { method: "GET" });
   const headers = learner.account ? {} : { "Set-Cookie": cookieHeader("onlydevops_learner", learner.id, 60 * 60 * 24 * 365) };
-  send(res, 200, { topics: syllabus, completed: rows.map((row) => row.item_id).filter((id) => itemIds.has(id)), learner: learner.id, user: learner.username ? { username: learner.username } : null }, headers);
+  send(res, 200, { topics: syllabus, completed: rows.map((row) => row.item_id).filter((id) => itemIds.has(id)), learner: learner.id, user: publicUser(learner) }, headers);
 }
 
 function publicChallenge(challenge, result) {
@@ -117,7 +132,7 @@ async function practice(req, res) {
   const rows = await supabase(`practice_progress?learner=eq.${encodeURIComponent(learner.id)}&select=challenge_id,version,choice_id,correct`, { method: "GET" });
   const results = new Map(rows.map((row) => [row.challenge_id, row]));
   const headers = learner.account ? {} : { "Set-Cookie": cookieHeader("onlydevops_learner", learner.id, 60 * 60 * 24 * 365) };
-  send(res, 200, { challenges: challenges.map((challenge) => publicChallenge(challenge, results.get(challenge.id))), learner: learner.id, user: learner.username ? { username: learner.username } : null }, headers);
+  send(res, 200, { challenges: challenges.map((challenge) => publicChallenge(challenge, results.get(challenge.id))), learner: learner.id, user: publicUser(learner) }, headers);
 }
 
 async function authenticate(req, res, mode) {
@@ -146,7 +161,28 @@ async function authenticate(req, res, mode) {
   }
   const token = crypto.randomBytes(32).toString("base64url");
   await supabase("sessions", { method: "POST", body: JSON.stringify({ token_hash: tokenHash(token), account_id: user.id, expires_at: new Date(Date.now() + 30 * 864e5).toISOString() }) });
-  send(res, mode === "register" ? 201 : 200, { user: { username: user.username } }, { "Set-Cookie": [cookieHeader("onlydevops_session", token, 30 * 86400), clearCookie("onlydevops_learner")] });
+  send(res, mode === "register" ? 201 : 200, { user: publicUser(user) }, { "Set-Cookie": [cookieHeader("onlydevops_session", token, 30 * 86400), clearCookie("onlydevops_learner")] });
+}
+
+async function updateProfile(req, res) {
+  const learner = await currentLearner(req);
+  if (!learner.account) return send(res, 401, { detail: "Sign in to update your profile." });
+  const body = await jsonBody(req);
+  const displayName = String(body.display_name || "").trim();
+  const email = String(body.email || "").trim().toLowerCase();
+  if (displayName && (displayName.length < 2 || displayName.length > 50)) {
+    return send(res, 422, { detail: "Display name must be between 2 and 50 characters." });
+  }
+  if (email && (email.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))) {
+    return send(res, 422, { detail: "Enter a valid email address." });
+  }
+  const updated = await supabase(`accounts?id=eq.${encodeURIComponent(learner.id)}&select=username,display_name,email`, {
+    method: "PATCH",
+    headers: { Prefer: "return=representation" },
+    body: JSON.stringify({ display_name: displayName || null, email: email || null }),
+  });
+  if (!updated?.[0]) return send(res, 404, { detail: "Profile not found." });
+  return send(res, 200, { user: publicUser(updated[0]) });
 }
 
 async function adminLogin(req, res) {
@@ -192,6 +228,7 @@ async function handler(req, res) {
     if (req.method === "GET" && path === "health") return send(res, 200, { status: "ok" });
     if (req.method === "GET" && path === "sheet") return sheet(req, res);
     if (req.method === "GET" && path === "practice") return practice(req, res);
+    if (req.method === "PATCH" && path === "profile") return updateProfile(req, res);
     if (req.method === "POST" && path === "admin/login") return adminLogin(req, res);
     if (req.method === "POST" && path === "admin/logout") return send(res, 200, { ok: true }, { "Set-Cookie": clearCookie("onlydevops_admin") });
     if (req.method === "GET" && path === "admin/stats") return adminStats(req, res);

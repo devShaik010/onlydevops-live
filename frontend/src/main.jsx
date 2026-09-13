@@ -4,13 +4,11 @@ import {
   Infinity,
   Workflow,
   Cloud,
-  LogOut,
   GitPullRequestArrow,
   ChevronDown,
   ChevronRight,
   Search,
   ArrowRight,
-  ArrowUpRight,
   Check,
   Layers,
   Menu,
@@ -32,7 +30,7 @@ import WorkspaceNav from "./WorkspaceNav";
 import ThemeToggle from "./ThemeToggle";
 import SkipLink from "./SkipLink";
 import AdminPage from "./AdminPage";
-import Avatar from "./Avatar";
+import ProfileMenu from "./ProfileMenu";
 import "./theme.css";
 
 const toolLogos = {
@@ -190,6 +188,9 @@ function App() {
       setAccountBusy(false);
     }
   }
+  function updateProfile(user) {
+    setData((current) => current ? { ...current, user } : current);
+  }
   async function toggle(item) {
     if (saving.current.has(item) || accountBusy || accountOpen) return;
     revision.current++;
@@ -309,20 +310,12 @@ function App() {
         <div className="top-right">
           <ThemeToggle />
           {data.user ? (
-            <div className="account-control">
-              <span className="account-name" title={data.user.username}>
-                <Avatar seed={data.user.username} />
-                {data.user.username}
-              </span>
-              <button
-                aria-label="Sign out"
-                title="Sign out"
-                disabled={pending.size > 0 || accountBusy}
-                onClick={logout}
-              >
-                <LogOut size={16} />
-              </button>
-            </div>
+            <ProfileMenu
+              user={data.user}
+              disabled={pending.size > 0 || accountBusy}
+              onLogout={logout}
+              onUpdated={updateProfile}
+            />
           ) : (
             <button
               className="save-account"
@@ -335,14 +328,6 @@ function App() {
               <span>Save my progress</span>
             </button>
           )}
-          <a
-            href="https://github.com/devShaik010/onlydevops-modern-learning-platform"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <img className="github-link-logo" src="/logos/github.svg" alt="" />{" "}
-            GitHub <ArrowUpRight size={14} />
-          </a>
           <button
             className="mobile-toggle"
             ref={roadmapToggle}

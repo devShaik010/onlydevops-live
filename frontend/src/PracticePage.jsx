@@ -6,7 +6,6 @@ import {
   ChevronRight,
   Cloud,
   Infinity,
-  LogOut,
   Terminal,
   Search,
   X,
@@ -16,7 +15,7 @@ import AccountDialog from "./AccountDialog";
 import WorkspaceNav from "./WorkspaceNav";
 import ThemeToggle from "./ThemeToggle";
 import SkipLink from "./SkipLink";
-import Avatar from "./Avatar";
+import ProfileMenu from "./ProfileMenu";
 import { celebrate } from "./celebrate";
 import "./practice.css";
 
@@ -282,6 +281,10 @@ export default function PracticePage() {
     }
   }
 
+  function updateProfile(user) {
+    setData((current) => current ? { ...current, user } : current);
+  }
+
   const solved = data?.challenges.filter((c) => c.result?.correct).length || 0;
   const nextChallenge = data?.challenges.find((c) => c.id !== selected && !c.result?.correct);
   const visible =
@@ -316,15 +319,12 @@ export default function PracticePage() {
         <div className="top-right">
           <ThemeToggle />
           {data?.user ? (
-            <div className="account-control">
-              <span className="account-name">
-                <Avatar seed={data.user.username} />
-                {data.user.username}
-              </span>
-              <button aria-label="Sign out" disabled={busy} onClick={logout}>
-                <LogOut size={16} />
-              </button>
-            </div>
+            <ProfileMenu
+              user={data.user}
+              disabled={busy}
+              onLogout={logout}
+              onUpdated={updateProfile}
+            />
           ) : (
             <button
               className="save-account"

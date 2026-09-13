@@ -8,3 +8,6 @@ __pycache__/
 
 test-results/
 playwright-report/
+.vercel/
+.env.local
+supabase/.temp/

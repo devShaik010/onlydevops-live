@@ -1,6 +1,11 @@
 import { test, expect } from "@playwright/test";
 import { execFileSync } from "node:child_process";
 
+async function logOut(page) {
+  await page.getByRole("button", { name: "Open profile menu" }).click();
+  await page.getByRole("menuitem", { name: "Log out" }).click();
+}
+
 test("guest import, two-device sync, sign out, and sign in", async ({
   browser,
 }) => {
@@ -42,12 +47,26 @@ test("guest import, two-device sync, sign out, and sign in", async ({
     await expect(remoteCheck).not.toBeChecked();
     await a.evaluate(() => window.dispatchEvent(new Event("focus")));
     await expect(check).not.toBeChecked();
-    await a.getByRole("button", { name: "Sign out", exact: true }).click();
+    const avatar = a.getByRole("button", { name: "Open profile menu" });
+    await expect(avatar.locator("img")).toHaveAttribute(
+      "src",
+      /\/adventurer\/svg\?seed=/,
+    );
+    await avatar.click();
+    await a.getByRole("menuitem", { name: "Profile" }).click();
+    await a.getByLabel("Display name").fill("Dev Learner");
+    await a.getByLabel("Email").fill("dev.learner@example.com");
+    await a.getByRole("button", { name: "Save changes" }).click();
+    await expect(a.getByRole("dialog")).toHaveCount(0);
+    await expect(
+      a.getByRole("button", { name: "Open profile menu" }),
+    ).toContainText("Dev Learner");
+    await logOut(a);
     await expect(
       a.getByRole("button", { name: "Save my progress" }),
     ).toBeVisible();
     await expect(
-      b.getByRole("button", { name: "Sign out", exact: true }),
+      b.getByRole("button", { name: "Open profile menu" }),
     ).toBeVisible();
     await a.getByRole("button", { name: "Save my progress" }).click();
     await a.getByRole("button", { name: "Sign in", exact: true }).click();
@@ -60,7 +79,7 @@ test("guest import, two-device sync, sign out, and sign in", async ({
     await a.getByLabel("Password", { exact: true }).fill(password);
     await a.getByRole("button", { name: "Sign in", exact: true }).click();
     await expect(
-      a.getByRole("button", { name: "Sign out", exact: true }),
+      a.getByRole("button", { name: "Open profile menu" }),
     ).toBeVisible();
   } finally {
     await deviceA.close();

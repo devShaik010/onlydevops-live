@@ -4,6 +4,11 @@ import { execFileSync } from "node:child_process";
 const challengeName = "The deployment that returns 502";
 const correctAnswer = "Point Nginx at api:8000, then reload its configuration.";
 
+async function logOut(page) {
+  await page.getByRole("button", { name: "Open profile menu" }).click();
+  await page.getByRole("menuitem", { name: "Log out" }).click();
+}
+
 test("challenge search and tool filters combine and can be reset", async ({ page }) => {
   await page.goto("/practice");
   await page.getByLabel("Filter by tool").selectOption("docker");
@@ -76,7 +81,7 @@ test("practice account creation imports results and sign-out clears the view", a
       page.getByText("Practice saved to your account"),
     ).toBeVisible();
     await expect(page.getByRole("status")).toHaveText("Correct diagnosis");
-    await page.getByRole("button", { name: "Sign out", exact: true }).click();
+    await logOut(page);
     await expect(
       page.getByText("Practice saved for this browser"),
     ).toBeVisible();

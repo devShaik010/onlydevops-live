@@ -858,11 +858,6 @@ footer span {
   right: -9px;
   bottom: -6px;
 }
-.github-link-logo {
-  width: 16px;
-  height: 16px;
-  filter: invert(1);
-}
 .topbar {
   background: var(--surface);
 }
@@ -942,12 +937,6 @@ h1 {
   .top-right {
     gap: 12px;
   }
-  .top-right a {
-    font-size: 11px;
-  }
-  .github-link-logo {
-    display: none;
-  }
   .brand small {
     font-size: 9px;
   }
@@ -962,25 +951,104 @@ h1 {
     gap: 15px;
   }
 }
-.account-control,
-.account-name,
 .save-account {
   display: flex;
   align-items: center;
   gap: 9px;
 }
-.account-control {
-  gap: 15px;
+.profile-menu {
+  position: relative;
 }
-.account-name {
-  color: var(--accent);
-  max-width: 220px;
+.profile-trigger {
+  min-height: 48px;
+  max-width: 240px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 3px 9px 3px 4px;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  color: var(--secondary);
+  background: transparent;
+}
+.profile-trigger:hover,
+.profile-trigger[aria-expanded="true"] {
+  color: var(--text);
+  border-color: var(--border);
+  background: var(--hover);
+}
+.profile-trigger > span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 12px;
+  font-weight: 600;
+}
+.profile-trigger > svg {
+  flex: 0 0 auto;
+  color: var(--muted);
+  transition: transform 160ms ease;
+}
+.profile-trigger[aria-expanded="true"] > svg {
+  transform: rotate(180deg);
+}
+.profile-dropdown {
+  position: absolute;
+  top: calc(100% + 9px);
+  right: 0;
+  z-index: 35;
+  width: 220px;
+  padding: 7px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+  box-shadow: 0 18px 50px #0006;
+}
+.profile-dropdown-identity {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+  padding: 10px 11px 12px;
+  margin-bottom: 5px;
+  border-bottom: 1px solid var(--border);
+}
+.profile-dropdown-identity strong,
+.profile-dropdown-identity span {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.account-name svg {
-  flex-shrink: 0;
+.profile-dropdown-identity strong {
+  font:
+    600 13px "Space Grotesk",
+    sans-serif;
+}
+.profile-dropdown-identity span {
+  color: var(--muted);
+  font:
+    10px "JetBrains Mono",
+    monospace;
+}
+.profile-dropdown > button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 11px;
+  border-radius: 7px;
+  color: var(--secondary);
+  background: transparent;
+  font-size: 12px;
+  text-align: left;
+}
+.profile-dropdown > button:hover,
+.profile-dropdown > button:focus-visible {
+  color: var(--text);
+  background: var(--hover);
+}
+.profile-dropdown > .profile-logout {
+  color: var(--danger);
 }
 .save-account {
   padding: 9px 12px;
@@ -1060,6 +1128,67 @@ button:disabled {
   line-height: 1.6;
   margin-top: 7px;
 }
+.profile-dialog {
+  width: min(500px, calc(100vw - 32px));
+}
+.profile-dialog-heading {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding-right: 28px;
+  margin-bottom: 25px;
+}
+.profile-dialog-heading h2 {
+  margin: 5px 0 4px;
+}
+.profile-dialog-heading p {
+  margin: 0;
+  color: var(--muted);
+  font:
+    11px "JetBrains Mono",
+    monospace;
+}
+.profile-input {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 0 12px;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  color: var(--muted);
+  background: var(--inset);
+}
+.profile-input:focus-within {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.profile-input input {
+  min-width: 0;
+  padding-left: 0;
+  padding-right: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+}
+.dialog-error {
+  margin: 16px 0 0;
+  color: var(--danger);
+  font-size: 12px;
+}
+.dialog-submit {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 9px;
+  margin-top: 25px;
+  padding: 12px;
+  border-radius: 7px;
+  color: var(--onAccent);
+  background: var(--accent);
+  font-size: 13px;
+  font-weight: 600;
+}
 .merge-note {
   padding: 12px;
   border-radius: 6px;
@@ -1097,25 +1226,18 @@ button:disabled {
   margin-left: 4px;
 }
 @media (max-width: 760px) {
-  .top-right > a {
-    display: none;
-  }
   .save-account {
     padding: 8px;
     font-size: 10px;
     gap: 5px;
   }
-  .account-name {
-    max-width: 95px;
-    display: block;
-    text-overflow: ellipsis;
-    font-size: 11px;
+  .profile-trigger {
+    min-width: 48px;
+    padding-right: 4px;
   }
-  .account-name svg {
+  .profile-trigger > span,
+  .profile-trigger > svg {
     display: none;
-  }
-  .account-control {
-    gap: 9px;
   }
   .account-dialog {
     padding: 26px;
