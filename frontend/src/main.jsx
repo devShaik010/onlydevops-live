@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { createRoot } from "react-dom/client";
 import {
-  Infinity,
   Workflow,
   GitPullRequestArrow,
   ChevronDown,
@@ -30,6 +29,7 @@ import ThemeToggle from "./ThemeToggle";
 import SkipLink from "./SkipLink";
 import AdminPage from "./AdminPage";
 import ProfileMenu from "./ProfileMenu";
+import BrandMark from "./BrandMark";
 import "./theme.css";
 
 const toolLogos = {
@@ -228,7 +228,7 @@ function App() {
   if (!data)
     return (
       <div className="loading">
-        <Infinity />
+        <BrandMark size={48} label="OnlyDevOps logo" />
         <h1>onlydevops</h1>
         <p role="status">{loading ? "Opening your sheet…" : error}</p>
         {!loading && <button onClick={() => load()}>Try again</button>}
@@ -296,7 +296,7 @@ function App() {
           }}
         >
           <span className="brand-icon">
-            <Infinity size={23} />
+            <BrandMark />
           </span>
           only<span>devops</span>
         </a>

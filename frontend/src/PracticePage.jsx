@@ -4,7 +4,6 @@ import {
   ArrowRight,
   Check,
   ChevronRight,
-  Infinity,
   Terminal,
   Search,
   X,
@@ -15,6 +14,7 @@ import WorkspaceNav from "./WorkspaceNav";
 import ThemeToggle from "./ThemeToggle";
 import SkipLink from "./SkipLink";
 import ProfileMenu from "./ProfileMenu";
+import BrandMark from "./BrandMark";
 import { celebrate } from "./celebrate";
 import "./practice.css";
 
@@ -301,7 +301,7 @@ export default function PracticePage() {
   if (!data)
     return (
       <div className="loading">
-        <Infinity />
+        <BrandMark size={48} label="OnlyDevOps logo" />
         <h1>onlydevops</h1>
         <p role="status">{loading ? "Opening practice…" : error}</p>
         {!loading && <button onClick={load}>Try again</button>}
@@ -315,7 +315,7 @@ export default function PracticePage() {
       <header className="topbar practice-topbar">
         <a className="brand" href="/" aria-label="OnlyDevOps learning sheet">
           <span className="brand-icon">
-            <Infinity size={23} />
+            <BrandMark />
           </span>
           only<span>devops</span>
         </a>

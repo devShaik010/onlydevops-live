@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { ArrowRight, Infinity, LogOut, RefreshCw, ShieldCheck, Users } from "lucide-react";
+import { ArrowRight, LogOut, RefreshCw, ShieldCheck, Users } from "lucide-react";
+import BrandMark from "./BrandMark";
 import ThemeToggle from "./ThemeToggle";
 import "./admin.css";
 
@@ -13,7 +14,7 @@ function Login({ onLogin }) {
     if (!response.ok) { setError("Those admin credentials did not match."); return; }
     onLogin();
   }
-  return <main className="admin-shell admin-login"><div className="admin-topline"><span className="admin-brand"><Infinity size={20} /> onlydevops</span><ThemeToggle /></div><section className="admin-login-panel"><ShieldCheck size={28} /><p className="admin-kicker">Private workspace</p><h1>Admin dashboard</h1><p className="admin-muted">Sign in to review the launch signal.</p><form onSubmit={submit}><label>Username<input value={form.username} onChange={(e) => setForm({ ...form, username: e.target.value })} autoComplete="username" required /></label><label>Password<input type="password" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} autoComplete="current-password" required /></label><label>Auth code<input value={form.authcode} onChange={(e) => setForm({ ...form, authcode: e.target.value })} autoComplete="one-time-code" required /></label>{error && <p className="admin-error" role="alert">{error}</p>}<button className="admin-primary">Open dashboard <ArrowRight size={16} /></button></form></section></main>;
+  return <main className="admin-shell admin-login"><div className="admin-topline"><span className="admin-brand"><BrandMark size={24} /> onlydevops</span><ThemeToggle /></div><section className="admin-login-panel"><ShieldCheck size={28} /><p className="admin-kicker">Private workspace</p><h1>Admin dashboard</h1><p className="admin-muted">Sign in to review the launch signal.</p><form onSubmit={submit}><label>Username<input value={form.username} onChange={(e) => setForm({ ...form, username: e.target.value })} autoComplete="username" required /></label><label>Password<input type="password" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} autoComplete="current-password" required /></label><label>Auth code<input value={form.authcode} onChange={(e) => setForm({ ...form, authcode: e.target.value })} autoComplete="one-time-code" required /></label>{error && <p className="admin-error" role="alert">{error}</p>}<button className="admin-primary">Open dashboard <ArrowRight size={16} /></button></form></section></main>;
 }
 
 function Stat({ label, value, detail }) { return <article className="admin-stat"><p>{label}</p><strong>{value.toLocaleString()}</strong><span>{detail}</span></article>; }
