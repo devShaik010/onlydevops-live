@@ -416,14 +416,6 @@ function App() {
           <div className="track">
             <span style={{ width: pct + "%" }} />
           </div>
-          <div className="progress-caption">
-            <span>
-              {n === list.length
-                ? "Sheet complete. Ready for the next step?"
-                : "Small steps. Solid foundations."}
-            </span>
-            <span>{t.sections.length} sections</span>
-          </div>
         </div>
         <div className="resume-strip">
           {nextItem ? (
@@ -450,7 +442,7 @@ function App() {
         <a className="practice-entry" href="/practice">
           <span>
             <Workflow size={18} />
-            Put your skills to work with troubleshooting practice
+            Practice troubleshooting
           </span>
           <ArrowRight size={17} />
         </a>

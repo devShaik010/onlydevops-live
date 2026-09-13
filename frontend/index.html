@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-    <meta name="theme-color" content="#101116" />
+    <meta name="theme-color" content="#000000" />
     <meta
       name="description"
       content="Learn practical DevOps with a guided command checklist and evidence-based troubleshooting challenges."
@@ -28,13 +28,13 @@
         let theme;
         try { theme = localStorage.getItem("onlydevops-theme"); } catch {}
         if (theme !== "light" && theme !== "dark") {
-          theme = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+          theme = "dark";
         }
         document.documentElement.dataset.theme = theme;
         document.documentElement.style.colorScheme = theme;
       })();
     </script>
-    <style>html { background: #101116; } html[data-theme="light"] { background: #f7f8fa; }</style>
+    <style>html { background: #000000; } html[data-theme="light"] { background: #ffffff; }</style>
   </head>
   <body><div id="root"></div><script type="module" src="/src/main.jsx"></script></body>
 </html>

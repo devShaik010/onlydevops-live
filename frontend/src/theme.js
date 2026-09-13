@@ -1,5 +1,5 @@
 export const themeKey = "onlydevops-theme";
-const systemTheme = () => matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+const systemTheme = () => "dark";
 
 export function readTheme() {
   try {
@@ -12,7 +12,7 @@ export function readTheme() {
 export function applyTheme(theme) {
   document.documentElement.dataset.theme = theme;
   document.documentElement.style.colorScheme = theme;
-  document.querySelector('meta[name="theme-color"]')?.setAttribute("content", theme === "dark" ? "#101116" : "#f7f8fa");
+  document.querySelector('meta[name="theme-color"]')?.setAttribute("content", theme === "dark" ? "#000000" : "#ffffff");
 }
 
 applyTheme(readTheme());

@@ -300,8 +300,9 @@ h1 em {
 }
 .progress-panel {
   border: 1px solid var(--line);
+  border-bottom: 0;
   border-radius: 10px;
-  padding: 22px 25px;
+  padding: 22px 25px 0;
   background: var(--surface);
 }
 .progress-top {
@@ -351,11 +352,7 @@ i {
   transition: width 0.25s ease;
 }
 .progress-caption {
-  display: flex;
-  justify-content: space-between;
-  font-size: 11px;
-  color: var(--muted);
-  margin-top: 12px;
+  display: none;
 }
 .toolbar {
   display: flex;
@@ -367,21 +364,49 @@ i {
 .tabs {
   display: flex;
   background: var(--surface);
-  border-radius: 6px;
-  padding: 4px;
-  gap: 2px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 3px;
+  gap: 3px;
 }
 .tabs button {
   font-size: 11px;
   color: var(--muted);
-  padding: 7px 12px;
-  border-radius: 4px;
+  padding: 8px 14px;
+  border-radius: 999px;
   white-space: nowrap;
+  transition: background 0.2s ease, color 0.2s ease;
 }
 .tabs button.selected {
+  background: var(--tint);
+  color: var(--accentText);
+  box-shadow: inset 0 0 0 1px var(--accentBorder);
+}
+.practice-entry {
+  display: inline-flex;
+  align-items: center;
+  gap: 18px;
+  width: max-content;
+  max-width: 100%;
+  margin-top: 26px;
+  padding: 10px 14px;
+  border: 1px solid var(--accentBorder);
+  border-radius: 7px;
+  color: var(--accentText);
+  background: var(--tint);
+  font-size: 12px;
+  font-weight: 600;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+.practice-entry > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+}
+.practice-entry:hover {
   background: var(--hover);
-  color: var(--text);
-  box-shadow: 0 1px 4px #00000020;
+  border-color: var(--accent);
+  transform: translateY(-1px);
 }
 .search {
   display: flex;
@@ -701,7 +726,7 @@ footer span {
     width: 220px;
   }
   .tabs button {
-    padding: 7px 9px;
+    padding: 8px 10px;
   }
 }
 @media (max-width: 760px) {
@@ -796,9 +821,6 @@ footer span {
   footer {
     gap: 15px;
     font-size: 10px;
-  }
-  .progress-caption {
-    font-size: 11px;
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -908,8 +930,8 @@ h1 {
 }
 .tabs button.selected {
   background: var(--tint);
-  color: var(--text);
-  box-shadow: 0 1px 4px #00000030;
+  color: var(--accentText);
+  box-shadow: inset 0 0 0 1px var(--accentBorder);
 }
 .search {
   background: var(--surface);
@@ -959,9 +981,6 @@ h1 {
   }
   .progress-top > div > span {
     font-size: 10px;
-  }
-  .progress-caption {
-    gap: 15px;
   }
 }
 .save-account {
