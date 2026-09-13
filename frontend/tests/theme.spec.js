@@ -3,6 +3,7 @@ import { test, expect } from "@playwright/test";
 test("theme follows the system until a saved choice overrides it", async ({ page }) => {
   await page.emulateMedia({ colorScheme: "light" });
   await page.goto("/");
+  await expect(page.getByRole("button", { name: "Switch to dark mode" })).toBeVisible();
   await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
   await page.emulateMedia({ colorScheme: "dark" });
   await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");

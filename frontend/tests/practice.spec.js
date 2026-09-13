@@ -30,7 +30,15 @@ test("workspace navigation and tool logos fit desktop and mobile", async ({ page
     await page.setViewportSize({ width, height: 900 });
     await page.goto("/practice");
     await expect(page.locator(".practice-card")).toHaveCount(5);
-    expect(await page.locator(".practice-card-meta img").evaluateAll((images) => images.every((image) => image.complete && image.naturalWidth > 0))).toBe(true);
+    await expect
+      .poll(() =>
+        page
+          .locator(".practice-card-meta img")
+          .evaluateAll((images) =>
+            images.every((image) => image.complete && image.naturalWidth > 0),
+          ),
+      )
+      .toBe(true);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     const nav = page.getByRole("navigation", { name: "Workspace", exact: true });
     await expect(nav.getByRole("link", { name: "Practice", exact: true })).toHaveAttribute("aria-current", "page");
