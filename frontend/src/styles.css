@@ -1128,6 +1128,65 @@ button:disabled {
   line-height: 1.6;
   margin-top: 7px;
 }
+.auth-dialog {
+  width: min(440px, calc(100vw - 32px));
+  padding: 38px;
+}
+.auth-dialog .eyebrow,
+.auth-dialog h2,
+.auth-dialog > p {
+  text-align: center;
+}
+.auth-avatar {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto 24px;
+}
+.auth-avatar .user-avatar {
+  box-shadow: 0 0 0 7px var(--tint);
+}
+.password-field {
+  position: relative;
+}
+.password-field input {
+  padding-right: 48px;
+}
+.password-field button {
+  position: absolute;
+  top: 50%;
+  right: 5px;
+  width: 38px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  transform: translateY(-50%);
+  color: var(--muted);
+  border-radius: 6px;
+}
+.password-field button:hover {
+  color: var(--text);
+  background: var(--hover);
+}
+.account-dialog .privacy-acceptance {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 20px 0 0;
+  color: var(--secondary);
+  line-height: 1.5;
+}
+.account-dialog .privacy-acceptance input {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 auto;
+  margin: 1px 0 0;
+  accent-color: var(--accent);
+}
+.privacy-acceptance a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
 .profile-dialog {
   width: min(500px, calc(100vw - 32px));
 }

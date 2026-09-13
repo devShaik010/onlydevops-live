@@ -4,7 +4,6 @@ import {
   ArrowRight,
   Check,
   ChevronRight,
-  Cloud,
   Infinity,
   Terminal,
   Search,
@@ -206,7 +205,6 @@ export default function PracticePage() {
   const [filter, setFilter] = useState("all");
   const [query, setQuery] = useState("");
   const [topic, setTopic] = useState("all");
-  const [accountOpen, setAccountOpen] = useState(false);
   const [busy, setBusy] = useState(false);
   const headingRef = useRef(null);
   const generation = useRef(0);
@@ -217,6 +215,10 @@ export default function PracticePage() {
     setError("");
     try {
       const response = await fetch("/api/practice");
+      if (response.status === 401) {
+        if (current === generation.current) setData({ user: null });
+        return;
+      }
       if (!response.ok) throw Error();
       const body = await response.json();
       if (current === generation.current) setData(body);
@@ -241,7 +243,7 @@ export default function PracticePage() {
       window.removeEventListener("hashchange", onHash);
     };
   }, []);
-  const challenge = data?.challenges.find((c) => c.id === selected);
+  const challenge = data?.challenges?.find((c) => c.id === selected);
   useEffect(() => {
     document.title = `${challenge?.title || "Troubleshooting practice"} · OnlyDevOps`;
     if (!loading) headingRef.current?.focus({ preventScroll: true });
@@ -254,7 +256,6 @@ export default function PracticePage() {
     window.scrollTo({ top: 0, behavior: "instant" });
   }
   async function authenticated() {
-    setAccountOpen(false);
     setBusy(true);
     // Unmount the old account's answer form before refreshing its identity.
     setData(null);
@@ -285,10 +286,10 @@ export default function PracticePage() {
     setData((current) => current ? { ...current, user } : current);
   }
 
-  const solved = data?.challenges.filter((c) => c.result?.correct).length || 0;
-  const nextChallenge = data?.challenges.find((c) => c.id !== selected && !c.result?.correct);
+  const solved = data?.challenges?.filter((c) => c.result?.correct).length || 0;
+  const nextChallenge = data?.challenges?.find((c) => c.id !== selected && !c.result?.correct);
   const visible =
-    data?.challenges.filter(
+    data?.challenges?.filter(
       (c) =>
         (topic === "all" || c.topic === topic) &&
         `${c.title} ${c.summary} ${topicNames[c.topic]}`.toLowerCase().includes(query.trim().toLowerCase()) &&
@@ -297,16 +298,19 @@ export default function PracticePage() {
           ? c.result?.correct
           : c.result && !c.result.correct)),
     ) || [];
+  if (!data)
+    return (
+      <div className="loading">
+        <Infinity />
+        <h1>onlydevops</h1>
+        <p role="status">{loading ? "Opening practice…" : error}</p>
+        {!loading && <button onClick={load}>Try again</button>}
+      </div>
+    );
+  if (!data.user)
+    return <AccountDialog required onAuthenticated={authenticated} hasPractice />;
   return (
     <>
-      {accountOpen && (
-        <AccountDialog
-          onClose={() => setAccountOpen(false)}
-          onAuthenticated={authenticated}
-          hasProgress={data?.challenges.some((c) => c.result)}
-          hasPractice
-        />
-      )}
       <SkipLink />
       <header className="topbar practice-topbar">
         <a className="brand" href="/" aria-label="OnlyDevOps learning sheet">
@@ -318,25 +322,12 @@ export default function PracticePage() {
         <WorkspaceNav practice />
         <div className="top-right">
           <ThemeToggle />
-          {data?.user ? (
-            <ProfileMenu
-              user={data.user}
-              disabled={busy}
-              onLogout={logout}
-              onUpdated={updateProfile}
-            />
-          ) : (
-            <button
-              className="save-account"
-              aria-label="Save my progress"
-              title="Save my progress"
-              disabled={!data || busy}
-              onClick={() => setAccountOpen(true)}
-            >
-              <Cloud size={15} />
-              <span>Save my progress</span>
-            </button>
-          )}
+          <ProfileMenu
+            user={data.user}
+            disabled={busy}
+            onLogout={logout}
+            onUpdated={updateProfile}
+          />
         </div>
       </header>
       <main id="main-content" tabIndex={-1} className="practice-main">

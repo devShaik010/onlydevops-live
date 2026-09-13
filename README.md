@@ -33,7 +33,7 @@ The frontend proxy points to the existing Docker API at `http://localhost:8088`.
 
 ## MVP scope
 
-The live track includes the syllabus checklist, troubleshooting practice, guest progress, username/password accounts, progress import, light/dark themes, keyboard navigation, and responsive layouts. The JavaScript function keeps the current API contract so the UI does not need a second rewrite.
+The live track includes an account-gated syllabus checklist, troubleshooting practice, synced progress, username/password accounts, profile settings, light/dark themes, keyboard navigation, and responsive layouts. The JavaScript function keeps the current API contract so the UI does not need a second rewrite.
 
 Correct practice answers stay in the server function. Public database roles have no access to application tables; the function uses the service role server-side. The next security iteration should move account identity to Supabase Auth and use JWT-backed ownership policies before accepting payments or sensitive user data.
 

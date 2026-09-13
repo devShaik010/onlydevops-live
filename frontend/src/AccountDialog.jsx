@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { X, Cloud, ArrowRight } from "lucide-react";
+import { ArrowRight, Eye, EyeOff, X } from "lucide-react";
+import Avatar from "./Avatar";
 import { celebrate } from "./celebrate";
 
 export default function AccountDialog({
@@ -7,16 +8,22 @@ export default function AccountDialog({
   onAuthenticated,
   hasProgress,
   hasPractice = false,
+  required = false,
 }) {
   const dialog = useRef(null);
+  const avatarSeed = useRef(`new-learner-${crypto.randomUUID()}`);
   const [mode, setMode] = useState("register");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [acceptedPrivacy, setAcceptedPrivacy] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
+
   useEffect(() => {
     dialog.current.showModal();
   }, []);
+
   async function submit(event) {
     event.preventDefault();
     if (busy) return;
@@ -26,7 +33,11 @@ export default function AccountDialog({
       const response = await fetch(`/api/auth/${mode}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({
+          username,
+          password,
+          accept_privacy: mode === "register" ? acceptedPrivacy : undefined,
+        }),
       });
       const result = await response.json();
       if (!response.ok)
@@ -46,35 +57,48 @@ export default function AccountDialog({
       setBusy(false);
     }
   }
+
+  function switchMode() {
+    setMode(mode === "register" ? "login" : "register");
+    setError("");
+    setPassword("");
+    setShowPassword(false);
+  }
+
   return (
     <dialog
       ref={dialog}
-      className="account-dialog"
+      className={`account-dialog auth-dialog${required ? " auth-required" : ""}`}
       aria-labelledby="account-title"
-      onCancel={(e) => {
-        e.preventDefault();
-        if (!busy) onClose();
+      onCancel={(event) => {
+        event.preventDefault();
+        if (!required && !busy) onClose?.();
       }}
     >
-      <button
-        className="dialog-close"
-        onClick={onClose}
-        disabled={busy}
-        aria-label="Close account dialog"
-      >
-        <X size={20} />
-      </button>
-      <div className="account-icon">
-        <Cloud size={25} />
+      {!required && (
+        <button
+          className="dialog-close"
+          onClick={onClose}
+          disabled={busy}
+          aria-label="Close account dialog"
+        >
+          <X size={20} />
+        </button>
+      )}
+      <div className="auth-avatar">
+        <Avatar
+          seed={username.trim().toLowerCase() || avatarSeed.current}
+          size={88}
+        />
       </div>
-      <div className="eyebrow blue">YOUR PROGRESS, EVERYWHERE</div>
+      <div className="eyebrow blue">WELCOME TO ONLYDEVOPS</div>
       <h2 id="account-title">
-        {mode === "register" ? "Make your progress yours." : "Welcome back."}
+        {mode === "register" ? "Create your account." : "Welcome back."}
       </h2>
       <p>
         {mode === "register"
-          ? "Create an account to keep your checklist across devices."
-          : "Sign in to pick up where you left off."}
+          ? "Create one account to open your learning sheet and save progress."
+          : "Sign in to continue your DevOps learning path."}
       </p>
       <form onSubmit={submit}>
         <label htmlFor="account-username">Username</label>
@@ -89,37 +113,61 @@ export default function AccountDialog({
           maxLength={32}
           pattern="[A-Za-z0-9_]{3,32}"
           value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          onChange={(event) => setUsername(event.target.value)}
           disabled={busy}
           aria-describedby="username-hint"
+          placeholder="Choose a username"
         />
         <small id="username-hint">3–32 letters, numbers, or underscores.</small>
         <label htmlFor="account-password">Password</label>
-        <input
-          id="account-password"
-          type="password"
-          autoComplete={
-            mode === "register" ? "new-password" : "current-password"
-          }
-          required
-          minLength={12}
-          maxLength={128}
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          disabled={busy}
-          aria-describedby="password-hint"
-        />
-        <small id="password-hint">
-          At least 12 characters.
-          {mode === "register"
-            ? " Save it in your password manager; password reset isn’t available yet."
-            : ""}
-        </small>
+        <div className="password-field">
+          <input
+            id="account-password"
+            type={showPassword ? "text" : "password"}
+            autoComplete={
+              mode === "register" ? "new-password" : "current-password"
+            }
+            required
+            minLength={8}
+            maxLength={128}
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
+            disabled={busy}
+            aria-describedby="password-hint"
+            placeholder="At least 8 characters"
+          />
+          <button
+            type="button"
+            onClick={() => setShowPassword((visible) => !visible)}
+            aria-label={showPassword ? "Hide password" : "Show password"}
+            aria-pressed={showPassword}
+          >
+            {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+          </button>
+        </div>
+        <small id="password-hint">At least 8 characters.</small>
+        {mode === "register" && (
+          <label className="privacy-acceptance">
+            <input
+              type="checkbox"
+              checked={acceptedPrivacy}
+              onChange={(event) => setAcceptedPrivacy(event.target.checked)}
+              required
+            />
+            <span>
+              I agree to the{" "}
+              <a href="/privacy.html" target="_blank" rel="noreferrer">
+                Privacy Policy
+              </a>
+              .
+            </span>
+          </label>
+        )}
         {hasProgress && (
           <div className="merge-note">
             {hasPractice
-              ? "Your guest practice results will be added to your account."
-              : "Your completed guest items will be added to your account."}
+              ? "Your saved practice results will be added to this account."
+              : "Your saved checklist items will be added to this account."}
           </div>
         )}
         {error && (
@@ -127,7 +175,10 @@ export default function AccountDialog({
             {error}
           </div>
         )}
-        <button className="account-submit" disabled={busy}>
+        <button
+          className="account-submit"
+          disabled={busy || (mode === "register" && !acceptedPrivacy)}
+        >
           {busy
             ? "Please wait…"
             : mode === "register"
@@ -140,14 +191,7 @@ export default function AccountDialog({
         {mode === "register"
           ? "Already have an account?"
           : "New to OnlyDevOps?"}{" "}
-        <button
-          disabled={busy}
-          onClick={() => {
-            setMode(mode === "register" ? "login" : "register");
-            setError("");
-            setPassword("");
-          }}
-        >
+        <button disabled={busy} onClick={switchMode}>
           {mode === "register" ? "Sign in" : "Create account"}
         </button>
       </div>

@@ -3,7 +3,6 @@ import { createRoot } from "react-dom/client";
 import {
   Infinity,
   Workflow,
-  Cloud,
   GitPullRequestArrow,
   ChevronDown,
   ChevronRight,
@@ -80,7 +79,6 @@ const items = (t) =>
   t.sections.flatMap((s) => s.commands.flatMap((c) => c.items));
 function App() {
   const roadmapToggle = useRef(null);
-  const guestPrompted = useRef(false);
   const revision = useRef(0);
   const saving = useRef(new Set());
   const [data, setData] = useState(null),
@@ -89,7 +87,6 @@ function App() {
     [error, setError] = useState(""),
     [loading, setLoading] = useState(true),
     [mobile, setMobile] = useState(false),
-    [accountOpen, setAccountOpen] = useState(false),
     [accountBusy, setAccountBusy] = useState(false),
     [syncError, setSyncError] = useState(false);
   const {
@@ -105,13 +102,13 @@ function App() {
   useEffect(() => {
     if (!mobile) return;
     const closeOnEscape = (event) => {
-      if (event.key !== "Escape" || accountOpen) return;
+      if (event.key !== "Escape") return;
       setMobile(false);
       roadmapToggle.current?.focus();
     };
     window.addEventListener("keydown", closeOnEscape);
     return () => window.removeEventListener("keydown", closeOnEscape);
-  }, [mobile, accountOpen]);
+  }, [mobile]);
   async function load(quiet = false) {
     if (saving.current.size) return;
     const current = ++revision.current;
@@ -121,6 +118,13 @@ function App() {
     }
     try {
       const r = await fetch("/api/sheet");
+      if (r.status === 401) {
+        if (current === revision.current) {
+          setData({ user: null });
+          setCompleted(new Set());
+        }
+        return true;
+      }
       if (!r.ok) throw Error();
       const d = await r.json();
       if (current !== revision.current) return;
@@ -144,13 +148,7 @@ function App() {
     load();
   }, []);
   useEffect(() => {
-    if (!data || data.user || accountOpen || accountBusy || guestPrompted.current) return;
-    guestPrompted.current = true;
-    const timer = window.setTimeout(() => setAccountOpen(true), 900);
-    return () => window.clearTimeout(timer);
-  }, [data?.user?.username, accountOpen, accountBusy]);
-  useEffect(() => {
-    if (!data?.user || pending.size || accountOpen || accountBusy) return;
+    if (!data?.user || pending.size || accountBusy) return;
     const refresh = () => {
       if (document.visibilityState === "visible") load(true);
     };
@@ -160,10 +158,9 @@ function App() {
       clearInterval(timer);
       window.removeEventListener("focus", refresh);
     };
-  }, [data?.user?.username, pending.size, accountOpen, accountBusy]);
+  }, [data?.user?.username, pending.size, accountBusy]);
   async function authenticated() {
     revision.current++;
-    setAccountOpen(false);
     setAccountBusy(true);
     const loaded = await load();
     if (!loaded) setData(null);
@@ -192,7 +189,7 @@ function App() {
     setData((current) => current ? { ...current, user } : current);
   }
   async function toggle(item) {
-    if (saving.current.has(item) || accountBusy || accountOpen) return;
+    if (saving.current.has(item) || accountBusy) return;
     revision.current++;
     saving.current.add(item);
     const completed = !done.has(item);
@@ -236,6 +233,10 @@ function App() {
         <p role="status">{loading ? "Opening your sheet…" : error}</p>
         {!loading && <button onClick={() => load()}>Try again</button>}
       </div>
+    );
+  if (!data.user)
+    return (
+      <AccountDialog required onAuthenticated={authenticated} />
     );
   const topics = data.topics,
     t = topics.find((t) => t.id === id) || topics[0],
@@ -284,13 +285,6 @@ function App() {
     .filter((s) => s.commands.length);
   return (
     <>
-      {accountOpen && (
-        <AccountDialog
-          onClose={() => setAccountOpen(false)}
-          onAuthenticated={authenticated}
-          hasProgress={done.size > 0}
-        />
-      )}
       <SkipLink onSkip={() => setMobile(false)} />
       <header className="topbar">
         <a
@@ -309,25 +303,12 @@ function App() {
         <WorkspaceNav />
         <div className="top-right">
           <ThemeToggle />
-          {data.user ? (
-            <ProfileMenu
-              user={data.user}
-              disabled={pending.size > 0 || accountBusy}
-              onLogout={logout}
-              onUpdated={updateProfile}
-            />
-          ) : (
-            <button
-              className="save-account"
-              aria-label="Save my progress"
-              title="Save my progress"
-              disabled={pending.size > 0 || accountBusy}
-              onClick={() => setAccountOpen(true)}
-            >
-              <Cloud size={15} />
-              <span>Save my progress</span>
-            </button>
-          )}
+          <ProfileMenu
+            user={data.user}
+            disabled={pending.size > 0 || accountBusy}
+            onLogout={logout}
+            onUpdated={updateProfile}
+          />
           <button
             className="mobile-toggle"
             ref={roadmapToggle}

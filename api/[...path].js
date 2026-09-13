@@ -112,6 +112,7 @@ function publicUser(account) {
 
 async function sheet(req, res) {
   const learner = await currentLearner(req);
+  if (!learner.account) return send(res, 401, { detail: "Create an account or sign in to open your learning sheet." });
   const rows = await supabase(`progress?learner=eq.${encodeURIComponent(learner.id)}&select=item_id`, { method: "GET" });
   const headers = learner.account ? {} : { "Set-Cookie": cookieHeader("onlydevops_learner", learner.id, 60 * 60 * 24 * 365) };
   send(res, 200, { topics: syllabus, completed: rows.map((row) => row.item_id).filter((id) => itemIds.has(id)), learner: learner.id, user: publicUser(learner) }, headers);
@@ -129,6 +130,7 @@ function publicChallenge(challenge, result) {
 
 async function practice(req, res) {
   const learner = await currentLearner(req);
+  if (!learner.account) return send(res, 401, { detail: "Create an account or sign in to open practice." });
   const rows = await supabase(`practice_progress?learner=eq.${encodeURIComponent(learner.id)}&select=challenge_id,version,choice_id,correct`, { method: "GET" });
   const results = new Map(rows.map((row) => [row.challenge_id, row]));
   const headers = learner.account ? {} : { "Set-Cookie": cookieHeader("onlydevops_learner", learner.id, 60 * 60 * 24 * 365) };
@@ -139,12 +141,13 @@ async function authenticate(req, res, mode) {
   const body = await jsonBody(req);
   const username = String(body.username || "").trim().toLowerCase();
   const password = String(body.password || "");
-  if (!/^[a-z0-9_]{3,32}$/.test(username) || password.length < 12 || password.length > 128) return send(res, 422, { detail: "Check your username and password requirements." });
+  if (!/^[a-z0-9_]{3,32}$/.test(username) || password.length < 8 || password.length > 128) return send(res, 422, { detail: "Use a valid username and a password with at least 8 characters." });
+  if (mode === "register" && body.accept_privacy !== true) return send(res, 422, { detail: "Accept the Privacy Policy to create your account." });
   const matches = await supabase(`accounts?username=eq.${encodeURIComponent(username)}&select=id,username,password_hash`, { method: "GET" });
   let user = matches?.[0];
   if (mode === "register") {
     if (user) return send(res, 409, { detail: "That username is taken. Choose another or sign in." });
-    const created = await supabase("accounts", { method: "POST", headers: { Prefer: "return=representation" }, body: JSON.stringify({ id: newId(), username, password_hash: hashPassword(password) }) });
+    const created = await supabase("accounts", { method: "POST", headers: { Prefer: "return=representation" }, body: JSON.stringify({ id: newId(), username, password_hash: hashPassword(password), privacy_accepted_at: new Date().toISOString() }) });
     user = created[0];
   } else if (!user || !validPassword(password, user.password_hash)) {
     return send(res, 401, { detail: "Username or password is incorrect." });
@@ -244,7 +247,7 @@ async function handler(req, res) {
       const body = await jsonBody(req);
       if (!itemIds.has(progressMatch[1]) || typeof body.completed !== "boolean") return send(res, 422, { detail: "Invalid checklist item or completion value." });
       const learner = await currentLearner(req);
-      if (!learner.id) return send(res, 401, { detail: "Open your sheet before updating progress." });
+      if (!learner.account) return send(res, 401, { detail: "Sign in before updating progress." });
       if (body.completed) await supabase("progress", { method: "POST", headers: { Prefer: "resolution=ignore-duplicates" }, body: JSON.stringify({ learner: learner.id, item_id: progressMatch[1] }) });
       else await supabase(`progress?learner=eq.${encodeURIComponent(learner.id)}&item_id=eq.${encodeURIComponent(progressMatch[1])}`, { method: "DELETE" });
       return send(res, 200, { item_id: progressMatch[1], completed: body.completed });
@@ -258,6 +261,7 @@ async function handler(req, res) {
       const option = challenge.options.find((entry) => entry.id === body.choice_id);
       if (!option) return send(res, 422, { detail: "Choose one of the available answers." });
       const learner = await currentLearner(req);
+      if (!learner.account) return send(res, 401, { detail: "Sign in before saving practice." });
       if (!learner.id || req.headers["x-learner"] !== learner.id) return send(res, 409, { detail: "Your account changed. Reload practice before saving." });
       const result = { choice_id: body.choice_id, correct: body.choice_id === challenge.answer, answer: challenge.answer, feedback: option.feedback, explanation: challenge.explanation, verification: challenge.verification, sources: challenge.sources };
       await supabase("practice_progress", { method: "POST", headers: { Prefer: "resolution=merge-duplicates" }, body: JSON.stringify({ learner: learner.id, challenge_id: challenge.id, version: challenge.version, choice_id: body.choice_id, correct: result.correct, updated_at: new Date().toISOString() }) });
