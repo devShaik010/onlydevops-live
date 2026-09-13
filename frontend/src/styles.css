@@ -16,6 +16,21 @@
 body {
   margin: 0;
 }
+html,
+body,
+.sidebar,
+.account-dialog {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+.sidebar::-webkit-scrollbar,
+.account-dialog::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
 button {
   cursor: pointer;
   font: inherit;
