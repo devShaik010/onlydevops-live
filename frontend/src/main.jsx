@@ -81,6 +81,8 @@ function App() {
   const roadmapToggle = useRef(null);
   const revision = useRef(0);
   const saving = useRef(new Set());
+  const queuedProgress = useRef(new Map());
+  const progressTimer = useRef(null);
   const [data, setData] = useState(null),
     [done, setCompleted] = useState(new Set()),
     [pending, setPending] = useState(new Set()),
@@ -147,6 +149,21 @@ function App() {
   useEffect(() => {
     load();
   }, []);
+  useEffect(
+    () => () => {
+      if (progressTimer.current) clearTimeout(progressTimer.current);
+    },
+    [],
+  );
+  useEffect(() => {
+    const saveBeforeLeaving = () => {
+      if (!progressTimer.current) return;
+      clearTimeout(progressTimer.current);
+      flushProgress();
+    };
+    window.addEventListener("pagehide", saveBeforeLeaving);
+    return () => window.removeEventListener("pagehide", saveBeforeLeaving);
+  }, [data?.learner]);
   useEffect(() => {
     if (!data?.user || pending.size || accountBusy) return;
     const refresh = () => {
@@ -188,38 +205,76 @@ function App() {
   function updateProfile(user) {
     setData((current) => current ? { ...current, user } : current);
   }
-  async function toggle(item) {
-    if (saving.current.has(item) || accountBusy) return;
-    revision.current++;
-    saving.current.add(item);
-    const completed = !done.has(item);
-    setPending((p) => new Set(p).add(item));
-    setError("");
+  async function flushProgress() {
+    progressTimer.current = null;
+    const changes = Array.from(
+      queuedProgress.current,
+      ([item_id, completed]) => ({
+        item_id,
+        completed,
+      }),
+    );
+    if (!changes.length) return;
+    queuedProgress.current.clear();
     try {
-      const r = await fetch("/api/progress/" + item, {
+      const r = await fetch("/api/progress", {
         method: "PUT",
+        keepalive: true,
         headers: {
           "Content-Type": "application/json",
           "X-Learner": data.learner,
         },
-        body: JSON.stringify({ completed }),
+        body: JSON.stringify({ changes }),
       });
       if (!r.ok) throw Error();
-      setCompleted((p) => {
-        const n = new Set(p);
-        completed ? n.add(item) : n.delete(item);
-        return n;
-      });
+      const result = await r.json();
+      const failed = new Set(result.failed || []);
+      if (failed.size) {
+        setCompleted((current) => {
+          const next = new Set(current);
+          for (const { item_id, completed } of changes) {
+            if (!failed.has(item_id)) continue;
+            completed ? next.delete(item_id) : next.add(item_id);
+          }
+          return next;
+        });
+        setError("Some checks weren’t saved. Please try again.");
+      } else {
+        setSyncError(false);
+      }
     } catch {
+      setCompleted((current) => {
+        const next = new Set(current);
+        for (const { item_id, completed } of changes) {
+          completed ? next.delete(item_id) : next.add(item_id);
+        }
+        return next;
+      });
       setError("That check wasn’t saved. Please try again.");
     } finally {
-      saving.current.delete(item);
+      for (const { item_id } of changes) saving.current.delete(item_id);
       setPending((p) => {
         const n = new Set(p);
-        n.delete(item);
+        for (const { item_id } of changes) n.delete(item_id);
         return n;
       });
     }
+  }
+  function toggle(item) {
+    if (saving.current.has(item) || accountBusy) return;
+    revision.current++;
+    const completed = !done.has(item);
+    saving.current.add(item);
+    queuedProgress.current.set(item, completed);
+    setCompleted((current) => {
+      const next = new Set(current);
+      completed ? next.add(item) : next.delete(item);
+      return next;
+    });
+    setPending((p) => new Set(p).add(item));
+    setError("");
+    if (progressTimer.current) clearTimeout(progressTimer.current);
+    progressTimer.current = setTimeout(flushProgress, 400);
   }
   function go(v) {
     navigate(v);

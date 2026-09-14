@@ -50,6 +50,7 @@ test("account gate, two-device sync, profile, logout, and sign in", async ({
     const check = a.getByRole("checkbox", { name: "ls -a", exact: true });
     await check.click();
     await expect(check).toBeChecked();
+    await expect(check).toBeEnabled();
 
     await b.goto(base);
     await signIn(b, username, password);

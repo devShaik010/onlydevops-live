@@ -1,4 +1,22 @@
 import { test, expect } from "@playwright/test";
+import { readFileSync } from "node:fs";
+
+const syllabus = JSON.parse(
+  readFileSync(new URL("../../api/syllabus.json", import.meta.url)),
+);
+
+async function mockSheet(page) {
+  await page.route("**/api/sheet", (route) =>
+    route.fulfill({
+      json: {
+        topics: syllabus,
+        completed: [],
+        learner: "00000000-0000-4000-8000-000000000001",
+        user: { username: "batch_test" },
+      },
+    }),
+  );
+}
 test("save, reload, filter, navigate, and undo", async ({ page }) => {
   await page.goto("/");
   const checkbox = page.getByRole("checkbox", { name: "ls -a", exact: true });
@@ -25,8 +43,9 @@ test("save, reload, filter, navigate, and undo", async ({ page }) => {
 test("failed saves preserve unchecked state and show an error", async ({
   page,
 }) => {
+  await mockSheet(page);
   await page.goto("/");
-  await page.route("**/api/progress/**", (route) =>
+  await page.route("**/api/progress", (route) =>
     route.fulfill({ status: 503, body: "unavailable" }),
   );
   await page.getByRole("checkbox", { name: "ls -a", exact: true }).click();
@@ -34,6 +53,33 @@ test("failed saves preserve unchecked state and show an error", async ({
   await expect(
     page.getByRole("checkbox", { name: "ls -a", exact: true }),
   ).not.toBeChecked();
+});
+
+test("rapid progress changes are optimistic and batched", async ({ page }) => {
+  let requests = 0;
+  let changes = [];
+  await mockSheet(page);
+  await page.route("**/api/progress", async (route) => {
+    requests += 1;
+    changes = route.request().postDataJSON().changes;
+    await route.fulfill({
+      json: { saved: changes.map((change) => change.item_id), failed: [] },
+    });
+  });
+  await page.goto("/");
+  const first = page.getByRole("checkbox", { name: "ls -a", exact: true });
+  const second = page.getByRole("checkbox", { name: "ls -lh", exact: true });
+  await first.click();
+  await expect(first).toBeChecked();
+  await second.click();
+  await expect(second).toBeChecked();
+  await expect(first).toBeEnabled();
+  await expect(second).toBeEnabled();
+  expect(requests).toBe(1);
+  expect(changes).toEqual([
+    { item_id: "linux-0-0-1", completed: true },
+    { item_id: "linux-0-0-3", completed: true },
+  ]);
 });
 test("mobile roadmap and narrow layout", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });

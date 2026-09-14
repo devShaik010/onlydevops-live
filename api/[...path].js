@@ -242,6 +242,32 @@ async function handler(req, res) {
       if (jar.onlydevops_session) await supabase(`sessions?token_hash=eq.${encodeURIComponent(tokenHash(jar.onlydevops_session))}`, { method: "DELETE" });
       return send(res, 200, { ok: true }, { "Set-Cookie": [clearCookie("onlydevops_session"), cookieHeader("onlydevops_learner", newId(), 60 * 60 * 24 * 365)] });
     }
+    if (req.method === "PUT" && path === "progress") {
+      const body = await jsonBody(req);
+      const changes = Array.isArray(body.changes) ? body.changes : [];
+      if (!changes.length || changes.length > 100) return send(res, 422, { detail: "Send between 1 and 100 progress changes." });
+      const finalChanges = new Map();
+      for (const change of changes) {
+        if (!change || !itemIds.has(change.item_id) || typeof change.completed !== "boolean") return send(res, 422, { detail: "Invalid checklist item or completion value." });
+        finalChanges.set(change.item_id, change.completed);
+      }
+      const learner = await currentLearner(req);
+      if (!learner.account) return send(res, 401, { detail: "Sign in before updating progress." });
+      if (!learner.id || req.headers["x-learner"] !== learner.id) return send(res, 409, { detail: "Your account changed. Reload your sheet before saving." });
+      const completed = [];
+      const incomplete = [];
+      for (const [itemId, isCompleted] of finalChanges) (isCompleted ? completed : incomplete).push(itemId);
+      const results = await Promise.allSettled([
+        completed.length ? supabase("progress", { method: "POST", headers: { Prefer: "resolution=ignore-duplicates" }, body: JSON.stringify(completed.map((item_id) => ({ learner: learner.id, item_id }))) }) : null,
+        incomplete.length ? supabase(`progress?learner=eq.${encodeURIComponent(learner.id)}&item_id=in.(${incomplete.map(encodeURIComponent).join(",")})`, { method: "DELETE" }) : null,
+      ]);
+      const failed = [
+        ...(results[0].status === "rejected" ? completed : []),
+        ...(results[1].status === "rejected" ? incomplete : []),
+      ];
+      if (failed.length) console.error("Some progress changes failed to save.", ...results.filter((result) => result.status === "rejected").map((result) => result.reason));
+      return send(res, 200, { saved: Array.from(finalChanges.keys()).filter((itemId) => !failed.includes(itemId)), failed });
+    }
     const progressMatch = path.match(/^progress\/([^/]+)$/);
     if (req.method === "PUT" && progressMatch) {
       const body = await jsonBody(req);

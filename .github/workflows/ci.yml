@@ -21,5 +21,7 @@ jobs:
         run: node -e "const fs=require('fs'); const syllabus=JSON.parse(fs.readFileSync('api/syllabus.json')); const challenges=JSON.parse(fs.readFileSync('api/challenges.json')); const topics=new Set(syllabus.map(t=>t.id)); if(challenges.some(c=>!topics.has(c.topic)||!c.options.some(o=>o.id===c.answer))) process.exit(1); console.log('Content OK')"
       - name: Check API syntax
         run: node --check 'api/[...path].js'
+      - name: Test progress batching API
+        run: node --test api/progress.test.cjs
       - name: Build frontend
         run: npm --prefix frontend run build
