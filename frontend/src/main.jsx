@@ -83,6 +83,7 @@ function App() {
   const saving = useRef(new Set());
   const queuedProgress = useRef(new Map());
   const progressTimer = useRef(null);
+  const lastSheetRefreshAt = useRef(0);
   const [data, setData] = useState(null),
     [done, setCompleted] = useState(new Set()),
     [pending, setPending] = useState(new Set()),
@@ -113,6 +114,7 @@ function App() {
   }, [mobile]);
   async function load(quiet = false) {
     if (saving.current.size) return;
+    lastSheetRefreshAt.current = Date.now();
     const current = ++revision.current;
     if (!quiet) {
       setLoading(true);
@@ -167,13 +169,18 @@ function App() {
   useEffect(() => {
     if (!data?.user || pending.size || accountBusy) return;
     const refresh = () => {
-      if (document.visibilityState === "visible") load(true);
+      if (
+        document.visibilityState === "visible" &&
+        Date.now() - lastSheetRefreshAt.current >= 15000
+      ) {
+        load(true);
+      }
     };
-    const timer = setInterval(refresh, 15000);
     window.addEventListener("focus", refresh);
+    document.addEventListener("visibilitychange", refresh);
     return () => {
-      clearInterval(timer);
       window.removeEventListener("focus", refresh);
+      document.removeEventListener("visibilitychange", refresh);
     };
   }, [data?.user?.username, pending.size, accountBusy]);
   async function authenticated() {
