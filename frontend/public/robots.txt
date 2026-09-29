@@ -3,4 +3,4 @@ Allow: /
 Disallow: /admin
 Disallow: /api/
 
-Sitemap: https://www.onlydevops.in/sitemap.xml
+Sitemap: https://onlydevops-live.vercel.app/sitemap.xml
